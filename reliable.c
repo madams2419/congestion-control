@@ -22,12 +22,16 @@ struct reliable_state
 
 	conn_t *c;          /* This is the connection object */
 
-	/* Add your own data fields below this */
-
+	int effective_window;
+	int buf_space;
+	char* buffer;
+	char* last_byte_acked;
+	char* last_byte_sent;
+	char* last_byte_written;
 };
-rel_t *rel_list;
 
-int effective_window;
+
+rel_t *rel_list;
 
 
 /* Creates a new reliable protocol session, returns NULL on failure.
@@ -95,18 +99,20 @@ void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 
 void rel_read (rel_t *s)
 {
-	char buf[effective_window];
-	int bytes_read = 0;
 	int rd_len;
 
-	while ((rd_len = conn_input(rel_list->c, &buf[bytes_read], effective_window - bytes_read)) > 0) {
-		bytes_read += rd_len;
-	}
+	while (rel_list->buf_space > 0) {
+		rd_len = conn_input(rel_list->c, rel_list->last_byte_written + 1, rel_list->buf_space);
 
-	if (rd_len == 0) {
-		return;
-	} else if (rd_len < 0) {
-		// handle EOF
+		if (rd_len == 0) {
+			return;
+		} else if (rd_len > 0) {
+			rel_list->last_byte_written += rd_len;
+		} else {
+			// handle EOF
+			return;
+		}
+
 	}
 
 }
