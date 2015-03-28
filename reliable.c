@@ -27,6 +27,8 @@ struct reliable_state
 };
 rel_t *rel_list;
 
+int effective_window;
+
 
 /* Creates a new reliable protocol session, returns NULL on failure.
  * Exactly one of c and ss should be NULL.  (ss is NULL when called
@@ -50,8 +52,8 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	}
 
 	r->c = c;
-	r->next = rel_list;	// pointer to current head of the list
-	r->prev = &rel_list;	// double pointer to itself (r becomes rel_list)
+	r->next = rel_list;
+	r->prev = &rel_list;
 	if (rel_list)
 		rel_list->prev = &r->next;
 	rel_list = r;
@@ -93,6 +95,20 @@ void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 
 void rel_read (rel_t *s)
 {
+	char buf[effective_window];
+	int bytes_read = 0;
+	int rd_len;
+
+	while ((rd_len = conn_input(rel_list->c, &buf[bytes_read], effective_window - bytes_read)) > 0) {
+		bytes_read += rd_len;
+	}
+
+	if (rd_len == 0) {
+		return;
+	} else if (rd_len < 0) {
+		// handle EOF
+	}
+
 }
 
 void rel_output (rel_t *r)
