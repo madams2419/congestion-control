@@ -14,6 +14,8 @@
 
 #include "rlib.h"
 
+#define BUF_SIZE 500
+
 
 struct reliable_state
 {
@@ -23,15 +25,26 @@ struct reliable_state
 	conn_t *c;          /* This is the connection object */
 
 	int effective_window;
-	int buf_space;
-	char* buffer;
+	int advertised_window;
+
+	char* send_buffer;
 	char* last_byte_acked;
 	char* last_byte_sent;
 	char* last_byte_written;
+	int send_buf_space;
+	int max_send_buffer;
+
+	char* rcv_buffer;
+	char* last_byte_read;
+	char* next_byte_expected;
+	char* last_byte_received;
+	int rcv_buf_space;
+	int max_rcv_buffer;
 };
 
 
 rel_t *rel_list;
+int cur_effective_window;
 
 
 /* Creates a new reliable protocol session, returns NULL on failure.
@@ -40,11 +53,11 @@ rel_t *rel_list;
  * rel_demux.) */
 rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct config_common *cc)
 {
-	rel_t *r;
+	/* allocate and zero memory for reliable struct */
+	rel_t *r = xmalloc(sizeof(*r));
+	memset (r, 0, sizeof(*r));
 
-	r = xmalloc (sizeof (*r));
-	memset (r, 0, sizeof (*r));
-
+	/* create connection struct if it does not exist */
 	if (!c)
 	{
 		c = conn_create (r, ss);
@@ -55,6 +68,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 		}
 	}
 
+	/* add reliable struct to linked list */
 	r->c = c;
 	r->next = rel_list;
 	r->prev = &rel_list;
@@ -62,8 +76,22 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 		rel_list->prev = &r->next;
 	rel_list = r;
 
-	/* Do any other initialization you need here */
+	/* set initial effective window */
+	r->effective_window = BUF_SIZE;
 
+	/* initialize send side */
+	r->send_buf_space = BUF_SIZE;
+	r->send_buffer = xmalloc(BUF_SIZE);
+	r->last_byte_acked = r->send_buffer;
+	r->last_byte_sent = r->send_buffer;
+	r->last_byte_written = r->send_buffer;
+
+	/* initialize receive side */
+	r->rcv_buf_space = BUF_SIZE;
+	r->rcv_buffer = xmalloc(BUF_SIZE);
+	r->last_byte_read = r->rcv_buffer;
+	r->next_byte_expected = r->rcv_buffer;
+	r->last_byte_received = r->rcv_buffer;
 
 	return r;
 }
@@ -71,12 +99,20 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 void rel_destroy (rel_t *r)
 {
+	/* reassigned linked list pointers */
 	if (r->next)
 		r->next->prev = r->prev;
 	*r->prev = r->next;
-	conn_destroy (r->c);
 
-	/* Free any other allocated memory here */
+	/* free connection struct */
+	conn_destroy(r->c);
+
+	/* free send and receive buffers */
+	free(r->send_buffer);
+	free(r->rcv_buffer);
+
+	/* free connection struct */
+	free(r);
 }
 
 
@@ -94,6 +130,25 @@ void rel_demux (const struct config_common *cc, const struct sockaddr_storage *s
 
 void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 {
+	/* update last byte acked regardless of packet type */
+	r->last_byte_acked = pkt->ackno - 1; //TODO
+
+	/* process data packet */
+	if(pkt->len >= 12) {
+		/* copy payload to receive buffer */
+		int data_len = pkt->len - 12;
+		memcpy(pkt->data, r->next_byte_expected, data_len);
+
+		/* update receive state */
+		r->rcv_buf_space -= data_len; //TODO all this shit is wrong
+		r->last_byte_received += data_len;
+		r->next_byte_expected += data_len;
+
+		/* update advertised and effective windows */
+		r->advertised_window = r->max_rcv_buffer - ((r->next_byte_expected - 1) - r->last_byte_read);
+		r->effective_window = r->advertised_window - (r->last_byte_sent - r->last_byte_acked);
+	}
+
 }
 
 
@@ -101,20 +156,19 @@ void rel_read (rel_t *s)
 {
 	int rd_len;
 
-	while (rel_list->buf_space > 0) {
-		rd_len = conn_input(rel_list->c, rel_list->last_byte_written + 1, rel_list->buf_space);
+	while (s->send_buf_space > 0) {
+		rd_len = conn_input(s->c, s->last_byte_written + 1, s->send_buf_space);
 
 		if (rd_len == 0) {
 			return;
 		} else if (rd_len > 0) {
-			rel_list->last_byte_written += rd_len;
+			s->last_byte_written += rd_len;
 		} else {
-			// handle EOF
+			//TODO handle EOF
 			return;
 		}
 
 	}
-
 }
 
 void rel_output (rel_t *r)
