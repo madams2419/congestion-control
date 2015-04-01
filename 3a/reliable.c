@@ -15,11 +15,14 @@
 #include "rlib.h"
 
 #define BUF_SIZE 500
+#define WINDOW_SIZE 1 // window size in number of packets (1 for stop and wait)
 
 /* Questions
 		1. how much buffering are we allowed?
 */
 
+
+typedef struct packet_buf pbuf_t;
 
 struct reliable_state
 {
@@ -31,25 +34,18 @@ struct reliable_state
 	int effective_window;
 	int advertised_window;
 
-	char* send_buffer;
-	char* last_pkt_acked;
-	char* last_pkt_sent;
-	char* last_pkt_written;
-	int send_buf_space;
-	int max_send_buffer;
+	char *send_buffer[WINDOW_SIZE];
+	int last_pkt_acked;
+	int last_pkt_sent;
+	int last_pkt_written;
 
-	char* rcv_buffer;
-	char* last_pkt_read;
-	char* next_pkt_expected;
-	char* last_pkt_received;
-	int rcv_buf_space;
-	int max_rcv_buffer;
+	char *rcv_buffer[WINDOW_SIZE];
+	int last_pkt_read;
+	int next_pkt_expected;
+	int last_pkt_received;
 };
 
-
 rel_t *rel_list;
-int cur_effective_window;
-
 
 /* Creates a new reliable protocol session, returns NULL on failure.
  * Exactly one of c and ss should be NULL.  (ss is NULL when called
