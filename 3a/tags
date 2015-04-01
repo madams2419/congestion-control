@@ -1,0 +1,171 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ACK_LEN	reliable.c	/^#define ACK_LEN /;"	d	file:
+CC	Makefile	/^CC = gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -g -Wall $(DMALLOC_CFLAGS)$/;"	m
+CLOCK_MONOTONIC	rlib.h	/^# define CLOCK_MONOTONIC /;"	d
+CLOCK_MONOTONIC	rlib.h	/^# undef CLOCK_MONOTONIC$/;"	d
+CLOCK_REALTIME	rlib.h	/^# define CLOCK_REALTIME /;"	d
+EOF_LEN	reliable.c	/^#define EOF_LEN /;"	d	file:
+LIBRT	Makefile	/^LIBRT = -lrt$/;"	m
+LIBS	Makefile	/^LIBS = $(DMALLOC_LIBS)$/;"	m
+MAX_READ_LEN	reliable.c	/^#define MAX_READ_LEN /;"	d	file:
+NEED_CLOCK_GETTIME	rlib.h	/^# define NEED_CLOCK_GETTIME /;"	d
+RCV_BUF_SPACE	reliable.c	/^#define RCV_BUF_SPACE(/;"	d	file:
+SEND_BUF_SPACE	reliable.c	/^#define SEND_BUF_SPACE(/;"	d	file:
+SUBMIT	Makefile	/^SUBMIT = reliable\/Makefile reliable\/*.[ch]$/;"	m
+TAR	Makefile	/^TAR = reliable.tar.gz$/;"	m
+WINDOW_SIZE	reliable.c	/^#define WINDOW_SIZE /;"	d	file:
+WINDOW_SIZE	reliable_sw.c	/^#define WINDOW_SIZE /;"	d	file:
+ack_packet	rlib.h	/^struct ack_packet$/;"	s
+ackno	rlib.h	/^	uint32_t ackno;$/;"	m	struct:ack_packet
+ackno	rlib.h	/^	uint32_t ackno;$/;"	m	struct:packet
+addreq	rlib.c	/^addreq (const struct sockaddr_storage *a, const struct sockaddr_storage *b)$/;"	f
+addrhash	rlib.c	/^addrhash (const struct sockaddr_storage *ss)$/;"	f
+addrsize	rlib.c	/^addrsize (const struct sockaddr_storage *ss)$/;"	f
+buf	rlib.c	/^	char buf[1];$/;"	m	struct:chunk	file:
+c	reliable.c	/^	conn_t *c;          \/* This is the connection object *\/$/;"	m	struct:reliable_state	file:
+c	reliable_sw.c	/^	conn_t *c;          \/* This is the connection object *\/$/;"	m	struct:reliable_state	file:
+c	rlib.c	/^	struct config_common c;$/;"	m	struct:config_client	typeref:struct:config_client::config_common	file:
+c	rlib.c	/^	struct config_common c;$/;"	m	struct:config_server	typeref:struct:config_server::config_common	file:
+cevents	rlib.c	/^static struct pollfd *cevents;$/;"	v	typeref:struct:pollfd	file:
+cevents_generation	rlib.c	/^int cevents_generation;$/;"	v
+chunk	rlib.c	/^struct chunk {$/;"	s	file:
+chunk_t	rlib.c	/^typedef struct chunk chunk_t;$/;"	t	typeref:struct:chunk	file:
+cksum	rlib.c	/^cksum (const void *_data, int len)$/;"	f
+cksum	rlib.h	/^	uint16_t cksum;$/;"	m	struct:ack_packet
+cksum	rlib.h	/^	uint16_t cksum;$/;"	m	struct:packet
+clock_gettime	rlib.c	/^clock_gettime (int id, struct timespec *tp)$/;"	f
+config_client	rlib.c	/^struct config_client {$/;"	s	file:
+config_common	rlib.h	/^struct config_common$/;"	s
+config_server	rlib.c	/^struct config_server {$/;"	s	file:
+conn	rlib.c	/^struct conn {$/;"	s	file:
+conn_alloc	rlib.c	/^conn_alloc (void)$/;"	f	file:
+conn_bufspace	rlib.c	/^conn_bufspace (conn_t *c)$/;"	f
+conn_create	rlib.c	/^conn_create (rel_t *rel, const struct sockaddr_storage *ss)$/;"	f
+conn_demux	rlib.c	/^conn_demux (const struct config_server *cs)$/;"	f	file:
+conn_destroy	rlib.c	/^conn_destroy (conn_t *c)$/;"	f
+conn_drain	rlib.c	/^conn_drain (conn_t *c)$/;"	f
+conn_free	rlib.c	/^conn_free (conn_t *c)$/;"	f	file:
+conn_input	rlib.c	/^conn_input (conn_t *c, void *buf, size_t n)$/;"	f
+conn_list	rlib.c	/^static conn_t *conn_list;$/;"	v	file:
+conn_mkevents	rlib.c	/^conn_mkevents (void)$/;"	f	file:
+conn_output	rlib.c	/^conn_output (conn_t *c, const void *_buf, size_t _n)$/;"	f
+conn_poll	rlib.c	/^conn_poll (const struct config_common *cc)$/;"	f
+conn_sendpkt	rlib.c	/^conn_sendpkt (conn_t *c, const packet_t *pkt, size_t len)$/;"	f
+conn_t	rlib.h	/^typedef struct conn conn_t;$/;"	t	typeref:struct:conn
+connect_to	rlib.c	/^connect_to (int dgram, const struct sockaddr_storage *ss)$/;"	f
+data	reliable.c	/^	char* data;$/;"	m	struct:packet_buf	file:
+data	reliable_sw.c	/^	char* data;$/;"	m	struct:packet_buf	file:
+data	rlib.h	/^	char data[500];$/;"	m	struct:packet
+debug_recv	rlib.c	/^debug_recv (int s, packet_t *buf, size_t len, int flags,$/;"	f	file:
+delete_me	rlib.c	/^	char delete_me;		\/* delete after draining *\/$/;"	m	struct:conn	file:
+dest	rlib.c	/^	struct sockaddr_storage dest;	\/* Demultiplex traffic and relay it to$/;"	m	struct:config_server	typeref:struct:config_server::sockaddr_storage	file:
+destroy_buf	reliable.c	/^void destroy_buf(pbuf_t** buf, int len) {$/;"	f
+destroy_buf	reliable_sw.c	/^void destroy_buf(pbuf_t** buf, int len) {$/;"	f
+destroy_pbuf	reliable.c	/^void destroy_pbuf(pbuf_t* pbuf) {$/;"	f
+do_client	rlib.c	/^do_client (struct config_client *cc)$/;"	f
+do_server	rlib.c	/^do_server (struct config_server *cs)$/;"	f
+evreaders	rlib.c	/^static conn_t **evreaders;$/;"	v	file:
+evwriters	rlib.c	/^static conn_t **evwriters;$/;"	v	file:
+get_address	rlib.c	/^get_address (struct sockaddr_storage *ss, int local,$/;"	f
+hash_bytes	rlib.c	/^hash_bytes (const void *_key, int len, unsigned int seed)$/;"	f	file:
+last_pkt_acked	reliable.c	/^	int last_pkt_acked;$/;"	m	struct:reliable_state	file:
+last_pkt_acked	reliable_sw.c	/^	int last_pkt_acked;$/;"	m	struct:reliable_state	file:
+last_pkt_read	reliable.c	/^	int last_pkt_read;$/;"	m	struct:reliable_state	file:
+last_pkt_read	reliable_sw.c	/^	int last_pkt_read;$/;"	m	struct:reliable_state	file:
+last_pkt_received	reliable.c	/^	int last_pkt_received;$/;"	m	struct:reliable_state	file:
+last_pkt_received	reliable_sw.c	/^	int last_pkt_received;$/;"	m	struct:reliable_state	file:
+last_pkt_sent	reliable.c	/^	int last_pkt_sent;$/;"	m	struct:reliable_state	file:
+last_pkt_sent	reliable_sw.c	/^	int last_pkt_sent;$/;"	m	struct:reliable_state	file:
+last_pkt_written	reliable.c	/^	int last_pkt_written;$/;"	m	struct:reliable_state	file:
+last_pkt_written	reliable_sw.c	/^	int last_pkt_written;$/;"	m	struct:reliable_state	file:
+last_timeout	rlib.c	/^struct timespec last_timeout;$/;"	v	typeref:struct:timespec
+len	reliable.c	/^	int len;$/;"	m	struct:packet_buf	file:
+len	reliable_sw.c	/^	int len;$/;"	m	struct:packet_buf	file:
+len	rlib.h	/^	uint16_t len;$/;"	m	struct:ack_packet
+len	rlib.h	/^	uint16_t len;$/;"	m	struct:packet
+listen_on	rlib.c	/^listen_on (int dgram, struct sockaddr_storage *ss)$/;"	f
+listen_socket	rlib.c	/^	int listen_socket; 		\/* Accept TCP connections on this socket *\/$/;"	m	struct:config_client	file:
+log_in	rlib.c	/^int log_in = -1;$/;"	v
+log_out	rlib.c	/^int log_out = -1;$/;"	v
+main	rlib.c	/^main (int argc, char **argv)$/;"	f
+make_async	rlib.c	/^make_async (int s)$/;"	f
+max_rcv_buffer	reliable.c	/^	int max_rcv_buffer;$/;"	m	struct:reliable_state	file:
+max_send_buffer	reliable.c	/^	int max_send_buffer;$/;"	m	struct:reliable_state	file:
+ncevents	rlib.c	/^static int ncevents;$/;"	v	file:
+need_timer_in	rlib.c	/^need_timer_in (const struct timespec *last, long timer)$/;"	f
+next	reliable.c	/^	rel_t *next;            \/* Linked list for traversing all connections *\/$/;"	m	struct:reliable_state	file:
+next	reliable_sw.c	/^	rel_t *next;            \/* Linked list for traversing all connections *\/$/;"	m	struct:reliable_state	file:
+next	rlib.c	/^	struct chunk *next;$/;"	m	struct:chunk	typeref:struct:chunk::chunk	file:
+next	rlib.c	/^	struct conn *next;		\/* Linked list of connections *\/$/;"	m	struct:conn	typeref:struct:conn::conn	file:
+next_pkt_expected	reliable.c	/^	int next_pkt_expected;$/;"	m	struct:reliable_state	file:
+next_pkt_expected	reliable_sw.c	/^	int next_pkt_expected;$/;"	m	struct:reliable_state	file:
+nfd	rlib.c	/^	int nfd;			\/* network file descriptor *\/$/;"	m	struct:conn	file:
+npoll	rlib.c	/^	int npoll;$/;"	m	struct:conn	file:
+opt_debug	rlib.c	/^int opt_debug;$/;"	v
+outq	rlib.c	/^	chunk_t *outq;		\/* chunks not yet written *\/$/;"	m	struct:conn	file:
+outqtail	rlib.c	/^	chunk_t **outqtail;$/;"	m	struct:conn	file:
+packet	rlib.h	/^struct packet$/;"	s
+packet_buf	reliable.c	/^struct packet_buf$/;"	s	file:
+packet_buf	reliable_sw.c	/^struct packet_buf$/;"	s	file:
+packet_t	rlib.h	/^typedef struct packet packet_t;$/;"	t	typeref:struct:packet
+pbuf_t	reliable.c	/^typedef struct packet_buf pbuf_t;$/;"	t	typeref:struct:packet_buf	file:
+pbuf_t	reliable_sw.c	/^typedef struct packet_buf pbuf_t;$/;"	t	typeref:struct:packet_buf	file:
+peer	rlib.c	/^	struct sockaddr_storage peer;	\/* network peer *\/$/;"	m	struct:conn	typeref:struct:conn::sockaddr_storage	file:
+prev	reliable.c	/^	rel_t **prev;$/;"	m	struct:reliable_state	file:
+prev	reliable_sw.c	/^	rel_t **prev;$/;"	m	struct:reliable_state	file:
+prev	rlib.c	/^	struct conn **prev;$/;"	m	struct:conn	typeref:struct:conn::conn	file:
+print_pkt	rlib.c	/^print_pkt (const packet_t *buf, const char *op, int n)$/;"	f
+progname	rlib.c	/^char *progname;$/;"	v
+rbuf_from_seqno	reliable.c	/^pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {$/;"	f
+rcv_buffer	reliable.c	/^	pbuf_t *rcv_buffer[WINDOW_SIZE];$/;"	m	struct:reliable_state	file:
+rcv_buffer	reliable_sw.c	/^	pbuf_t *rcv_buffer[WINDOW_SIZE];$/;"	m	struct:reliable_state	file:
+read_eof	rlib.c	/^	char read_eof;	        \/* zero if haven't received EOF *\/$/;"	m	struct:conn	file:
+rel	rlib.c	/^	rel_t *rel;			\/* Data from reliable *\/$/;"	m	struct:conn	file:
+rel_create	reliable.c	/^rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct config_common *cc)$/;"	f
+rel_create	reliable_sw.c	/^rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct config_common *cc)$/;"	f
+rel_demux	reliable.c	/^void rel_demux (const struct config_common *cc, const struct sockaddr_storage *ss, packet_t *pkt, size_t len)$/;"	f
+rel_demux	reliable_sw.c	/^void rel_demux (const struct config_common *cc, const struct sockaddr_storage *ss, packet_t *pkt, size_t len)$/;"	f
+rel_destroy	reliable.c	/^void rel_destroy (rel_t *r)$/;"	f
+rel_destroy	reliable_sw.c	/^void rel_destroy (rel_t *r)$/;"	f
+rel_list	reliable.c	/^rel_t *rel_list;$/;"	v
+rel_list	reliable_sw.c	/^rel_t *rel_list;$/;"	v
+rel_output	reliable.c	/^void rel_output (rel_t *r)$/;"	f
+rel_output	reliable_sw.c	/^void rel_output (rel_t *r)$/;"	f
+rel_read	reliable.c	/^void rel_read(rel_t *s)$/;"	f
+rel_read	reliable_sw.c	/^void rel_read (rel_t *s)$/;"	f
+rel_recvpkt	reliable.c	/^void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)$/;"	f
+rel_recvpkt	reliable_sw.c	/^void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)$/;"	f
+rel_t	rlib.h	/^typedef struct reliable_state rel_t;$/;"	t	typeref:struct:reliable_state
+rel_timer	reliable.c	/^void rel_timer ()$/;"	f
+rel_timer	reliable_sw.c	/^void rel_timer ()$/;"	f
+reliable_state	reliable.c	/^struct reliable_state$/;"	s	file:
+reliable_state	reliable_sw.c	/^struct reliable_state$/;"	s	file:
+rfd	rlib.c	/^	int rfd;			\/* input file descriptor *\/$/;"	m	struct:conn	file:
+rpoll	rlib.c	/^	int rpoll;			\/* offsets into cevents array *\/$/;"	m	struct:conn	file:
+sbuf_from_seqno	reliable.c	/^pbuf_t *sbuf_from_seqno(int seqno, rel_t *r) {$/;"	f
+send_buffer	reliable.c	/^	pbuf_t *send_buffer[WINDOW_SIZE];$/;"	m	struct:reliable_state	file:
+send_buffer	reliable_sw.c	/^	pbuf_t *send_buffer[WINDOW_SIZE];$/;"	m	struct:reliable_state	file:
+seqno	rlib.h	/^	uint32_t seqno;       \/* Only valid if length > 8 *\/$/;"	m	struct:packet
+server	rlib.c	/^	char server;			\/* non-zero on server *\/$/;"	m	struct:conn	file:
+server	rlib.c	/^	struct sockaddr_storage server; \/* Tunnel them to this server over UDP *\/$/;"	m	struct:config_client	typeref:struct:config_client::sockaddr_storage	file:
+serverconf	rlib.c	/^static struct config_server *serverconf;$/;"	v	typeref:struct:config_server	file:
+single_connection	rlib.h	/^	int single_connection;        \/* Exit after first connection failure *\/$/;"	m	struct:config_common
+size	rlib.c	/^	size_t size;$/;"	m	struct:chunk	file:
+timeout	rlib.h	/^	int timeout;          \/* Retransmission timeout in milliseconds *\/$/;"	m	struct:config_common
+timer	rlib.h	/^	int timer;            \/* How often rel_timer called in milliseconds *\/$/;"	m	struct:config_common
+udp_socket	rlib.c	/^	int udp_socket;		\/* Receive all UDP over this socket *\/$/;"	m	struct:config_server	file:
+usage	rlib.c	/^usage (void)$/;"	f	file:
+used	rlib.c	/^	size_t used;$/;"	m	struct:chunk	file:
+wfd	rlib.c	/^	int wfd;			\/* output file descriptor *\/$/;"	m	struct:conn	file:
+window	rlib.h	/^	int window;           \/* # of unacknowledged packets in flight *\/$/;"	m	struct:config_common
+wpoll	rlib.c	/^	int wpoll;$/;"	m	struct:conn	file:
+write_eof	rlib.c	/^	char write_eof;		\/* send EOF when output queue drained *\/$/;"	m	struct:conn	file:
+write_err	rlib.c	/^	char write_err;	        \/* zero if it's okay to write to wfd *\/$/;"	m	struct:conn	file:
+xmalloc	rlib.c	/^xmalloc (size_t n)$/;"	f
+xoff	rlib.c	/^	char xoff;			\/* non-zero to pause reading *\/$/;"	m	struct:conn	file:
