@@ -16,10 +16,6 @@
 
 #define BUF_SIZE 500
 
-/* Questions
-		1. how much buffering are we allowed?
-*/
-
 
 struct reliable_state
 {
