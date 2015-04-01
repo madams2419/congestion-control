@@ -14,12 +14,13 @@
 
 #include "rlib.h"
 
-#define BUF_SIZE 500
 #define WINDOW_SIZE 1 // window size in number of packets (1 for stop and wait)
 
-/* Questions
-		1. how much buffering are we allowed?
-*/
+// Questions:
+
+// TODO
+// - check all requirements in 356 handout and Stanford handout
+
 
 
 typedef struct packet_buf pbuf_t;
@@ -30,9 +31,6 @@ struct reliable_state
 	rel_t **prev;
 
 	conn_t *c;          /* This is the connection object */
-
-	int effective_window;
-	int advertised_window;
 
 	char *send_buffer[WINDOW_SIZE];
 	int last_pkt_acked;
@@ -55,7 +53,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 {
 	/* allocate and zero memory for reliable struct */
 	rel_t *r = xmalloc(sizeof(*r));
-	memset (r, 0, sizeof(*r));
+	memset(r, 0, sizeof(*r));
 
 	/* create connection struct if it does not exist */
 	if (!c)
@@ -76,22 +74,24 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 		rel_list->prev = &r->next;
 	rel_list = r;
 
-	/* set initial effective window */
-	r->effective_window = BUF_SIZE;
-
 	/* initialize send side */
-	r->send_buf_space = BUF_SIZE;
-	r->send_buffer = xmalloc(BUF_SIZE);
-	r->last_pkt_acked = r->send_buffer;
-	r->last_pkt_sent = r->send_buffer;
-	r->last_pkt_written = r->send_buffer;
+	memset(r->send_buffer, 0, sizeof(r->send_buffer));
+	r->last_pkt_acked = -1;
+	r->last_pkt_sent = -1;
+	r->last_pkt_written = -1;
+
+	/* debug shit */
+	printf("Send buffer size (from struct): %lu\n", sizeof(r->send_buffer)); //DEBUG
+	printf("address of send_buffer      : %d\n", &r->send_buffer);
+	printf("address of send_buffer[0]   : %d\n", &r->send_buffer[0]);
+	printf("address of send_buffer[1]   : %d\n", &r->send_buffer[1]);
+	printf("address of last_pkt_acked   : %d\n", &r->last_pkt_acked);
 
 	/* initialize receive side */
-	r->rcv_buf_space = BUF_SIZE;
-	r->rcv_buffer = xmalloc(BUF_SIZE);
-	r->last_pkt_read = r->rcv_buffer;
-	r->next_pkt_expected = r->rcv_buffer;
-	r->last_pkt_received = r->rcv_buffer;
+	memset(r->rcv_buffer, 0, sizeof(r->rcv_buffer));
+	r->last_pkt_read = -1;
+	r->next_pkt_expected = -1;
+	r->last_pkt_received = -1;
 
 	return r;
 }
@@ -107,11 +107,19 @@ void rel_destroy (rel_t *r)
 	/* free connection struct */
 	conn_destroy(r->c);
 
-	/* free send and receive buffers */
-	free(r->send_buffer);
-	free(r->rcv_buffer);
+	/* free send buffers */
+	for(int i = 0; i < sizeof(r->send_buffer); i++) {
+		free(r->send_buffer[i]);
+	}
+	//TODO might have to free send_buffer here
 
-	/* free connection struct */
+	/* free receive buffers */
+	for(int i = 0; i < sizeof(r->rcv_buffer); i++) {
+		free(r->rcv_buffer[i]);
+	}
+	//TODO migth have to free rcv_buffer here
+
+	/* free reliable protocol struct */
 	free(r);
 }
 
@@ -131,24 +139,34 @@ void rel_demux (const struct config_common *cc, const struct sockaddr_storage *s
 void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 {
 	/* update last byte acked regardless of packet type */
-	r->last_pkt_acked = pkt->ackno - 1; //TODO
+	r->last_pkt_acked = pkt->ackno - 1;
+
+	/* process ack packet */
+	if(pkt->len == 8) {
+
+
+	}
 
 	/* process data packet */
-	if(pkt->len >= 12) {
+	else if(pkt->len >= 12) {
+
+		//TODO verify length here
+
 		/* copy payload to receive buffer */
 		int data_len = pkt->len - 12;
-		memcpy(pkt->data, r->next_pkt_expected, data_len);
+		memcpy(pkt->data, r->rcv_buffer[pkt->seqno], data_len);
 
-		/* update receive state */
-		r->rcv_buf_space -= data_len; //TODO all this shit is wrong
-		r->last_pkt_received += data_len;
-		r->next_pkt_expected += data_len;
+		/* update last packet received */
+		r->last_pkt_received = pkt->seqno;
 
-		/* update effective window */
-		r->effective_window = pkt->advertised_window - (r->last_pkt_sent - r->last_pkt_acked);
+		/* update next packet expected */
+		if(pkt->seqno == r->next_pkt_expected) {
+			r->next_pkt_expected++;
+		}
 
-		/* update and send advertise window */
-		r->advertised_window = r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read);
+		/* attempt to output data */
+		rel_output(r);
+
 	}
 
 }
