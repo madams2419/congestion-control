@@ -37,7 +37,7 @@ struct reliable_state
 	int last_pkt_sent;
 	int last_pkt_written;
 
-	char *rcv_buffer[WINDOW_SIZE];
+	pbuf_t *rcv_buffer[WINDOW_SIZE];
 	int last_pkt_read;
 	int next_pkt_expected;
 	int last_pkt_received;
@@ -103,6 +103,15 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 }
 
 
+/* helper function to free send/rcv buffer memory */
+void destroy_buf(pbuf_t** buf, int len) {
+	for(int i = 0; i < len; i++) {
+		free(buf[i]->data);
+		free(buf[i]);
+	}
+}
+
+
 void rel_destroy (rel_t *r)
 {
 	/* reassigned linked list pointers */
@@ -120,10 +129,10 @@ void rel_destroy (rel_t *r)
 	//TODO might have to free send_buffer here
 
 	/* free receive buffers */
-	for(int i = 0; i < sizeof(r->rcv_buffer); i++) {
-		free(r->rcv_buffer[i]);
-	}
-	//TODO migth have to free rcv_buffer here
+	destroy_buf(r->rcv_buffer, sizeof(r->rcv_buffer));
+
+	/* free send buffer */
+	destroy_buf(r->send_buffer, sizeof(r->send_buffer));
 
 	/* free reliable protocol struct */
 	free(r);
