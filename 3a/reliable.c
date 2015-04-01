@@ -32,16 +32,16 @@ struct reliable_state
 	int advertised_window;
 
 	char* send_buffer;
-	char* last_byte_acked;
-	char* last_byte_sent;
-	char* last_byte_written;
+	char* last_pkt_acked;
+	char* last_pkt_sent;
+	char* last_pkt_written;
 	int send_buf_space;
 	int max_send_buffer;
 
 	char* rcv_buffer;
-	char* last_byte_read;
-	char* next_byte_expected;
-	char* last_byte_received;
+	char* last_pkt_read;
+	char* next_pkt_expected;
+	char* last_pkt_received;
 	int rcv_buf_space;
 	int max_rcv_buffer;
 };
@@ -86,16 +86,16 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	/* initialize send side */
 	r->send_buf_space = BUF_SIZE;
 	r->send_buffer = xmalloc(BUF_SIZE);
-	r->last_byte_acked = r->send_buffer;
-	r->last_byte_sent = r->send_buffer;
-	r->last_byte_written = r->send_buffer;
+	r->last_pkt_acked = r->send_buffer;
+	r->last_pkt_sent = r->send_buffer;
+	r->last_pkt_written = r->send_buffer;
 
 	/* initialize receive side */
 	r->rcv_buf_space = BUF_SIZE;
 	r->rcv_buffer = xmalloc(BUF_SIZE);
-	r->last_byte_read = r->rcv_buffer;
-	r->next_byte_expected = r->rcv_buffer;
-	r->last_byte_received = r->rcv_buffer;
+	r->last_pkt_read = r->rcv_buffer;
+	r->next_pkt_expected = r->rcv_buffer;
+	r->last_pkt_received = r->rcv_buffer;
 
 	return r;
 }
@@ -135,24 +135,24 @@ void rel_demux (const struct config_common *cc, const struct sockaddr_storage *s
 void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 {
 	/* update last byte acked regardless of packet type */
-	r->last_byte_acked = pkt->ackno - 1; //TODO
+	r->last_pkt_acked = pkt->ackno - 1; //TODO
 
 	/* process data packet */
 	if(pkt->len >= 12) {
 		/* copy payload to receive buffer */
 		int data_len = pkt->len - 12;
-		memcpy(pkt->data, r->next_byte_expected, data_len);
+		memcpy(pkt->data, r->next_pkt_expected, data_len);
 
 		/* update receive state */
 		r->rcv_buf_space -= data_len; //TODO all this shit is wrong
-		r->last_byte_received += data_len;
-		r->next_byte_expected += data_len;
+		r->last_pkt_received += data_len;
+		r->next_pkt_expected += data_len;
 
 		/* update effective window */
-		r->effective_window = pkt->advertised_window - (r->last_byte_sent - r->last_byte_acked);
+		r->effective_window = pkt->advertised_window - (r->last_pkt_sent - r->last_pkt_acked);
 
 		/* update and send advertise window */
-		r->advertised_window = r->max_rcv_buffer - ((r->next_byte_expected - 1) - r->last_byte_read);
+		r->advertised_window = r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read);
 	}
 
 }
@@ -163,12 +163,12 @@ void rel_read (rel_t *s)
 	int rd_len;
 
 	while (s->send_buf_space > 0) {
-		rd_len = conn_input(s->c, s->last_byte_written + 1, s->send_buf_space);
+		rd_len = conn_input(s->c, s->last_pkt_written + 1, s->send_buf_space);
 
 		if (rd_len == 0) {
 			return;
 		} else if (rd_len > 0) {
-			s->last_byte_written += rd_len;
+			s->last_pkt_written += rd_len;
 			/* TODO send packet */
 			// int send_len = conn_sendpkt(s->c, pkt, sizeof(pkt))
 		} else {
@@ -187,7 +187,7 @@ void rel_output (rel_t *r)
 		return;
 	} else {
 
-		while (r->last_byte_read < r->last_byte_received
+		while (r->last_pkt_read < r->last_pkt_received
 				&& buf_space > 0) {
 			// print packets
 		}
