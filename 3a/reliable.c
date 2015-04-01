@@ -63,8 +63,10 @@ struct reliable_state
 
 struct packet_buf
 {
+	int seqno;
 	int len;
 	char* data;
+	struct timespec send_time;
 };
 
 rel_t *rel_list;
@@ -253,6 +255,7 @@ void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 			/* copy payload to receive buffer */
 			int data_len = pkt->len - DATA_HDR_LEN;
 			pbuf_t *rbuf = rbuf_from_seqno(pkt->seqno, r);
+			rbuf->seqno = pkt->seqno;
 			rbuf->len = data_len;
 			rbuf->data = xmalloc(rbuf->len);
 			memcpy(pkt->data, rbuf->data, rbuf->len);
@@ -271,6 +274,28 @@ void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 
 }
 
+
+void send_packet(pbuf_t *pbuf, rel_t *s) {
+	/* construct packet */
+	printf("Size of packet_t: %lu\n", sizeof(packet_t)); //DEBUG
+	packet_t *pkt = xmalloc(sizeof(packet_t));
+	pkt->cksum = 0;
+	pkt->len = pbuf->len + DATA_HDR_LEN;
+	pkt->ackno = s->next_pkt_expected - 1;
+	pkt->seqno = pbuf->seqno;
+	memcpy(pbuf->data, pkt->data, pbuf->len);
+	pkt->cksum = cksum(pkt, pkt->len);
+
+	/* send packet */
+	if(conn_sendpkt(s->c, pkt, pkt->len) > 0) {
+		s->last_pkt_sent++;
+		clock_gettime(CLOCK_MONOTONIC, &pbuf->send_time);
+	} else {
+		printf("Packet sending failed!\n");
+	}
+}
+
+
 void send_next_packet(rel_t *s) {
 	if(s->last_pkt_written == s->last_pkt_sent) {
 		return;
@@ -279,22 +304,8 @@ void send_next_packet(rel_t *s) {
 	/* retrieve buffer to send */
 	pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_sent + 1, s);
 
-	/* construct packet */
-	printf("Size of packet_t: %lu\n", sizeof(packet_t)); //DEBUG
-	packet_t *pkt = xmalloc(sizeof(packet_t));
-	pkt->cksum = 0;
-	pkt->len = sbuf->len + DATA_HDR_LEN;
-	pkt->ackno = s->next_pkt_expected - 1;
-	pkt->seqno = s->last_pkt_sent + 1;
-	pkt->cksum = cksum(pkt, pkt->len);
-
 	/* send packet */
-	if(conn_sendpkt(s->c, pkt, pkt->len) > 0) {
-		s->last_pkt_sent++;
-	} else {
-		printf("Packet sending failed!\n");
-	}
-
+	send_packet(sbuf, s);
 }
 
 
@@ -322,6 +333,7 @@ void rel_read(rel_t *s)
 
 			/* copy data data into send buffer */
 			pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
+			sbuf->seqno = s->last_pkt_written + 1;
 			sbuf->len = rd_len;
 			sbuf->data = xmalloc(sbuf->len);
 			memcpy(temp, sbuf->data, sbuf->len);
@@ -374,6 +386,17 @@ void rel_output (rel_t *r)
 
 void rel_timer ()
 {
-	/* Retransmit any packets that need to be retransmitted */
+	// TODO loop through all connections
+	rel_t *r = rel_list;
+	struct timespec *tbuf = xmalloc(sizeof(struct timespec));
+	for(int sn = r->last_pkt_acked + 1; sn < r->last_pkt_sent; sn++) {
+		pbuf_t *temp = sbuf_from_seqno(sn, r);
+		clock_gettime(CLOCK_MONOTONIC, tbuf);
+		double t_elapsed = difftime(temp->send_time.tv_sec, tbuf->tv_sec);
 
+		if(t_elapsed > r->timeout) {
+			send_packet(temp, r);
+		}
+
+	}
 }
