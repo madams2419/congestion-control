@@ -26,6 +26,7 @@
 // - having seqno refer to packets instead of bytes really complicates things...do we have to do this? Is there anything internal to the library that demands it be packets?
 // - do we have to conn_output partial packets or can we wait until there is space for an entier packet?
 // - should we call rel_output when packets are recieved or let the program call it
+// - do we send packets as soon as we read them or do we use some algo to fill up a packet first?
 
 // TODO
 // - check all requirements in 356 handout and Stanford handout
@@ -40,6 +41,9 @@ struct reliable_state
 	rel_t **prev;
 
 	conn_t *c;          /* This is the connection object */
+
+	int window;
+	int timeout;
 
 	int rcvd_remote_eof;
 	int rcvd_local_eof;
@@ -93,6 +97,10 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	if (rel_list)
 		rel_list->prev = &r->next;
 	rel_list = r;
+
+	/* initialize config params */
+	r->window = cc->window;
+	r->timeout = cc->timeout;
 
 	/* initialize booleans */
 	r->rcvd_remote_eof = 0;
@@ -197,26 +205,30 @@ void handle_connection_close(rel_t *r) {
 
 void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 {
+
+	/* verify packet length */
+	if(pkt->len < n) {
+		return;
+	}
+
+	/* verify checksum */
+	uint16_t cks = pkt->cksum;
+	pkt->cksum = 0;
+	if(cks != cksum(pkt, pkt->len)) {
+		printf("Checksum failed!\n");
+		return;
+	}
+
 	/* update last byte acked regardless of packet type */
 	r->last_pkt_acked = pkt->ackno - 1;
 
 	/* handle ack packet */
 	if(pkt->len == ACK_LEN) {
-		//TODO handle ack
+		handle_connection_close(r);
 	}
 
 	/* handle eof or data packet */
 	else if(pkt->len >= DATA_HDR_LEN) {
-
-		/* verify checksum */
-		uint16_t cks = pkt->cksum;
-		pkt->cksum = 0;
-		if(cks != cksum(pkt, pkt->len)) {
-			printf("Checksum failed!\n");
-			return;
-		}
-
-		//TODO verify length
 
 		/* return if packet is a duplicate */
 		if(pkt->seqno < r->next_pkt_expected) {
@@ -227,28 +239,32 @@ void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 		if(pkt->len == DATA_HDR_LEN) {
 			r->rcvd_remote_eof = 1;
 			handle_connection_close(r);
-			return;
 		}
 
-		/* return if there is insufficient space in the buffer */
-		int space_required = pkt->seqno - r->last_pkt_received;
-		if(space_required > RCV_BUF_SPACE(r)) {
-			return;
-		}
+		/* handle data packet */
+		else {
 
-		/* copy payload to receive buffer */
-		int data_len = pkt->len - DATA_HDR_LEN;
-		pbuf_t *rbuf = rbuf_from_seqno(pkt->seqno, r);
-		rbuf->len = data_len;
-		rbuf->data = xmalloc(rbuf->len);
-		memcpy(pkt->data, rbuf->data, rbuf->len);
+			/* return if there is insufficient space in the buffer */
+			int space_required = pkt->seqno - r->last_pkt_received;
+			if(space_required > RCV_BUF_SPACE(r)) {
+				return;
+			}
 
-		/* update last packet received */
-		r->last_pkt_received = pkt->seqno;
+			/* copy payload to receive buffer */
+			int data_len = pkt->len - DATA_HDR_LEN;
+			pbuf_t *rbuf = rbuf_from_seqno(pkt->seqno, r);
+			rbuf->len = data_len;
+			rbuf->data = xmalloc(rbuf->len);
+			memcpy(pkt->data, rbuf->data, rbuf->len);
 
-		/* update next packet expected */
-		if(pkt->seqno == r->next_pkt_expected) {
-			r->next_pkt_expected++;
+			/* update last packet received */
+			r->last_pkt_received = pkt->seqno;
+
+			/* update next packet expected */
+			if(pkt->seqno == r->next_pkt_expected) {
+				r->next_pkt_expected++;
+			}
+
 		}
 
 	}
