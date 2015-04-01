@@ -32,7 +32,7 @@ struct reliable_state
 
 	conn_t *c;          /* This is the connection object */
 
-	char *send_buffer[WINDOW_SIZE];
+	pbuf_t *send_buffer[WINDOW_SIZE];
 	int last_pkt_acked;
 	int last_pkt_sent;
 	int last_pkt_written;
@@ -41,6 +41,12 @@ struct reliable_state
 	int last_pkt_read;
 	int next_pkt_expected;
 	int last_pkt_received;
+};
+
+struct packet_buf
+{
+	int len;
+	char* data;
 };
 
 rel_t *rel_list;
@@ -193,15 +199,15 @@ void rel_read (rel_t *s)
 	}
 }
 
-void rel_output (rel_t *r)
+int rel_output (rel_t *r)
 {
 	size_t buf_space = conn_bufspace(r->c);
 
 	if (buf_space == 0) {
-		return;
+		return 0;
 	} else {
 
-		while (r->last_pkt_read < r->last_pkt_received
+		while (r->last_pkt_read < r->next_pkt_expected
 				&& buf_space > 0) {
 			// print packets
 		}
