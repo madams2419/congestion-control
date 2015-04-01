@@ -34,12 +34,14 @@ struct reliable_state
 
 	pbuf_t *send_buffer;
 	int max_send_buffer;
+	int send_buffer_space;
 	int last_pkt_acked;
 	int last_pkt_sent;
 	int last_pkt_written;
 
 	pbuf_t *rcv_buffer;
 	int max_rcv_buffer;
+	int rcv_buffer_space;
 	int last_pkt_read;
 	int next_pkt_expected;
 	int last_pkt_received;
@@ -86,8 +88,9 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	rel_list = r;
 
 	/* initialize send side */
-	memset(r->send_buffer, 0, sizeof(r->send_buffer));
+	r->send_buffer = NULL;
 	r->max_send_buffer = WINDOW_SIZE;
+	r->send_buffer_space = WINDOW_SIZE;
 	r->last_pkt_acked = -1;
 	r->last_pkt_sent = -1;
 	r->last_pkt_written = -1;
@@ -100,8 +103,9 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	printf("address of last_pkt_acked   : %d\n", &r->last_pkt_acked);
 
 	/* initialize receive side */
-	memset(r->rcv_buffer, 0, sizeof(r->rcv_buffer));
+	r->rcv_buffer = NULL;
 	r->max_rcv_buffer = WINDOW_SIZE;
+	r->rcv_buffer_space = WINDOW_SIZE;
 	r->last_pkt_read = -1;
 	r->next_pkt_expected = -1;
 	r->last_pkt_received = -1;
@@ -111,11 +115,12 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 
 /* helper function to free send/rcv buffer memory */
-void destroy_buf(pbuf_t** buf, int len) {
-	for(int i = 0; i < len; i++) {
-		free(buf[i]->data);
-		free(buf[i]);
+void destroy_buf(pbuf_t *pbuf) {
+	if(pbuf->next != NULL) {
+		destroy_buf(pbuf->next);
 	}
+	free(pbuf->data);
+	free(pbuf);
 }
 
 
@@ -130,10 +135,10 @@ void rel_destroy (rel_t *r)
 	conn_destroy(r->c);
 
 	/* free send buffer */
-	destroy_buf(r->send_buffer, sizeof(r->send_buffer));
+	destroy_buf(r->send_buffer);
 
 	/* free receive buffers */
-	destroy_buf(r->rcv_buffer, sizeof(r->rcv_buffer));
+	destroy_buf(r->rcv_buffer);
 
 	/* free reliable protocol struct */
 	free(r);
