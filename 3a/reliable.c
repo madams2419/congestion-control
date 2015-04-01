@@ -32,12 +32,14 @@ struct reliable_state
 
 	conn_t *c;          /* This is the connection object */
 
-	pbuf_t *send_buffer[WINDOW_SIZE];
+	pbuf_t *send_buffer;
+	int max_send_buffer;
 	int last_pkt_acked;
 	int last_pkt_sent;
 	int last_pkt_written;
 
-	pbuf_t *rcv_buffer[WINDOW_SIZE];
+	pbuf_t *rcv_buffer;
+	int max_rcv_buffer;
 	int last_pkt_read;
 	int next_pkt_expected;
 	int last_pkt_received;
@@ -45,6 +47,9 @@ struct reliable_state
 
 struct packet_buf
 {
+	pbuf_t* next;
+	pbuf_t* prev;
+	int seqno;
 	int len;
 	char* data;
 };
@@ -82,6 +87,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* initialize send side */
 	memset(r->send_buffer, 0, sizeof(r->send_buffer));
+	r->max_send_buffer = WINDOW_SIZE;
 	r->last_pkt_acked = -1;
 	r->last_pkt_sent = -1;
 	r->last_pkt_written = -1;
@@ -95,6 +101,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* initialize receive side */
 	memset(r->rcv_buffer, 0, sizeof(r->rcv_buffer));
+	r->max_rcv_buffer = WINDOW_SIZE;
 	r->last_pkt_read = -1;
 	r->next_pkt_expected = -1;
 	r->last_pkt_received = -1;
@@ -122,17 +129,11 @@ void rel_destroy (rel_t *r)
 	/* free connection struct */
 	conn_destroy(r->c);
 
-	/* free send buffers */
-	for(int i = 0; i < sizeof(r->send_buffer); i++) {
-		free(r->send_buffer[i]);
-	}
-	//TODO might have to free send_buffer here
+	/* free send buffer */
+	destroy_buf(r->send_buffer, sizeof(r->send_buffer));
 
 	/* free receive buffers */
 	destroy_buf(r->rcv_buffer, sizeof(r->rcv_buffer));
-
-	/* free send buffer */
-	destroy_buf(r->send_buffer, sizeof(r->send_buffer));
 
 	/* free reliable protocol struct */
 	free(r);
@@ -156,16 +157,13 @@ void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 	/* update last byte acked regardless of packet type */
 	r->last_pkt_acked = pkt->ackno - 1;
 
-	/* process ack packet */
-	if(pkt->len == 8) {
-
-
-	}
-
-	/* process data packet */
-	else if(pkt->len >= 12) {
+	/* handle packet appropriately depending on type */
+	if(pkt->len == 8) { // ack packet
+	} else if(pkt->len >= 12) { // data packet
 
 		//TODO verify length here
+
+		if(last_pkt_written -
 
 		/* copy payload to receive buffer */
 		int data_len = pkt->len - 12;
@@ -181,7 +179,6 @@ void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 
 		/* attempt to output data */
 		rel_output(r);
-
 	}
 
 }
@@ -208,23 +205,22 @@ void rel_read (rel_t *s)
 	}
 }
 
-int rel_output (rel_t *r)
+void rel_output (rel_t *r)
 {
 	size_t buf_space = conn_bufspace(r->c);
 
-	if (buf_space == 0) {
-		return 0;
-	} else {
+	while (r->last_pkt_read < r->next_pkt_expected) {
+		pbuf_t *pkt = r->rcv_buffer[r->last_pkt_read];
+		size_t buf_space = conn_bufspace(r->c);
 
-		while (r->last_pkt_read < r->next_pkt_expected
-				&& buf_space > 0) {
-			// print packets
+		if(buf_space < pkt->len) {
+			r->last_pkt_received = 
+			return; //TODO change for 3b
 		}
 
-		if (buf_space > 0) {
-			// update available buf space and send ack
-		}
+		conn_output(r->c, pkt->data, pkt->len);
 	}
+
 }
 
 void rel_timer ()

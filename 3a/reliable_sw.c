@@ -14,8 +14,16 @@
 
 #include "rlib.h"
 
-#define BUF_SIZE 500
+#define WINDOW_SIZE 1 // window size in number of packets (1 for stop and wait)
 
+// Questions:
+
+// TODO
+// - check all requirements in 356 handout and Stanford handout
+
+
+
+typedef struct packet_buf pbuf_t;
 
 struct reliable_state
 {
@@ -24,28 +32,24 @@ struct reliable_state
 
 	conn_t *c;          /* This is the connection object */
 
-	int effective_window;
-	int advertised_window;
+	pbuf_t *send_buffer[WINDOW_SIZE];
+	int last_pkt_acked;
+	int last_pkt_sent;
+	int last_pkt_written;
 
-	char* send_buffer;
-	char* last_byte_acked;
-	char* last_byte_sent;
-	char* last_byte_written;
-	int send_buf_space;
-	int max_send_buffer;
-
-	char* rcv_buffer;
-	char* last_byte_read;
-	char* next_byte_expected;
-	char* last_byte_received;
-	int rcv_buf_space;
-	int max_rcv_buffer;
+	pbuf_t *rcv_buffer[WINDOW_SIZE];
+	int last_pkt_read;
+	int next_pkt_expected;
+	int last_pkt_received;
 };
 
+struct packet_buf
+{
+	int len;
+	char* data;
+};
 
 rel_t *rel_list;
-int cur_effective_window;
-
 
 /* Creates a new reliable protocol session, returns NULL on failure.
  * Exactly one of c and ss should be NULL.  (ss is NULL when called
@@ -55,7 +59,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 {
 	/* allocate and zero memory for reliable struct */
 	rel_t *r = xmalloc(sizeof(*r));
-	memset (r, 0, sizeof(*r));
+	memset(r, 0, sizeof(*r));
 
 	/* create connection struct if it does not exist */
 	if (!c)
@@ -76,24 +80,35 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 		rel_list->prev = &r->next;
 	rel_list = r;
 
-	/* set initial effective window */
-	r->effective_window = BUF_SIZE;
-
 	/* initialize send side */
-	r->send_buf_space = BUF_SIZE;
-	r->send_buffer = xmalloc(BUF_SIZE);
-	r->last_byte_acked = r->send_buffer;
-	r->last_byte_sent = r->send_buffer;
-	r->last_byte_written = r->send_buffer;
+	memset(r->send_buffer, 0, sizeof(r->send_buffer));
+	r->last_pkt_acked = -1;
+	r->last_pkt_sent = -1;
+	r->last_pkt_written = -1;
+
+	/* debug shit */
+	printf("Send buffer size (from struct): %lu\n", sizeof(r->send_buffer)); //DEBUG
+	printf("address of send_buffer      : %d\n", &r->send_buffer);
+	printf("address of send_buffer[0]   : %d\n", &r->send_buffer[0]);
+	printf("address of send_buffer[1]   : %d\n", &r->send_buffer[1]);
+	printf("address of last_pkt_acked   : %d\n", &r->last_pkt_acked);
 
 	/* initialize receive side */
-	r->rcv_buf_space = BUF_SIZE;
-	r->rcv_buffer = xmalloc(BUF_SIZE);
-	r->last_byte_read = r->rcv_buffer;
-	r->next_byte_expected = r->rcv_buffer;
-	r->last_byte_received = r->rcv_buffer;
+	memset(r->rcv_buffer, 0, sizeof(r->rcv_buffer));
+	r->last_pkt_read = -1;
+	r->next_pkt_expected = -1;
+	r->last_pkt_received = -1;
 
 	return r;
+}
+
+
+/* helper function to free send/rcv buffer memory */
+void destroy_buf(pbuf_t** buf, int len) {
+	for(int i = 0; i < len; i++) {
+		free(buf[i]->data);
+		free(buf[i]);
+	}
 }
 
 
@@ -107,11 +122,13 @@ void rel_destroy (rel_t *r)
 	/* free connection struct */
 	conn_destroy(r->c);
 
-	/* free send and receive buffers */
-	free(r->send_buffer);
-	free(r->rcv_buffer);
+	/* free send buffer */
+	destroy_buf(r->send_buffer, sizeof(r->send_buffer));
 
-	/* free connection struct */
+	/* free receive buffers */
+	destroy_buf(r->rcv_buffer, sizeof(r->rcv_buffer));
+
+	/* free reliable protocol struct */
 	free(r);
 }
 
@@ -131,24 +148,28 @@ void rel_demux (const struct config_common *cc, const struct sockaddr_storage *s
 void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 {
 	/* update last byte acked regardless of packet type */
-	r->last_byte_acked = pkt->ackno - 1; //TODO
+	r->last_pkt_acked = pkt->ackno - 1;
 
-	/* process data packet */
-	if(pkt->len >= 12) {
+	/* handle packet appropriately depending on type */
+	if(pkt->len == 8) { // ack packet
+	} else if(pkt->len >= 12) { // data packet
+
+		//TODO verify length here
+
 		/* copy payload to receive buffer */
 		int data_len = pkt->len - 12;
-		memcpy(pkt->data, r->next_byte_expected, data_len);
+		memcpy(pkt->data, r->rcv_buffer[pkt->seqno], data_len);
 
-		/* update receive state */
-		r->rcv_buf_space -= data_len; //TODO all this shit is wrong
-		r->last_byte_received += data_len;
-		r->next_byte_expected += data_len;
+		/* update last packet received */
+		r->last_pkt_received = pkt->seqno;
 
-		/* update effective window */
-		r->effective_window = pkt->advertised_window - (r->last_byte_sent - r->last_byte_acked);
+		/* update next packet expected */
+		if(pkt->seqno == r->next_pkt_expected) {
+			r->next_pkt_expected++;
+		}
 
-		/* update and send advertise window */
-		r->advertised_window = r->max_rcv_buffer - ((r->next_byte_expected - 1) - r->last_byte_read);
+		/* attempt to output data */
+		rel_output(r);
 	}
 
 }
@@ -159,12 +180,12 @@ void rel_read (rel_t *s)
 	int rd_len;
 
 	while (s->send_buf_space > 0) {
-		rd_len = conn_input(s->c, s->last_byte_written + 1, s->send_buf_space);
+		rd_len = conn_input(s->c, s->last_pkt_written + 1, s->send_buf_space);
 
 		if (rd_len == 0) {
 			return;
 		} else if (rd_len > 0) {
-			s->last_byte_written += rd_len;
+			s->last_pkt_written += rd_len;
 			/* TODO send packet */
 			// int send_len = conn_sendpkt(s->c, pkt, sizeof(pkt))
 		} else {
@@ -179,19 +200,18 @@ void rel_output (rel_t *r)
 {
 	size_t buf_space = conn_bufspace(r->c);
 
-	if (buf_space == 0) {
-		return;
-	} else {
+	while (r->last_pkt_read < r->next_pkt_expected) {
+		pbuf_t *pkt = r->rcv_buffer[r->last_pkt_read];
+		size_t buf_space = conn_bufspace(r->c);
 
-		while (r->last_byte_read < r->last_byte_received
-				&& buf_space > 0) {
-			// print packets
+		if(buf_space < pkt->len) {
+			r->last_pkt_received = 
+			return; //TODO change for 3b
 		}
 
-		if (buf_space > 0) {
-			// update available buf space and send ack
-		}
+		conn_output(r->c, pkt->data, pkt->len);
 	}
+
 }
 
 void rel_timer ()
