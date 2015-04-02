@@ -65,7 +65,6 @@ struct reliable_state
 	int rcvd_remote_eof;
 	int rcvd_local_eof;
 
-	//TODO conver to to contiguous buffer
 	pbuf_t **send_buffer;
 	int max_send_buffer;
 	int last_pkt_acked;
@@ -76,6 +75,7 @@ struct reliable_state
 	//TODO what should size of receive buffer be
 	pbuf_t **rcv_buffer;
 	int max_rcv_buffer;
+	int num_dpkts_rcvd;
 	int last_pkt_read;
 	int lprd_buf_index;
 	int next_pkt_expected;
@@ -141,6 +141,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	/* initialize receive side */
 	r->max_rcv_buffer = RCV_BUF_SIZE; //TODO what should this be
 	r->rcv_buffer = xmalloc(r->max_rcv_buffer * sizeof(*r->rcv_buffer));
+	r->num_dpkts_rcvd = 0;
 	r->last_pkt_read = -1;
 	r->lprd_buf_index = -1;
 	r->next_pkt_expected = -1;
@@ -229,7 +230,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		else {
 
 			/* return if there is insufficient space in the buffer */
-			int space_required = (r->last_pkt_received != -1) ? pkt->seqno - r->last_pkt_received : 1;
+			int space_required = (r->last_pkt_received == -1) ? 1 : pkt->seqno - r->last_pkt_received;
 			if(space_required > RCV_BUF_SPACE(r)) {
 				return;
 			}
@@ -244,12 +245,23 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 			/* update last packet received */
 			r->last_pkt_received = pkt->seqno;
-			r->lprd_buf_index = get_rbuf_index(pkt->seqno, r);
 
 			/* update next packet expected */
 			if(pkt->seqno == r->next_pkt_expected) {
 				r->next_pkt_expected++;
 			}
+
+			/* handle case of first data packet */
+			if(r->num_dpkts_rcvd == 0) {
+				r->next_pkt_expected = pkt->seqno + 1;
+				r->last_pkt_read = pkt->seqno - 1;
+			}
+
+			/* increment num data packets received */
+			r->num_dpkts_rcvd++;
+
+			/* output packet */
+			rel_output(r);
 
 		}
 
@@ -377,11 +389,6 @@ void destroy_srbuf(pbuf_t **srbuf, int len) {
 
 /* get send or receive buffer index from sequence number target and start index */
 int get_buf_index(int sq_start, int sq_target, int buf_start, int buf_length) {
-	/* return 0 index if sequence start has not been initialized */
-	if(buf_start < 0) {
-		return 0;
-	}
-
 	int offset = sq_target - sq_start;
 
 	/* validate offset */
@@ -396,13 +403,13 @@ int get_buf_index(int sq_start, int sq_target, int buf_start, int buf_length) {
 
 /* get send buffer index from sequence number */
 int get_sbuf_index(int seqno, rel_t *r) {
-	return get_buf_index(r->last_pkt_acked, seqno, r->lpa_buf_index, r->max_send_buffer);
+	return get_buf_index(r->last_pkt_acked + 1, seqno, r->lpa_buf_index, r->max_send_buffer);
 }
 
 
 /* get receive index from sequence number */
 int get_rbuf_index(int seqno, rel_t *r) {
-	return get_buf_index(r->last_pkt_read, seqno, r->lprd_buf_index, r->max_rcv_buffer);
+	return get_buf_index(r->last_pkt_read + 1, seqno, r->lprd_buf_index, r->max_rcv_buffer);
 }
 
 
