@@ -17,7 +17,7 @@
 #define ACK_LEN 8
 #define DATA_HDR_LEN 12
 #define MAX_PACKET_SIZE 500
-#define WINDOW_SIZE 1 // window size in number of packets (1 for stop and wait)
+#define RCV_BUF_SIZE 1
 
 #define RCV_BUF_SPACE(r) r->max_rcv_buffer - (r->last_pkt_received - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
@@ -77,7 +77,7 @@ struct reliable_state
 	pbuf_t **rcv_buffer;
 	int max_rcv_buffer;
 	int last_pkt_read;
-	int lpr_buf_index;
+	int lprd_buf_index;
 	int next_pkt_expected;
 	int last_pkt_received;
 };
@@ -139,10 +139,10 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->last_pkt_written = -1;
 
 	/* initialize receive side */
-	r->max_rcv_buffer = WINDOW_SIZE; //TODO what should this be
+	r->max_rcv_buffer = RCV_BUF_SIZE; //TODO what should this be
 	r->rcv_buffer = xmalloc(r->max_rcv_buffer * sizeof(*r->rcv_buffer));
 	r->last_pkt_read = -1;
-	r->lpr_buf_index = 0;
+	r->lprd_buf_index = 0;
 	r->next_pkt_expected = -1;
 	r->last_pkt_received = -1;
 
@@ -229,7 +229,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		else {
 
 			/* return if there is insufficient space in the buffer */
-			int space_required = pkt->seqno - r->last_pkt_received;
+			int space_required = (r->last_pkt_received != -1) ? pkt->seqno - r->last_pkt_received : 1;
 			if(space_required > RCV_BUF_SPACE(r)) {
 				return;
 			}
@@ -244,7 +244,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 			/* update last packet received */
 			r->last_pkt_received = pkt->seqno;
-			r->lpr_buf_index = get_rbuf_index(pkt->seqno, r);
+			r->lprd_buf_index = get_rbuf_index(pkt->seqno, r);
 
 			/* update next packet expected */
 			if(pkt->seqno == r->next_pkt_expected) {
@@ -397,7 +397,7 @@ int get_sbuf_index(int seqno, rel_t *r) {
 
 /* get receive index from sequence number */
 int get_rbuf_index(int seqno, rel_t *r) {
-	return get_buf_index(r->last_pkt_read, seqno, r->lpr_buf_index, r->max_rcv_buffer);
+	return get_buf_index(r->last_pkt_read, seqno, r->lprd_buf_index, r->max_rcv_buffer);
 }
 
 
