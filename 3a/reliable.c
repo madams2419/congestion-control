@@ -244,6 +244,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 			/* update last packet received */
 			r->last_pkt_received = pkt->seqno;
+			r->lpr_buf_index = get_rbuf_index(pkt->seqno, r);
 
 			/* update next packet expected */
 			if(pkt->seqno == r->next_pkt_expected) {
