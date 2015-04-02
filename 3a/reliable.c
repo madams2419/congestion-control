@@ -134,7 +134,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->max_send_buffer = r->window;
 	create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = -1;
-	r->lpa_buf_index = -1;
+	r->lpa_buf_index = 0;
 	r->last_pkt_sent = -1;
 	r->last_pkt_written = -1;
 
@@ -143,7 +143,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->rcv_buffer = xmalloc(r->max_rcv_buffer * sizeof(*r->rcv_buffer));
 	r->num_dpkts_rcvd = 0;
 	r->last_pkt_read = -1;
-	r->lprd_buf_index = -1;
+	r->lprd_buf_index = 0;
 	r->next_pkt_expected = -1;
 	r->last_pkt_received = -1;
 
@@ -336,7 +336,7 @@ void rel_output (rel_t *r)
 		packet_t *ack = xmalloc(ACK_LEN);
 		ack->cksum = 0;
 		ack->len = ACK_LEN;
-		ack->ackno = r->last_pkt_read;
+		ack->ackno = r->next_pkt_expected;
 		ack->cksum = cksum(ack, ack->len);
 		conn_sendpkt(r->c, ack, ack->len);
 	}
