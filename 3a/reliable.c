@@ -24,7 +24,7 @@
 
 // Questions:
 // - having seqno refer to packets instead of bytes really complicates things...do we have to do this? Is there anything internal to the library that demands it be packets?
-// - do we have to conn_output partial packets or can we wait until there is space for an entier packet?
+// - do we have to conn_output partial packets or can we wait until there is space for an entire packet?
 // - should we call rel_output when packets are recieved or let the program call it
 // - do we send packets as soon as we read them or do we use some algo to fill up a packet first?
 
@@ -116,11 +116,11 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->last_pkt_written = -1;
 
 	/* debug shit */
-	printf("Send buffer size (from struct): %lu\n", sizeof(r->send_buffer)); //DEBUG
-	printf("address of send_buffer      : %d\n", &r->send_buffer);
-	printf("address of send_buffer[0]   : %d\n", &r->send_buffer[0]);
-	printf("address of send_buffer[1]   : %d\n", &r->send_buffer[1]);
-	printf("address of last_pkt_acked   : %d\n", &r->last_pkt_acked);
+	fprintf(stderr, "Send buffer size (from struct): %lu\n", sizeof(r->send_buffer)); //DEBUG
+	fprintf(stderr, "address of send_buffer      : %d\n", &r->send_buffer);
+	fprintf(stderr, "address of send_buffer[0]   : %d\n", &r->send_buffer[0]);
+	fprintf(stderr, "address of send_buffer[1]   : %d\n", &r->send_buffer[1]);
+	fprintf(stderr, "address of last_pkt_acked   : %d\n", &r->last_pkt_acked);
 
 	/* initialize receive side */
 	memset(r->rcv_buffer, 0, sizeof(r->rcv_buffer));
@@ -142,7 +142,8 @@ void destroy_pbuf(pbuf_t* pbuf) {
 
 /* free send or receive buffer memory */
 void destroy_buf(pbuf_t** buf, int len) {
-	for(int i = 0; i < len; i++) {
+	int i;
+	for(i = 0; i < len; i++) {
 		destroy_pbuf(buf[i]);
 	}
 }
@@ -217,7 +218,7 @@ void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 	uint16_t cks = pkt->cksum;
 	pkt->cksum = 0;
 	if(cks != cksum(pkt, pkt->len)) {
-		printf("Checksum failed!\n");
+		fprintf(stderr, "Checksum failed!\n");
 		return;
 	}
 
@@ -277,7 +278,7 @@ void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 
 void send_packet(pbuf_t *pbuf, rel_t *s) {
 	/* construct packet */
-	printf("Size of packet_t: %lu\n", sizeof(packet_t)); //DEBUG
+	fprintf(stderr, "Size of packet_t: %lu\n", sizeof(packet_t)); //DEBUG
 	packet_t *pkt = xmalloc(sizeof(packet_t));
 	pkt->cksum = 0;
 	pkt->len = pbuf->len + DATA_HDR_LEN;
@@ -291,7 +292,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 		s->last_pkt_sent++;
 		clock_gettime(CLOCK_MONOTONIC, &pbuf->send_time);
 	} else {
-		printf("Packet sending failed!\n");
+		fprintf(stderr, "Packet sending failed!\n");
 	}
 }
 
@@ -389,7 +390,8 @@ void rel_timer ()
 	// TODO loop through all connections
 	rel_t *r = rel_list;
 	struct timespec *tbuf = xmalloc(sizeof(struct timespec));
-	for(int sn = r->last_pkt_acked + 1; sn < r->last_pkt_sent; sn++) {
+	int sn;
+	for(sn = r->last_pkt_acked + 1; sn < r->last_pkt_sent; sn++) {
 		pbuf_t *temp = sbuf_from_seqno(sn, r);
 		clock_gettime(CLOCK_MONOTONIC, tbuf);
 		double t_elapsed = difftime(temp->send_time.tv_sec, tbuf->tv_sec);
