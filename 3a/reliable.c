@@ -415,9 +415,9 @@ void rel_timer ()
 	for(sn = r->last_pkt_acked + 1; sn < r->last_pkt_sent; sn++) {
 		pbuf_t *sbuf = sbuf_from_seqno(sn, r);
 		clock_gettime(CLOCK_MONOTONIC, tbuf);
-		double t_elapsed = difftime(sbuf->send_time.tv_sec, tbuf->tv_sec);
+		double t_elapsed_ms = 1000 * difftime(sbuf->send_time.tv_sec, tbuf->tv_sec);
 
-		if(t_elapsed > r->timeout) {
+		if(t_elapsed_ms > r->timeout) {
 			send_packet(sbuf, r);
 		}
 
