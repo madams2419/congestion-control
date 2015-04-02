@@ -36,10 +36,27 @@
 
 // TODO
 // - check all requirements in 356 handout and Stanford handout
+// - move helper declarations to header file
 
 
-
+struct packet_buf
+{
+	int seqno;
+	int len;
+	char* data;
+	struct timespec send_time;
+};
 typedef struct packet_buf pbuf_t;
+
+void create_srbuf(pbuf_t **srbuf, int len);
+void destroy_srbuf(pbuf_t **srbuf, int len);
+int get_buf_offset(int sq_start, int sq_target, int buf_start, int buf_length);
+pbuf_t *rbuf_from_seqno(int seqno, rel_t *r);
+pbuf_t *sbuf_from_seqno(int seqno, rel_t *r);
+void handle_connection_close(rel_t *r);
+void send_packet(pbuf_t *pbuf, rel_t *s);
+void send_next_packet(rel_t *s);
+
 
 struct reliable_state
 {
@@ -54,7 +71,7 @@ struct reliable_state
 	int rcvd_local_eof;
 
 	//TODO conver to to contiguous buffer
-	pbuf_t *send_buffer[WINDOW_SIZE]; //TODO change this to variable length based on window
+	pbuf_t **send_buffer;
 	int max_send_buffer;
 	int last_pkt_acked;
 	int lpa_buf_offset;
@@ -62,20 +79,12 @@ struct reliable_state
 	int last_pkt_written;
 
 	//TODO what should size of receive buffer be
-	pbuf_t *rcv_buffer[WINDOW_SIZE];
+	pbuf_t **rcv_buffer;
 	int max_rcv_buffer;
 	int last_pkt_read;
 	int lpr_buf_offset;
 	int next_pkt_expected;
 	int last_pkt_received;
-};
-
-struct packet_buf
-{
-	int seqno;
-	int len;
-	char* data;
-	struct timespec send_time;
 };
 
 rel_t *rel_list;
@@ -118,38 +127,22 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->rcvd_local_eof = 0;
 
 	/* initialize send side */
-	memset(r->send_buffer, 0, sizeof(r->send_buffer));
 	r->max_send_buffer = r->window;
+	create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = -1;
 	r->lpa_buf_offset = 0;
 	r->last_pkt_sent = -1;
 	r->last_pkt_written = -1;
 
 	/* initialize receive side */
-	memset(r->rcv_buffer, 0, sizeof(r->rcv_buffer));
 	r->max_rcv_buffer = WINDOW_SIZE; //TODO what should this be
+	r->rcv_buffer = xmalloc(r->max_rcv_buffer * sizeof(*r->rcv_buffer));
 	r->last_pkt_read = -1;
 	r->lpr_buf_offset = 0;
 	r->next_pkt_expected = -1;
 	r->last_pkt_received = -1;
 
 	return r;
-}
-
-
-/* free packet buffer memory */
-void destroy_pbuf(pbuf_t* pbuf) {
-	free(pbuf->data);
-	free(pbuf);
-}
-
-
-/* free send or receive buffer memory */
-void destroy_buf(pbuf_t** buf, int len) {
-	int i;
-	for(i = 0; i < len; i++) {
-		destroy_pbuf(buf[i]);
-	}
 }
 
 
@@ -164,10 +157,10 @@ void rel_destroy(rel_t *r)
 	conn_destroy(r->c);
 
 	/* free send buffer */
-	destroy_buf(r->send_buffer, sizeof(r->send_buffer)); //TODO proper send buffer size
+	destroy_srbuf(r->send_buffer, sizeof(r->send_buffer)); //TODO proper send buffer size
 
 	/* free receive buffers */
-	destroy_buf(r->rcv_buffer, sizeof(r->rcv_buffer));
+	destroy_srbuf(r->rcv_buffer, sizeof(r->rcv_buffer));
 
 	/* free reliable protocol struct */
 	free(r);
@@ -184,43 +177,6 @@ void rel_destroy(rel_t *r)
  */
 void rel_demux (const struct config_common *cc, const struct sockaddr_storage *ss, packet_t *pkt, size_t len)
 {
-}
-
-
-/* map sequence number space to buffer space */
-int get_buf_offset(int sq_start, int sq_target, int buf_start, int buf_length) {
-	int offset = sq_target - sq_start;
-
-	/* validate offset */
-	if(offset < 0 || offset > buf_length) {
-		fprintf(stderr, "Invalid offset.\n");
-		return -1;
-	}
-
-	return (buf_start + offset) % buf_length;
-}
-
-
-/* get receive buffer from sequence number */
-pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
-	int buf_offset = get_buf_offset(r->last_pkt_acked, seqno, r->lpa_buf_offset, r->max_rcv_buffer);
-	return r->rcv_buffer[buf_offset];
-}
-
-/* get send buffer from sequence number */
-pbuf_t *sbuf_from_seqno(int seqno, rel_t *r) {
-	int buf_offset = get_buf_offset(r->last_pkt_read, seqno, r->lpr_buf_offset, r->max_send_buffer);
-	return r->rcv_buffer[buf_offset];
-}
-
-
-/* checks if connection is closed and calls rel_destroy if so */
-void handle_connection_close(rel_t *r) {
-	if(r->rcvd_local_eof == 1
-			&& r->rcvd_remote_eof  == 1
-			&& r->last_pkt_acked == r->last_pkt_written) {
-		rel_destroy(r);
-	}
 }
 
 
@@ -297,40 +253,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 }
 
 
-void send_packet(pbuf_t *pbuf, rel_t *s) {
-	/* construct packet */
-	fprintf(stderr, "Size of packet_t: %lu\n", sizeof(packet_t)); //DEBUG
-	packet_t *pkt = xmalloc(sizeof(packet_t));
-	pkt->cksum = 0;
-	pkt->len = pbuf->len + DATA_HDR_LEN;
-	pkt->ackno = s->next_pkt_expected;
-	pkt->seqno = pbuf->seqno;
-	memcpy(pbuf->data, pkt->data, pbuf->len);
-	pkt->cksum = cksum(pkt, pkt->len);
-
-	/* send packet */
-	if(conn_sendpkt(s->c, pkt, pkt->len) > 0) {
-		s->last_pkt_sent++;
-		clock_gettime(CLOCK_MONOTONIC, &pbuf->send_time);
-	} else {
-		fprintf(stderr, "Packet sending failed!\n");
-	}
-}
-
-
-void send_next_packet(rel_t *s) {
-	if(s->last_pkt_written == s->last_pkt_sent) {
-		return;
-	}
-
-	/* retrieve buffer to send */
-	pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_sent + 1, s);
-
-	/* send packet */
-	send_packet(sbuf, s);
-}
-
-
 void rel_read(rel_t *s)
 {
 	int rd_len;
@@ -373,6 +295,7 @@ void rel_read(rel_t *s)
 	}
 }
 
+
 void rel_output (rel_t *r)
 {
 	while (r->last_pkt_read < (r->next_pkt_expected - 1)) {
@@ -388,9 +311,6 @@ void rel_output (rel_t *r)
 		if(conn_output(r->c, rbuf->data, rbuf->len) <= 0) {
 			return;
 		}
-
-		/* free buffer */
-		destroy_pbuf(rbuf);
 
 		/* update last packet read */
 		r->last_pkt_read++;
@@ -422,4 +342,102 @@ void rel_timer ()
 		}
 
 	}
+}
+
+
+////////////////////////////////////////////////////
+// HELPER FUNCTIONS
+////////////////////////////////////////////////////
+
+
+/* create send receive buffer */
+void create_srbuf(pbuf_t **srbuf, int len) {
+	srbuf = xmalloc(len * sizeof(*srbuf));
+	int i;
+	for(i = 0; i < len; i++) {
+		srbuf[i] = xmalloc(sizeof(pbuf_t));
+	}
+}
+
+
+/* free send receive buffer memory */
+void destroy_srbuf(pbuf_t **srbuf, int len) {
+	int i;
+	for(i = 0; i < len; i++) {
+		free(srbuf[i]->data);
+		free(srbuf[i]);
+	}
+}
+
+
+/* map sequence number space to buffer space */
+int get_buf_offset(int sq_start, int sq_target, int buf_start, int buf_length) {
+	int offset = sq_target - sq_start;
+
+	/* validate offset */
+	if(offset < 0 || offset > buf_length) {
+		fprintf(stderr, "Invalid offset.\n");
+		return -1;
+	}
+
+	return (buf_start + offset) % buf_length;
+}
+
+
+/* get receive buffer from sequence number */
+pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
+	int buf_offset = get_buf_offset(r->last_pkt_acked, seqno, r->lpa_buf_offset, r->max_rcv_buffer);
+	return r->rcv_buffer[buf_offset];
+}
+
+/* get send buffer from sequence number */
+pbuf_t *sbuf_from_seqno(int seqno, rel_t *r) {
+	int buf_offset = get_buf_offset(r->last_pkt_read, seqno, r->lpr_buf_offset, r->max_send_buffer);
+	return r->rcv_buffer[buf_offset];
+}
+
+
+/* checks if connection is closed and calls rel_destroy if so */
+void handle_connection_close(rel_t *r) {
+	if(r->rcvd_local_eof == 1
+			&& r->rcvd_remote_eof  == 1
+			&& r->last_pkt_acked == r->last_pkt_written) {
+		rel_destroy(r);
+	}
+}
+
+
+/* send single packet */
+void send_packet(pbuf_t *pbuf, rel_t *s) {
+	/* construct packet */
+	fprintf(stderr, "Size of packet_t: %lu\n", sizeof(packet_t)); //DEBUG
+	packet_t *pkt = xmalloc(sizeof(packet_t));
+	pkt->cksum = 0;
+	pkt->len = pbuf->len + DATA_HDR_LEN;
+	pkt->ackno = s->next_pkt_expected;
+	pkt->seqno = pbuf->seqno;
+	memcpy(pbuf->data, pkt->data, pbuf->len);
+	pkt->cksum = cksum(pkt, pkt->len);
+
+	/* send packet */
+	if(conn_sendpkt(s->c, pkt, pkt->len) > 0) {
+		s->last_pkt_sent++;
+		clock_gettime(CLOCK_MONOTONIC, &pbuf->send_time);
+	} else {
+		fprintf(stderr, "Packet sending failed!\n");
+	}
+}
+
+
+/* send next packet in queue */
+void send_next_packet(rel_t *s) {
+	if(s->last_pkt_written == s->last_pkt_sent) {
+		return;
+	}
+
+	/* retrieve buffer to send */
+	pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_sent + 1, s);
+
+	/* send packet */
+	send_packet(sbuf, s);
 }
