@@ -86,7 +86,7 @@ struct reliable_state
 struct packet_buf
 {
 	int seqno;
-	int len;
+	int data_len;
 	char* data;
 	struct timespec send_time;
 };
@@ -240,9 +240,8 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			int data_len = pkt->len - DATA_HDR_LEN;
 			pbuf_t *rbuf = rbuf_from_seqno(pkt->seqno, r);
 			rbuf->seqno = pkt->seqno;
-			rbuf->len = data_len;
-			rbuf->data = xmalloc(rbuf->len);
-			memcpy(pkt->data, rbuf->data, rbuf->len);
+			rbuf->data_len = data_len;
+			memcpy(pkt->data, rbuf->data, rbuf->data_len);
 
 			/* update last packet received */
 			r->last_pkt_received = pkt->seqno;
@@ -297,9 +296,8 @@ void rel_read(rel_t *s)
 			/* copy data data into send buffer */
 			pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
 			sbuf->seqno = s->last_pkt_written + 1;
-			sbuf->len = rd_len;
-			sbuf->data = xmalloc(sbuf->len);
-			memcpy(temp, sbuf->data, sbuf->len);
+			sbuf->data_len = rd_len;
+			memcpy(temp, sbuf->data, sbuf->data_len);
 
 			/* update last packet written */
 			s->last_pkt_written++;
@@ -322,12 +320,12 @@ void rel_output (rel_t *r)
 		pbuf_t *rbuf = rbuf_from_seqno(r->last_pkt_read + 1, r);
 
 		/* return if there is insufficient space in the application buffer */
-		if(buf_space < rbuf->len) {
+		if(buf_space < rbuf->data_len) {
 			return;
 		}
 
 		/* output packet */
-		if(conn_output(r->c, rbuf->data, rbuf->len) <= 0) {
+		if(conn_output(r->c, rbuf->data, rbuf->data_len) <= 0) {
 			return;
 		}
 
@@ -437,10 +435,10 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	fprintf(stderr, "Size of packet_t: %lu\n", sizeof(packet_t)); //DEBUG
 	packet_t *pkt = xmalloc(sizeof(packet_t));
 	pkt->cksum = 0;
-	pkt->len = pbuf->len + DATA_HDR_LEN;
+	pkt->len = pbuf->data_len + DATA_HDR_LEN;
 	pkt->ackno = s->next_pkt_expected;
 	pkt->seqno = pbuf->seqno;
-	memcpy(pbuf->data, pkt->data, pbuf->len);
+	memcpy(pbuf->data, pkt->data, pbuf->data_len);
 	pkt->cksum = cksum(pkt, pkt->len);
 
 	/* send packet */
