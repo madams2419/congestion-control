@@ -51,6 +51,7 @@ pbuf_t *sbuf_from_seqno(int seqno, rel_t *r);
 void handle_connection_close(rel_t *r);
 void send_packet(pbuf_t *pbuf, rel_t *s);
 void send_next_packet(rel_t *s);
+void send_ack(rel_t *s);
 
 
 struct reliable_state
@@ -263,10 +264,11 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			/* output packet */
 			rel_output(r);
 
+			/* send ack */
+			send_ack(r);
+
 		}
-
 	}
-
 }
 
 
@@ -329,16 +331,10 @@ void rel_output (rel_t *r)
 			return;
 		}
 
-		/* update last packet read */
+		/* update last packet read seqno and buffer index */
 		r->last_pkt_read++;
+		r->lprd_buf_index = get_rbuf_index(r->last_pkt_read, r);
 
-		/* send ack */ //TODO move to recvpkt
-		packet_t *ack = xmalloc(ACK_LEN);
-		ack->cksum = 0;
-		ack->len = ACK_LEN;
-		ack->ackno = r->next_pkt_expected;
-		ack->cksum = cksum(ack, ack->len);
-		conn_sendpkt(r->c, ack, ack->len);
 	}
 
 }
@@ -468,4 +464,14 @@ void send_next_packet(rel_t *s) {
 
 	/* send packet */
 	send_packet(sbuf, s);
+}
+
+/* send ack packet */
+void send_ack(rel_t *s) {
+	packet_t *ack = xmalloc(ACK_LEN);
+	ack->cksum = 0;
+	ack->len = ACK_LEN;
+	ack->ackno = s->next_pkt_expected;
+	ack->cksum = cksum(ack, ack->len);
+	conn_sendpkt(s->c, ack, ack->len);
 }
