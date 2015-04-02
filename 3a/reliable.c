@@ -39,18 +39,13 @@
 // - move helper declarations to header file
 
 
-struct packet_buf
-{
-	int seqno;
-	int len;
-	char* data;
-	struct timespec send_time;
-};
 typedef struct packet_buf pbuf_t;
 
 void create_srbuf(pbuf_t **srbuf, int len);
 void destroy_srbuf(pbuf_t **srbuf, int len);
-int get_buf_offset(int sq_start, int sq_target, int buf_start, int buf_length);
+int get_buf_index(int sq_start, int sq_target, int buf_start, int buf_length);
+int get_rbuf_index(int seqno, rel_t *r);
+int get_sbuf_index(int seqno, rel_t *r);
 pbuf_t *rbuf_from_seqno(int seqno, rel_t *r);
 pbuf_t *sbuf_from_seqno(int seqno, rel_t *r);
 void handle_connection_close(rel_t *r);
@@ -74,7 +69,7 @@ struct reliable_state
 	pbuf_t **send_buffer;
 	int max_send_buffer;
 	int last_pkt_acked;
-	int lpa_buf_offset;
+	int lpa_buf_index;
 	int last_pkt_sent;
 	int last_pkt_written;
 
@@ -82,10 +77,19 @@ struct reliable_state
 	pbuf_t **rcv_buffer;
 	int max_rcv_buffer;
 	int last_pkt_read;
-	int lpr_buf_offset;
+	int lpr_buf_index;
 	int next_pkt_expected;
 	int last_pkt_received;
 };
+
+struct packet_buf
+{
+	int seqno;
+	int len;
+	char* data;
+	struct timespec send_time;
+};
+
 
 rel_t *rel_list;
 
@@ -130,7 +134,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->max_send_buffer = r->window;
 	create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = -1;
-	r->lpa_buf_offset = 0;
+	r->lpa_buf_index = 0;
 	r->last_pkt_sent = -1;
 	r->last_pkt_written = -1;
 
@@ -138,7 +142,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->max_rcv_buffer = WINDOW_SIZE; //TODO what should this be
 	r->rcv_buffer = xmalloc(r->max_rcv_buffer * sizeof(*r->rcv_buffer));
 	r->last_pkt_read = -1;
-	r->lpr_buf_offset = 0;
+	r->lpr_buf_index = 0;
 	r->next_pkt_expected = -1;
 	r->last_pkt_received = -1;
 
@@ -198,8 +202,8 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 	/* update last byte acked regardless of packet type */
 	if(pkt->ackno - 1 > r->last_pkt_acked) {
-		//TODO maybe remove r->last_pkt_acked here
 		r->last_pkt_acked = pkt->ackno - 1;
+		r->lpa_buf_index = get_sbuf_index(r->last_pkt_acked, r);
 	}
 
 	/* handle ack packet */
@@ -370,8 +374,8 @@ void destroy_srbuf(pbuf_t **srbuf, int len) {
 }
 
 
-/* map sequence number space to buffer space */
-int get_buf_offset(int sq_start, int sq_target, int buf_start, int buf_length) {
+/* get send or receive buffer index from sequence number target and start index */
+int get_buf_index(int sq_start, int sq_target, int buf_start, int buf_length) {
 	int offset = sq_target - sq_start;
 
 	/* validate offset */
@@ -384,16 +388,27 @@ int get_buf_offset(int sq_start, int sq_target, int buf_start, int buf_length) {
 }
 
 
-/* get receive buffer from sequence number */
-pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
-	int buf_offset = get_buf_offset(r->last_pkt_acked, seqno, r->lpa_buf_offset, r->max_rcv_buffer);
-	return r->rcv_buffer[buf_offset];
+/* get send buffer index from sequence number */
+int get_sbuf_index(int seqno, rel_t *r) {
+	return get_buf_index(r->last_pkt_acked, seqno, r->lpa_buf_index, r->max_send_buffer);
 }
+
+
+/* get receive index from sequence number */
+int get_rbuf_index(int seqno, rel_t *r) {
+	return get_buf_index(r->last_pkt_read, seqno, r->lpr_buf_index, r->max_rcv_buffer);
+}
+
 
 /* get send buffer from sequence number */
 pbuf_t *sbuf_from_seqno(int seqno, rel_t *r) {
-	int buf_offset = get_buf_offset(r->last_pkt_read, seqno, r->lpr_buf_offset, r->max_send_buffer);
-	return r->rcv_buffer[buf_offset];
+	return r->send_buffer[get_rbuf_index(seqno, r)];
+}
+
+
+/* get receive buffer from sequence number */
+pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
+	return r->rcv_buffer[get_rbuf_index(seqno, r)];
 }
 
 
