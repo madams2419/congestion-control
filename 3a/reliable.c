@@ -17,24 +17,16 @@
 #define ACK_LEN 8
 #define DATA_HDR_LEN 12
 #define MAX_PACKET_SIZE 500
-#define RCV_BUF_SIZE 1
+#define RCV_BUF_SIZE 10
 
 #define RCV_BUF_SPACE(r) r->max_rcv_buffer - (r->last_pkt_received - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
 
 // Questions:
-// - do we ACK packet after it's been outputed or buffered in TCP buffer?
-// - do we have to protect against silly window
-// - is EOF equivalent to FIN / do we have to implement the actual closing FSM
-// - do we have to do any handshake steps
-// - how to set first seqno
-// - having seqno refer to packets instead of bytes really complicates things...do we have to do this? Is there anything internal to the library that demands it be packets?
-// - do we have to conn_output partial packets or can we wait until there is space for an entire packet?
-// - should we call rel_output when packets are recieved or let the program call it
-// - do we send packets as soon as we read them or do we use some algo to fill up a packet first?
-// - how do we get max receive buffer size
 
 // TODO
+// - send intiial sending seqno to 1 (instead of 0)
+// - remove rel_output call in rel_recpkt and see if shit still works
 // - check all requirements in 356 handout and Stanford handout
 // - move helper declarations to header file
 
@@ -100,6 +92,7 @@ rel_t *rel_list;
  * rel_demux.) */
 rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct config_common *cc)
 {
+	printf("rel_create\n");
 	/* allocate and zero memory for reliable struct */
 	rel_t *r = xmalloc(sizeof(*r));
 	memset(r, 0, sizeof(*r));
@@ -141,7 +134,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* initialize receive side */
 	r->max_rcv_buffer = RCV_BUF_SIZE; //TODO what should this be
-	r->rcv_buffer = xmalloc(r->max_rcv_buffer * sizeof(*r->rcv_buffer));
+	create_srbuf(r->rcv_buffer, r->max_rcv_buffer);
 	r->num_dpkts_rcvd = 0;
 	r->last_pkt_read = -1;
 	r->lprd_buf_index = 0;
@@ -154,6 +147,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 void rel_destroy(rel_t *r)
 {
+	printf("rel_destroy\n");
 	/* reassigned linked list pointers */
 	if (r->next)
 		r->next->prev = r->prev;
@@ -188,7 +182,7 @@ void rel_demux (const struct config_common *cc, const struct sockaddr_storage *s
 
 void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 {
-
+	printf("rel_recvpkt\n");
 	/* verify packet length */
 	if(pkt->len < n) {
 		return;
@@ -273,6 +267,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 void rel_read(rel_t *s)
 {
+	printf("rel_recvpkt\n");
 	int rd_len;
 
 	//TODO protocol for determining how to structure packets
@@ -281,7 +276,7 @@ void rel_read(rel_t *s)
 	while (SEND_BUF_SPACE(s) > 0) {
 
 		/* read user data input send buffer */
-		char* temp = xmalloc(MAX_PACKET_SIZE); //TODO what should max read length be
+		char* temp = xmalloc(MAX_PACKET_SIZE);
 		rd_len = conn_input(s->c, temp, MAX_PACKET_SIZE);
 
 		/* handle EOF */
@@ -290,8 +285,13 @@ void rel_read(rel_t *s)
 			handle_connection_close(s);
 		}
 
+		/* handle no data */
+		else if(rd_len == 0) {
+			return;
+		}
+
 		/* handle data */
-		else if (rd_len > 0) {
+		else {
 
 			/* copy data data into send buffer */
 			pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
@@ -315,6 +315,7 @@ void rel_read(rel_t *s)
 
 void rel_output (rel_t *r)
 {
+	printf("rel_output\n");
 	while (r->last_pkt_read < (r->next_pkt_expected - 1)) {
 		size_t buf_space = conn_bufspace(r->c);
 		pbuf_t *rbuf = rbuf_from_seqno(r->last_pkt_read + 1, r);
@@ -366,7 +367,7 @@ void create_srbuf(pbuf_t **srbuf, int len) {
 	srbuf = xmalloc(len * sizeof(*srbuf));
 	int i;
 	for(i = 0; i < len; i++) {
-		srbuf[i] = xmalloc(sizeof(pbuf_t));
+		srbuf[i] = xmalloc(sizeof(**srbuf));
 	}
 }
 
