@@ -27,6 +27,7 @@
 // - do we have to protect against silly window
 // - is EOF equivalent to FIN / do we have to implement the actual closing FSM
 // - do we have to do any handshake steps
+// - how to set first seqno
 // - having seqno refer to packets instead of bytes really complicates things...do we have to do this? Is there anything internal to the library that demands it be packets?
 // - do we have to conn_output partial packets or can we wait until there is space for an entire packet?
 // - should we call rel_output when packets are recieved or let the program call it
@@ -49,14 +50,14 @@ struct reliable_state
 
 	int window;
 	int timeout;
-
 	int rcvd_remote_eof;
 	int rcvd_local_eof;
 
 	//TODO conver to to contiguous buffer
-	pbuf_t **send_buffer;
+	pbuf_t *send_buffer[WINDOW_SIZE]; //TODO change this to variable length based on window
 	int max_send_buffer;
 	int last_pkt_acked;
+	int lpa_buf_offset;
 	int last_pkt_sent;
 	int last_pkt_written;
 
@@ -64,6 +65,7 @@ struct reliable_state
 	pbuf_t *rcv_buffer[WINDOW_SIZE];
 	int max_rcv_buffer;
 	int last_pkt_read;
+	int lpr_buf_offset;
 	int next_pkt_expected;
 	int last_pkt_received;
 };
@@ -116,23 +118,18 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->rcvd_local_eof = 0;
 
 	/* initialize send side */
-	r->send_buffer = xmalloc(sizeof(int) * r->window);
+	memset(r->send_buffer, 0, sizeof(r->send_buffer));
 	r->max_send_buffer = r->window;
 	r->last_pkt_acked = -1;
+	r->lpa_buf_offset = 0;
 	r->last_pkt_sent = -1;
 	r->last_pkt_written = -1;
-
-	/* debug shit */
-	fprintf(stderr, "Send buffer size (from struct): %lu\n", sizeof(r->send_buffer)); //DEBUG
-	fprintf(stderr, "address of send_buffer      : %d\n", &r->send_buffer);
-	fprintf(stderr, "address of send_buffer[0]   : %d\n", &r->send_buffer[0]);
-	fprintf(stderr, "address of send_buffer[1]   : %d\n", &r->send_buffer[1]);
-	fprintf(stderr, "address of last_pkt_acked   : %d\n", &r->last_pkt_acked);
 
 	/* initialize receive side */
 	memset(r->rcv_buffer, 0, sizeof(r->rcv_buffer));
 	r->max_rcv_buffer = WINDOW_SIZE; //TODO what should this be
 	r->last_pkt_read = -1;
+	r->lpr_buf_offset = 0;
 	r->next_pkt_expected = -1;
 	r->last_pkt_received = -1;
 
@@ -190,16 +187,30 @@ void rel_demux (const struct config_common *cc, const struct sockaddr_storage *s
 }
 
 
+/* map sequence number space to buffer space */
+int get_buf_offset(int sq_start, int sq_target, int buf_start, int buf_length) {
+	int offset = sq_target - sq_start;
+
+	/* validate offset */
+	if(offset < 0 || offset > buf_length) {
+		fprintf(stderr, "Invalid offset.\n");
+		return -1;
+	}
+
+	return (buf_start + offset) % buf_length;
+}
+
+
 /* get receive buffer from sequence number */
 pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
-	//TODO
-	return NULL;
+	int buf_offset = get_buf_offset(r->last_pkt_acked, seqno, r->lpa_buf_offset, r->max_rcv_buffer);
+	return r->rcv_buffer[buf_offset];
 }
 
 /* get send buffer from sequence number */
 pbuf_t *sbuf_from_seqno(int seqno, rel_t *r) {
-	//TODO
-	return NULL;
+	int buf_offset = get_buf_offset(r->last_pkt_read, seqno, r->lpr_buf_offset, r->max_send_buffer);
+	return r->rcv_buffer[buf_offset];
 }
 
 
@@ -231,6 +242,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 	/* update last byte acked regardless of packet type */
 	if(pkt->ackno - 1 > r->last_pkt_acked) {
+		//TODO maybe remove r->last_pkt_acked here
 		r->last_pkt_acked = pkt->ackno - 1;
 	}
 
