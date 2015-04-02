@@ -33,7 +33,7 @@
 
 typedef struct packet_buf pbuf_t;
 
-void create_srbuf(pbuf_t **srbuf, int len);
+pbuf_t **create_srbuf(pbuf_t **srbuf, int len);
 void destroy_srbuf(pbuf_t **srbuf, int len);
 int get_buf_index(int sq_start, int sq_target, int buf_start, int buf_length);
 int get_rbuf_index(int seqno, rel_t *r);
@@ -126,7 +126,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* initialize send side */
 	r->max_send_buffer = r->window;
-	create_srbuf(r->send_buffer, r->max_send_buffer);
+	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = -1;
 	r->lpa_buf_index = 0;
 	r->last_pkt_sent = -1;
@@ -134,7 +134,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* initialize receive side */
 	r->max_rcv_buffer = RCV_BUF_SIZE; //TODO what should this be
-	create_srbuf(r->rcv_buffer, r->max_rcv_buffer);
+	r->rcv_buffer = create_srbuf(r->rcv_buffer, r->max_rcv_buffer);
 	r->num_dpkts_rcvd = 0;
 	r->last_pkt_read = -1;
 	r->lprd_buf_index = 0;
@@ -267,7 +267,9 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 void rel_read(rel_t *s)
 {
-	printf("rel_recvpkt\n");
+	printf("rel_read\n");
+	printf("r->send_buf = %x\n", s->send_buffer);
+	printf("r->send_buf[0] = %d\n", s->send_buffer[0]);
 	int rd_len;
 
 	//TODO protocol for determining how to structure packets
@@ -363,12 +365,15 @@ void rel_timer ()
 
 
 /* create send receive buffer */
-void create_srbuf(pbuf_t **srbuf, int len) {
+pbuf_t **create_srbuf(pbuf_t **srbuf, int len) {
 	srbuf = xmalloc(len * sizeof(*srbuf));
+	printf("srbuf = %x\n", srbuf);
 	int i;
 	for(i = 0; i < len; i++) {
 		srbuf[i] = xmalloc(sizeof(**srbuf));
 	}
+	printf("srbuf[0] = %x\n", srbuf[0]);
+	return srbuf;
 }
 
 
