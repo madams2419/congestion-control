@@ -16,17 +16,22 @@
 
 #define ACK_LEN 8
 #define DATA_HDR_LEN 12
-#define MAX_READ_LEN 500
+#define MAX_PACKET_SIZE 500
 #define WINDOW_SIZE 1 // window size in number of packets (1 for stop and wait)
 
 #define RCV_BUF_SPACE(r) r->max_rcv_buffer - (r->last_pkt_received - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
 
 // Questions:
+// - do we ACK packet after it's been outputed or buffered in TCP buffer?
+// - do we have to protect against silly window
+// - is EOF equivalent to FIN / do we have to implement the actual closing FSM
+// - do we have to do any handshake steps
 // - having seqno refer to packets instead of bytes really complicates things...do we have to do this? Is there anything internal to the library that demands it be packets?
 // - do we have to conn_output partial packets or can we wait until there is space for an entire packet?
 // - should we call rel_output when packets are recieved or let the program call it
 // - do we send packets as soon as we read them or do we use some algo to fill up a packet first?
+// - how do we get max receive buffer size
 
 // TODO
 // - check all requirements in 356 handout and Stanford handout
@@ -48,12 +53,14 @@ struct reliable_state
 	int rcvd_remote_eof;
 	int rcvd_local_eof;
 
-	pbuf_t *send_buffer[WINDOW_SIZE];
+	//TODO conver to to contiguous buffer
+	pbuf_t **send_buffer;
 	int max_send_buffer;
 	int last_pkt_acked;
 	int last_pkt_sent;
 	int last_pkt_written;
 
+	//TODO what should size of receive buffer be
 	pbuf_t *rcv_buffer[WINDOW_SIZE];
 	int max_rcv_buffer;
 	int last_pkt_read;
@@ -109,8 +116,8 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->rcvd_local_eof = 0;
 
 	/* initialize send side */
-	memset(r->send_buffer, 0, sizeof(r->send_buffer));
-	r->max_send_buffer = WINDOW_SIZE;
+	r->send_buffer = xmalloc(sizeof(int) * r->window);
+	r->max_send_buffer = r->window;
 	r->last_pkt_acked = -1;
 	r->last_pkt_sent = -1;
 	r->last_pkt_written = -1;
@@ -124,7 +131,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* initialize receive side */
 	memset(r->rcv_buffer, 0, sizeof(r->rcv_buffer));
-	r->max_rcv_buffer = WINDOW_SIZE;
+	r->max_rcv_buffer = WINDOW_SIZE; //TODO what should this be
 	r->last_pkt_read = -1;
 	r->next_pkt_expected = -1;
 	r->last_pkt_received = -1;
@@ -149,7 +156,7 @@ void destroy_buf(pbuf_t** buf, int len) {
 }
 
 
-void rel_destroy (rel_t *r)
+void rel_destroy(rel_t *r)
 {
 	/* reassigned linked list pointers */
 	if (r->next)
@@ -160,7 +167,7 @@ void rel_destroy (rel_t *r)
 	conn_destroy(r->c);
 
 	/* free send buffer */
-	destroy_buf(r->send_buffer, sizeof(r->send_buffer));
+	destroy_buf(r->send_buffer, sizeof(r->send_buffer)); //TODO proper send buffer size
 
 	/* free receive buffers */
 	destroy_buf(r->rcv_buffer, sizeof(r->rcv_buffer));
@@ -206,7 +213,7 @@ void handle_connection_close(rel_t *r) {
 }
 
 
-void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
+void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 {
 
 	/* verify packet length */
@@ -223,7 +230,9 @@ void rel_recvpkt (rel_t *r, packet_t *pkt, size_t n)
 	}
 
 	/* update last byte acked regardless of packet type */
-	r->last_pkt_acked = pkt->ackno - 1;
+	if(pkt->ackno - 1 > r->last_pkt_acked) {
+		r->last_pkt_acked = pkt->ackno - 1;
+	}
 
 	/* handle ack packet */
 	if(pkt->len == ACK_LEN) {
@@ -282,7 +291,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	packet_t *pkt = xmalloc(sizeof(packet_t));
 	pkt->cksum = 0;
 	pkt->len = pbuf->len + DATA_HDR_LEN;
-	pkt->ackno = s->next_pkt_expected - 1;
+	pkt->ackno = s->next_pkt_expected;
 	pkt->seqno = pbuf->seqno;
 	memcpy(pbuf->data, pkt->data, pbuf->len);
 	pkt->cksum = cksum(pkt, pkt->len);
@@ -320,8 +329,8 @@ void rel_read(rel_t *s)
 	while (SEND_BUF_SPACE(s) > 0) {
 
 		/* read user data input send buffer */
-		char* temp = xmalloc(MAX_READ_LEN);
-		rd_len = conn_input(s->c, temp, MAX_READ_LEN);
+		char* temp = xmalloc(MAX_PACKET_SIZE); //TODO what should max read length be
+		rd_len = conn_input(s->c, temp, MAX_PACKET_SIZE);
 
 		/* handle EOF */
 		if(rd_len == -1) {
@@ -374,7 +383,7 @@ void rel_output (rel_t *r)
 		/* update last packet read */
 		r->last_pkt_read++;
 
-		/* send ack */
+		/* send ack */ //TODO move to recvpkt
 		packet_t *ack = xmalloc(ACK_LEN);
 		ack->cksum = 0;
 		ack->len = ACK_LEN;
@@ -392,12 +401,12 @@ void rel_timer ()
 	struct timespec *tbuf = xmalloc(sizeof(struct timespec));
 	int sn;
 	for(sn = r->last_pkt_acked + 1; sn < r->last_pkt_sent; sn++) {
-		pbuf_t *temp = sbuf_from_seqno(sn, r);
+		pbuf_t *sbuf = sbuf_from_seqno(sn, r);
 		clock_gettime(CLOCK_MONOTONIC, tbuf);
-		double t_elapsed = difftime(temp->send_time.tv_sec, tbuf->tv_sec);
+		double t_elapsed = difftime(sbuf->send_time.tv_sec, tbuf->tv_sec);
 
 		if(t_elapsed > r->timeout) {
-			send_packet(temp, r);
+			send_packet(sbuf, r);
 		}
 
 	}
