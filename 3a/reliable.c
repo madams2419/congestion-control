@@ -134,7 +134,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->max_send_buffer = r->window;
 	create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = -1;
-	r->lpa_buf_index = 0;
+	r->lpa_buf_index = -1;
 	r->last_pkt_sent = -1;
 	r->last_pkt_written = -1;
 
@@ -142,7 +142,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->max_rcv_buffer = RCV_BUF_SIZE; //TODO what should this be
 	r->rcv_buffer = xmalloc(r->max_rcv_buffer * sizeof(*r->rcv_buffer));
 	r->last_pkt_read = -1;
-	r->lprd_buf_index = 0;
+	r->lprd_buf_index = -1;
 	r->next_pkt_expected = -1;
 	r->last_pkt_received = -1;
 
@@ -377,6 +377,11 @@ void destroy_srbuf(pbuf_t **srbuf, int len) {
 
 /* get send or receive buffer index from sequence number target and start index */
 int get_buf_index(int sq_start, int sq_target, int buf_start, int buf_length) {
+	/* return 0 index if sequence start has not been initialized */
+	if(buf_start < 0) {
+		return 0;
+	}
+
 	int offset = sq_target - sq_start;
 
 	/* validate offset */
