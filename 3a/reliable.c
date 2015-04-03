@@ -62,7 +62,7 @@ struct reliable_state
 	pbuf_t **send_buffer;
 	int max_send_buffer;
 	int last_pkt_acked;
-	int lpa_buf_index;
+	int sbuf_start_index;
 	int last_pkt_sent;
 	int last_pkt_written;
 
@@ -71,7 +71,7 @@ struct reliable_state
 	int max_rcv_buffer;
 	int num_dpkts_rcvd;
 	int last_pkt_read;
-	int lprd_buf_index;
+	int rbuf_start_index;
 	int next_pkt_expected;
 	int last_pkt_received;
 };
@@ -129,7 +129,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->max_send_buffer = r->window;
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
-	r->lpa_buf_index = 0;
+	r->sbuf_start_index = 0;
 	r->last_pkt_sent = 0;
 	r->last_pkt_written = 0;
 
@@ -138,7 +138,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->rcv_buffer = create_srbuf(r->rcv_buffer, r->max_rcv_buffer);
 	r->num_dpkts_rcvd = 0;
 	r->last_pkt_read = 0;
-	r->lprd_buf_index = 0;
+	r->rbuf_start_index = 0;
 	r->next_pkt_expected = 0;
 	r->last_pkt_received = 0;
 
@@ -200,7 +200,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	/* update last byte acked regardless of packet type */
 	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) {
 		r->last_pkt_acked = pkt->ackno - 1;
-		r->lpa_buf_index = get_sbuf_index(r->last_pkt_acked, r);
+		r->sbuf_start_index = get_sbuf_index(r->last_pkt_acked + 1, r);
 	}
 
 	/* handle ack packet */
@@ -337,7 +337,7 @@ void rel_output (rel_t *r)
 
 		/* update last packet read seqno and buffer index */
 		r->last_pkt_read++;
-		r->lprd_buf_index = get_rbuf_index(r->last_pkt_read, r);
+		r->rbuf_start_index = get_rbuf_index(r->last_pkt_read + 1, r);
 
 	}
 
@@ -405,13 +405,13 @@ int get_buf_index(int sq_start, int sq_target, int buf_start, int buf_length) {
 
 /* get send buffer index from sequence number */
 int get_sbuf_index(int seqno, rel_t *r) {
-	return get_buf_index(r->last_pkt_acked + 1, seqno, r->lpa_buf_index, r->max_send_buffer);
+	return get_buf_index(r->last_pkt_acked + 1, seqno, r->sbuf_start_index, r->max_send_buffer);
 }
 
 
 /* get receive index from sequence number */
 int get_rbuf_index(int seqno, rel_t *r) {
-	return get_buf_index(r->last_pkt_read + 1, seqno, r->lprd_buf_index, r->max_rcv_buffer);
+	return get_buf_index(r->last_pkt_read + 1, seqno, r->rbuf_start_index, r->max_rcv_buffer);
 }
 
 
