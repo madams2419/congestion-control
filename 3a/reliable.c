@@ -215,34 +215,27 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			return;
 		}
 
-		/* eof boolean */
-		int isEOF = (pkt->len == PKT_HDR_LEN);
-
-		/* handle data packet */
-		if(!isEOF) {
-			/* return if there is insufficient space in the buffer */
-			int space_required = (r->last_pkt_received == -1) ? 1 : pkt->seqno - r->last_pkt_received;
-			if(space_required > RCV_BUF_SPACE(r)) {
-				return;
-			}
-
-			/* copy payload to receive buffer */
-			int data_len = pkt->len - PKT_HDR_LEN;
-			pbuf_t *rbuf = rbuf_from_seqno(pkt->seqno, r);
-			rbuf->seqno = pkt->seqno;
-			rbuf->data_len = data_len;
-			memcpy(rbuf->data, pkt->data, data_len);
-
-			/* handle first data packet */
-			if(r->num_dpkts_rcvd == 0) {
-				r->next_pkt_expected = pkt->seqno + 1;
-				r->last_pkt_read = pkt->seqno - 1;
-			}
-
-			/* increment num data packets received */
-			r->num_dpkts_rcvd++;
-
+		/* return if there is insufficient space in the buffer */
+		int space_required = (r->last_pkt_received == -1) ? 1 : pkt->seqno - r->last_pkt_received;
+		if(space_required > RCV_BUF_SPACE(r)) {
+			return;
 		}
+
+		/* copy payload to receive buffer */
+		int data_len = pkt->len - PKT_HDR_LEN;
+		pbuf_t *rbuf = rbuf_from_seqno(pkt->seqno, r);
+		rbuf->seqno = pkt->seqno;
+		rbuf->data_len = data_len;
+		memcpy(rbuf->data, pkt->data, data_len);
+
+		/* handle first data packet */
+		if(r->num_dpkts_rcvd == 0) {
+			r->next_pkt_expected = pkt->seqno + 1;
+			r->last_pkt_read = pkt->seqno - 1;
+		}
+
+		/* increment num data packets received */
+		r->num_dpkts_rcvd++;
 
 		/* update last packet received */
 		r->last_pkt_received = pkt->seqno;
@@ -257,12 +250,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 		/* send ack */
 		send_ack(r);
-
-		/* additional EOF handling */
-		if(pkt->len == PKT_HDR_LEN) {
-			r->rcvd_remote_eof = 1;
-			handle_connection_close(r, WAIT);
-		}
 
 	}
 }
@@ -317,18 +304,25 @@ void rel_output(rel_t *r)
 			return;
 		}
 
-		/* output packet */
-		int out_len = conn_output(r->c, rbuf->data, rbuf->data_len);
-		if(out_len <= 0) {
-			return;
-		}
-
 		/* update last packet read seqno and buffer index */
 		r->last_pkt_read++;
 		r->rbuf_start_index = get_rbuf_index(r->last_pkt_read + 1, r);
 
-	}
+		/* handle eof packet */
+		if(rbuf->data_len == 0) {
+			r->rcvd_remote_eof = 1;
+			handle_connection_close(r, WAIT);
+		}
 
+		/* print data packet */
+		else {
+			int out_len = conn_output(r->c, rbuf->data, rbuf->data_len);
+			if(out_len <= 0) {
+				return;
+			}
+		}
+
+	}
 }
 
 void rel_timer ()
