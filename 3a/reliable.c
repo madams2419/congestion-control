@@ -15,9 +15,11 @@
 #include "rlib.h"
 
 #define ACK_LEN 8
-#define DATA_HDR_LEN 12
+#define PKT_HDR_LEN 12
 #define MAX_PACKET_SIZE 500
 #define RCV_BUF_SIZE 10
+#define WAIT 1
+#define NO_WAIT 0
 
 #define RCV_BUF_SPACE(r) r->max_rcv_buffer - (r->last_pkt_received - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
@@ -25,11 +27,8 @@
 // Questions:
 
 // TODO
-// - remove temp buf from rel_read()
-// - send intiial sending seqno to 1 (instead of 0)
-// - remove rel_output call in rel_recpkt and see if shit still works
+// - figure out connection closing
 // - check all requirements in 356 handout and Stanford handout
-// - move helper declarations to header file
 
 
 typedef struct packet_buf pbuf_t;
@@ -41,7 +40,7 @@ int get_rbuf_index(int seqno, rel_t *r);
 int get_sbuf_index(int seqno, rel_t *r);
 pbuf_t *rbuf_from_seqno(int seqno, rel_t *r);
 pbuf_t *sbuf_from_seqno(int seqno, rel_t *r);
-void handle_connection_close(rel_t *r);
+void handle_connection_close(rel_t *r, int wait);
 void send_packet(pbuf_t *pbuf, rel_t *s);
 void send_next_packet(rel_t *s);
 void send_ack(rel_t *s);
@@ -206,28 +205,23 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 	/* handle ack packet */
 	if(pkt->len == ACK_LEN) {
-		handle_connection_close(r);
-		print_buf_ptrs(r);
+		handle_connection_close(r, NO_WAIT);
+		print_buf_ptrs(r); //DEBUG
 	}
 
 	/* handle eof or data packet */
-	else if(pkt->len >= DATA_HDR_LEN) {
+	else if(pkt->len >= PKT_HDR_LEN) {
 
 		/* return if packet is a duplicate */
 		if(pkt->seqno < r->next_pkt_expected) {
 			return;
 		}
 
-		/* handle EOF packet */
-		if(pkt->len == DATA_HDR_LEN) {
-			r->rcvd_remote_eof = 1;
-			handle_connection_close(r);
-			print_buf_ptrs(r); //DEBUG
-		}
+		/* eof boolean */
+		int isEOF = (pkt->len == PKT_HDR_LEN);
 
 		/* handle data packet */
-		else {
-
+		if(!isEOF) {
 			/* return if there is insufficient space in the buffer */
 			int space_required = (r->last_pkt_received == -1) ? 1 : pkt->seqno - r->last_pkt_received;
 			if(space_required > RCV_BUF_SPACE(r)) {
@@ -235,21 +229,13 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			}
 
 			/* copy payload to receive buffer */
-			int data_len = pkt->len - DATA_HDR_LEN;
+			int data_len = pkt->len - PKT_HDR_LEN;
 			pbuf_t *rbuf = rbuf_from_seqno(pkt->seqno, r);
 			rbuf->seqno = pkt->seqno;
 			rbuf->data_len = data_len;
 			memcpy(rbuf->data, pkt->data, data_len);
 
-			/* update last packet received */
-			r->last_pkt_received = pkt->seqno;
-
-			/* update next packet expected */
-			if(pkt->seqno == r->next_pkt_expected) {
-				r->next_pkt_expected++;
-			}
-
-			/* handle case of first data packet */
+			/* handle first data packet */
 			if(r->num_dpkts_rcvd == 0) {
 				r->next_pkt_expected = pkt->seqno + 1;
 				r->last_pkt_read = pkt->seqno - 1;
@@ -258,15 +244,30 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			/* increment num data packets received */
 			r->num_dpkts_rcvd++;
 
-			print_buf_ptrs(r); //DEBUG
-
-			/* output packet */
-			rel_output(r);
-
-			/* send ack */
-			send_ack(r);
-
 		}
+
+		/* update last packet received */
+		r->last_pkt_received = pkt->seqno;
+
+		/* update next packet expected */
+		if(pkt->seqno == r->next_pkt_expected) {
+			r->next_pkt_expected++;
+		}
+
+		print_buf_ptrs(r); //DEBUG
+
+		/* output packet */
+		rel_output(r);
+
+		/* send ack */
+		send_ack(r);
+
+		/* additional EOF handling */
+		if(pkt->len == PKT_HDR_LEN) {
+			r->rcvd_remote_eof = 1;
+			handle_connection_close(r, WAIT);
+		}
+
 	}
 }
 
@@ -283,30 +284,27 @@ void rel_read(rel_t *s)
 		/* get send buffer */
 		pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
 		int rd_len = conn_input(s->c, sbuf->data, MAX_PACKET_SIZE);
-
-		/* handle EOF */
-		if(rd_len == -1) {
-			s->rcvd_local_eof = 1;
-			handle_connection_close(s);
-			return;
-		}
+		int isEOF = (rd_len == -1);
 
 		/* handle no data */
-		else if(rd_len == 0) {
+		if(rd_len == 0) {
 			return;
 		}
 
-		/* handle data */
-		else {
-			/* set sent buffer seqno and length */
-			sbuf->seqno = s->last_pkt_written + 1;
-			sbuf->data_len = rd_len;
+		/* set sent buffer seqno and length */
+		sbuf->seqno = s->last_pkt_written + 1;
+		sbuf->data_len = (isEOF) ? PKT_HDR_LEN : rd_len;
 
-			/* update last packet written */
-			s->last_pkt_written++;
+		/* update last packet written */
+		s->last_pkt_written++;
 
-			/* send next packet */
-			send_next_packet(s);
+		/* send next packet */
+		send_next_packet(s);
+
+		/* handle EOF */
+		if(isEOF) {
+			s->rcvd_local_eof = 1;
+			handle_connection_close(s, NO_WAIT);
 		}
 
 	}
@@ -425,10 +423,17 @@ pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
 
 
 /* checks if connection is closed and calls rel_destroy if so */
-void handle_connection_close(rel_t *r) {
+void handle_connection_close(rel_t *r, int wait) {
 	if(r->rcvd_local_eof == 1
 			&& r->rcvd_remote_eof  == 1
 			&& r->last_pkt_acked == r->last_pkt_written) {
+
+		/* wait two segment lifetimes if wait flag set */
+		if(wait) {
+			sleep(r->timeout * 2 * 1000);
+		}
+
+		printf("Connection closed manually.");
 		rel_destroy(r);
 	}
 }
@@ -439,7 +444,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	/* construct packet */
 	packet_t *pkt = xmalloc(sizeof(packet_t));
 	pkt->cksum = 0;
-	pkt->len = pbuf->data_len + DATA_HDR_LEN;
+	pkt->len = pbuf->data_len + PKT_HDR_LEN;
 	pkt->ackno = s->next_pkt_expected;
 	pkt->seqno = pbuf->seqno;
 	memcpy(pkt->data, pbuf->data, pbuf->data_len);
@@ -473,6 +478,7 @@ void send_next_packet(rel_t *s) {
 	send_packet(sbuf, s);
 }
 
+
 /* send ack packet */
 void send_ack(rel_t *s) {
 	packet_t *ack = xmalloc(ACK_LEN);
@@ -484,6 +490,8 @@ void send_ack(rel_t *s) {
 	free(ack);
 }
 
+
+/* print send and receive buffer pointers */
 void print_buf_ptrs(rel_t *r) {
 	fprintf(stderr, "==========================\n");
 	fprintf(stderr, "SEND BUFFER\n");
