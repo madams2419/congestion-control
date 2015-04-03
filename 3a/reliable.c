@@ -450,10 +450,12 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	pkt->ackno = s->next_pkt_expected;
 	pkt->seqno = pbuf->seqno;
 	memcpy(pkt->data, pbuf->data, pbuf->data_len);
-	pkt->cksum = cksum(pkt, pkt->len);
 
 	/* convert to network byte order */
 	hton_pconvert(pkt);
+
+	/* compute checksum */
+	pkt->cksum = cksum(pkt, pkt_len);
 
 	/* send packet */
 	if(conn_sendpkt(s->c, pkt, pkt_len) > 0) {
@@ -488,10 +490,12 @@ void send_ack(rel_t *s) {
 	ack->cksum = 0;
 	ack->len = ACK_LEN;
 	ack->ackno = s->next_pkt_expected;
-	ack->cksum = cksum(ack, ack->len);
 
 	/* convert to network byte order */
 	hton_pconvert(ack);
+
+	/* compute checksum */
+	ack->cksum = cksum(ack, ACK_LEN);
 
 	/* send packet */
 	conn_sendpkt(s->c, ack, ACK_LEN);
