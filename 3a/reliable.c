@@ -274,7 +274,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 void rel_read(rel_t *s)
 {
 	printf("rel_read\n");
-	int rd_len;
 
 	//TODO protocol for determining how to structure packets
 	//TODO convert send buffer from packet to byte granularity
@@ -283,7 +282,7 @@ void rel_read(rel_t *s)
 
 		/* get send buffer */
 		pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
-		rd_len = conn_input(s->c, sbuf->data, MAX_PACKET_SIZE);
+		int rd_len = conn_input(s->c, sbuf->data, MAX_PACKET_SIZE);
 
 		/* handle EOF */
 		if(rd_len == -1) {
@@ -415,7 +414,7 @@ int get_rbuf_index(int seqno, rel_t *r) {
 
 /* get send buffer from sequence number */
 pbuf_t *sbuf_from_seqno(int seqno, rel_t *r) {
-	return r->send_buffer[get_rbuf_index(seqno, r)];
+	return r->send_buffer[get_sbuf_index(seqno, r)];
 }
 
 
@@ -489,6 +488,7 @@ void print_buf_ptrs(rel_t *r) {
 	fprintf(stderr, "==========================\n");
 	fprintf(stderr, "SEND BUFFER\n");
 	fprintf(stderr, "==========================\n");
+	fprintf(stderr, "sbuf_start_index  : %d\n", r->sbuf_start_index);
 	fprintf(stderr, "last_pkt_acked    : %d\n", r->last_pkt_acked);
 	fprintf(stderr, "last_pkt_sent     : %d\n", r->last_pkt_sent);
 	fprintf(stderr, "last_pkt_written  : %d\n", r->last_pkt_written);
@@ -497,6 +497,7 @@ void print_buf_ptrs(rel_t *r) {
 	fprintf(stderr, "==========================\n");
 	fprintf(stderr, "RECEIVE BUFFER\n");
 	fprintf(stderr, "==========================\n");
+	fprintf(stderr, "rbuf_start_index  : %d\n", r->rbuf_start_index);
 	fprintf(stderr, "last_pkt_read     : %d\n", r->last_pkt_read);
 	fprintf(stderr, "next_pkt_expected : %d\n", r->next_pkt_expected);
 	fprintf(stderr, "last_pkt_received : %d\n", r->last_pkt_received);
