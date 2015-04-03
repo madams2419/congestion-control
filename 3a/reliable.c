@@ -127,19 +127,19 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	/* initialize send side */
 	r->max_send_buffer = r->window;
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
-	r->last_pkt_acked = -1;
+	r->last_pkt_acked = 0;
 	r->lpa_buf_index = 0;
-	r->last_pkt_sent = -1;
-	r->last_pkt_written = -1;
+	r->last_pkt_sent = 0;
+	r->last_pkt_written = 0;
 
 	/* initialize receive side */
 	r->max_rcv_buffer = RCV_BUF_SIZE; //TODO what should this be
 	r->rcv_buffer = create_srbuf(r->rcv_buffer, r->max_rcv_buffer);
 	r->num_dpkts_rcvd = 0;
-	r->last_pkt_read = -1;
+	r->last_pkt_read = 0;
 	r->lprd_buf_index = 0;
-	r->next_pkt_expected = -1;
-	r->last_pkt_received = -1;
+	r->next_pkt_expected = 0;
+	r->last_pkt_received = 0;
 
 	return r;
 }
@@ -435,7 +435,6 @@ void handle_connection_close(rel_t *r) {
 /* send single packet */
 void send_packet(pbuf_t *pbuf, rel_t *s) {
 	/* construct packet */
-	fprintf(stderr, "Size of packet_t: %lu\n", sizeof(packet_t)); //DEBUG
 	packet_t *pkt = xmalloc(sizeof(packet_t));
 	pkt->cksum = 0;
 	pkt->len = pbuf->data_len + DATA_HDR_LEN;
@@ -443,6 +442,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	pkt->seqno = pbuf->seqno;
 	memcpy(pbuf->data, pkt->data, pbuf->data_len);
 	pkt->cksum = cksum(pkt, pkt->len);
+
 
 	/* send packet */
 	if(conn_sendpkt(s->c, pkt, pkt->len) > 0) {
