@@ -45,6 +45,8 @@ void send_packet(pbuf_t *pbuf, rel_t *s);
 void send_next_packet(rel_t *s);
 void send_ack(rel_t *s);
 void print_buf_ptrs(rel_t *r);
+void hton_pconvert(packet_t *pkt);
+void ntoh_pconvert(packet_t *pkt);
 
 
 struct reliable_state
@@ -183,18 +185,23 @@ void rel_demux (const struct config_common *cc, const struct sockaddr_storage *s
 
 void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 {
+	uint16_t pkt_len = ntohs(pkt->len);
+
 	/* verify packet length */
-	if(pkt->len < n) {
+	if(pkt_len > n) {
 		return;
 	}
 
 	/* verify checksum */
 	uint16_t cks = pkt->cksum;
 	pkt->cksum = 0;
-	if(cks != cksum(pkt, pkt->len)) {
+	if(cks != cksum(pkt, pkt_len)) {
 		fprintf(stderr, "Checksum failed!\n");
 		return;
 	}
+
+	/* convert packet to host byte order */
+	hton_pconvert(pkt);
 
 	/* update last byte acked regardless of packet type */
 	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) {
@@ -434,18 +441,22 @@ void handle_connection_close(rel_t *r, int wait) {
 
 /* send single packet */
 void send_packet(pbuf_t *pbuf, rel_t *s) {
+	int pkt_len = pbuf->data_len + PKT_HDR_LEN;
+
 	/* construct packet */
 	packet_t *pkt = xmalloc(sizeof(packet_t));
 	pkt->cksum = 0;
-	pkt->len = pbuf->data_len + PKT_HDR_LEN;
+	pkt->len = pkt_len;
 	pkt->ackno = s->next_pkt_expected;
 	pkt->seqno = pbuf->seqno;
 	memcpy(pkt->data, pbuf->data, pbuf->data_len);
 	pkt->cksum = cksum(pkt, pkt->len);
 
+	/* convert to network byte order */
+	hton_pconvert(pkt);
 
 	/* send packet */
-	if(conn_sendpkt(s->c, pkt, pkt->len) > 0) {
+	if(conn_sendpkt(s->c, pkt, pkt_len) > 0) {
 		s->last_pkt_sent++;
 		clock_gettime(CLOCK_MONOTONIC, &pbuf->send_time);
 	} else {
@@ -472,15 +483,38 @@ void send_next_packet(rel_t *s) {
 
 /* send ack packet */
 void send_ack(rel_t *s) {
+	/* construct packet */
 	packet_t *ack = xmalloc(ACK_LEN);
 	ack->cksum = 0;
 	ack->len = ACK_LEN;
 	ack->ackno = s->next_pkt_expected;
 	ack->cksum = cksum(ack, ack->len);
-	conn_sendpkt(s->c, ack, ack->len);
+
+	/* convert to network byte order */
+	hton_pconvert(ack);
+
+	/* send packet */
+	conn_sendpkt(s->c, ack, ACK_LEN);
 	free(ack);
 }
 
+/* convert packet fields from network to host byte order */
+void ntoh_pconvert(packet_t *pkt) {
+	pkt->len = ntohs(pkt->len);
+	pkt->ackno = ntohl(pkt->ackno);
+	if(pkt->len > ACK_LEN) {
+		pkt->seqno = ntohl(pkt->seqno);
+	}
+}
+
+/* convert packet fields from host to network byte order */
+void hton_pconvert(packet_t *pkt) {
+	pkt->len = htons(pkt->len);
+	pkt->ackno = htonl(pkt->ackno);
+	if(pkt->len > ACK_LEN) {
+		pkt->seqno = htonl(pkt->seqno);
+	}
+}
 
 /* print send and receive buffer pointers */
 void print_buf_ptrs(rel_t *r) {
