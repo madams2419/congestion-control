@@ -208,7 +208,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	/* handle ack packet */
 	if(pkt->len == ACK_LEN) {
 		handle_connection_close(r, NO_WAIT);
-		print_buf_ptrs(r); //DEBUG
 	}
 
 	/* handle eof or data packet */
@@ -256,8 +255,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			r->next_pkt_expected++;
 		}
 
-		print_buf_ptrs(r); //DEBUG
-
 		/* output packet */
 		rel_output(r);
 
@@ -266,8 +263,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 		/* additional EOF handling */
 		if(pkt->len == PKT_HDR_LEN) {
-			print_buf_ptrs(r);
-			printf("EOF received!\n");
 			r->rcvd_remote_eof = 1;
 			handle_connection_close(r, WAIT);
 		}
@@ -278,7 +273,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 void rel_read(rel_t *s)
 {
-	printf("rel_read\n");
 
 	//TODO protocol for determining how to structure packets
 	//TODO convert send buffer from packet to byte granularity
@@ -307,8 +301,6 @@ void rel_read(rel_t *s)
 
 		/* handle EOF */
 		if(isEOF) {
-			print_buf_ptrs(s);
-			printf("Sent EOF!\n");
 			s->rcvd_local_eof = 1;
 			handle_connection_close(s, NO_WAIT);
 		}
@@ -319,7 +311,6 @@ void rel_read(rel_t *s)
 
 void rel_output(rel_t *r)
 {
-	printf("rel_output\n");
 	while (r->last_pkt_read < (r->next_pkt_expected - 1)) {
 		size_t buf_space = conn_bufspace(r->c);
 		pbuf_t *rbuf = rbuf_from_seqno(r->last_pkt_read + 1, r);
@@ -439,7 +430,6 @@ void handle_connection_close(rel_t *r, int wait) {
 			r->fin_wait = 1;
 		}
 
-		printf("Connection closed manually.\n");
 		rel_destroy(r);
 	}
 }
@@ -466,8 +456,6 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	}
 
 	free(pkt);
-
-	print_buf_ptrs(s); //DEBUG
 }
 
 
