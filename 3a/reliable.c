@@ -253,13 +253,13 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		}
 
 		/* output packet */
-		rel_output(r);
+		if(!isEOF) rel_output(r);
 
 		/* send ack */
 		send_ack(r);
 
 		/* additional EOF handling */
-		if(pkt->len == PKT_HDR_LEN) {
+		if(isEOF) {
 			r->rcvd_remote_eof = 1;
 			handle_connection_close(r, WAIT);
 		}
