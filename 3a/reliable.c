@@ -25,6 +25,7 @@
 // Questions:
 
 // TODO
+// - remove temp buf from rel_read()
 // - send intiial sending seqno to 1 (instead of 0)
 // - remove rel_output call in rel_recpkt and see if shit still works
 // - check all requirements in 356 handout and Stanford handout
@@ -238,7 +239,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			pbuf_t *rbuf = rbuf_from_seqno(pkt->seqno, r);
 			rbuf->seqno = pkt->seqno;
 			rbuf->data_len = data_len;
-			memcpy(pkt->data, rbuf->data, rbuf->data_len);
+			memcpy(rbuf->data, pkt->data, data_len);
 
 			/* update last packet received */
 			r->last_pkt_received = pkt->seqno;
@@ -284,25 +285,25 @@ void rel_read(rel_t *s)
 		char *temp = xmalloc(MAX_PACKET_SIZE);
 		rd_len = conn_input(s->c, temp, MAX_PACKET_SIZE);
 
+		//DEBUG
+		printf("rd_len : %d\n", rd_len);
+		printf("read data:\n");
+		printf(temp);
+
 		/* handle EOF */
 		if(rd_len == -1) {
 			s->rcvd_local_eof = 1;
 			handle_connection_close(s);
 		}
 
-		/* handle no data */
-		else if(rd_len == 0) {
-			return;
-		}
-
 		/* handle data */
-		else {
+		else if(rd_len > 0) {
 
 			/* copy data data into send buffer */
 			pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
 			sbuf->seqno = s->last_pkt_written + 1;
 			sbuf->data_len = rd_len;
-			memcpy(temp, sbuf->data, rd_len);
+			memcpy(sbuf->data, temp, rd_len);
 
 			/* update last packet written */
 			s->last_pkt_written++;
@@ -318,7 +319,7 @@ void rel_read(rel_t *s)
 }
 
 
-void rel_output (rel_t *r)
+void rel_output(rel_t *r)
 {
 	printf("rel_output\n");
 	while (r->last_pkt_read < (r->next_pkt_expected - 1)) {
@@ -331,7 +332,8 @@ void rel_output (rel_t *r)
 		}
 
 		/* output packet */
-		if(conn_output(r->c, rbuf->data, rbuf->data_len) <= 0) {
+		int out_len = conn_output(r->c, rbuf->data, rbuf->data_len);
+		if(out_len <= 0) {
 			return;
 		}
 
@@ -359,6 +361,7 @@ void rel_timer ()
 		}
 
 	}
+	free(tbuf);
 }
 
 
@@ -445,7 +448,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	pkt->len = pbuf->data_len + DATA_HDR_LEN;
 	pkt->ackno = s->next_pkt_expected;
 	pkt->seqno = pbuf->seqno;
-	memcpy(pbuf->data, pkt->data, pbuf->data_len);
+	memcpy(pkt->data, pbuf->data, pbuf->data_len);
 	pkt->cksum = cksum(pkt, pkt->len);
 
 
