@@ -44,6 +44,7 @@ void handle_connection_close(rel_t *r);
 void send_packet(pbuf_t *pbuf, rel_t *s);
 void send_next_packet(rel_t *s);
 void send_ack(rel_t *s);
+void print_buf_ptrs(rel_t *r);
 
 
 struct reliable_state
@@ -197,7 +198,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	}
 
 	/* update last byte acked regardless of packet type */
-	if(pkt->ackno - 1 > r->last_pkt_acked) {
+	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) {
 		r->last_pkt_acked = pkt->ackno - 1;
 		r->lpa_buf_index = get_sbuf_index(r->last_pkt_acked, r);
 	}
@@ -205,6 +206,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	/* handle ack packet */
 	if(pkt->len == ACK_LEN) {
 		handle_connection_close(r);
+		print_buf_ptrs(r);
 	}
 
 	/* handle eof or data packet */
@@ -219,6 +221,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		if(pkt->len == DATA_HDR_LEN) {
 			r->rcvd_remote_eof = 1;
 			handle_connection_close(r);
+			print_buf_ptrs(r); //DEBUG
 		}
 
 		/* handle data packet */
@@ -253,6 +256,8 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 			/* increment num data packets received */
 			r->num_dpkts_rcvd++;
+
+			print_buf_ptrs(r); //DEBUG
 
 			/* output packet */
 			rel_output(r);
@@ -451,6 +456,8 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	} else {
 		fprintf(stderr, "Packet sending failed!\n");
 	}
+
+	print_buf_ptrs(s); //DEBUG
 }
 
 
@@ -475,4 +482,22 @@ void send_ack(rel_t *s) {
 	ack->ackno = s->next_pkt_expected;
 	ack->cksum = cksum(ack, ack->len);
 	conn_sendpkt(s->c, ack, ack->len);
+}
+
+void print_buf_ptrs(rel_t *r) {
+	fprintf(stderr, "==========================\n");
+	fprintf(stderr, "SEND BUFFER\n");
+	fprintf(stderr, "==========================\n");
+	fprintf(stderr, "last_pkt_acked    : %d\n", r->last_pkt_acked);
+	fprintf(stderr, "last_pkt_sent     : %d\n", r->last_pkt_sent);
+	fprintf(stderr, "last_pkt_written  : %d\n", r->last_pkt_written);
+	fprintf(stderr, "==========================\n");
+
+	fprintf(stderr, "==========================\n");
+	fprintf(stderr, "RECEIVE BUFFER\n");
+	fprintf(stderr, "==========================\n");
+	fprintf(stderr, "last_pkt_read     : %d\n", r->last_pkt_read);
+	fprintf(stderr, "next_pkt_expected : %d\n", r->next_pkt_expected);
+	fprintf(stderr, "last_pkt_received : %d\n", r->last_pkt_received);
+	fprintf(stderr, "==========================\n");
 }
