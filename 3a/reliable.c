@@ -434,7 +434,8 @@ void handle_connection_close(rel_t *r, int wait) {
 
 		/* wait two segment lifetimes if wait flag set */
 		if(wait) {
-			sleep(r->timeout * 2 * 1000);
+			printf("sleeping for %d ms\n", r->timeout);
+			sleep(2 * r->timeout / 1000);
 		}
 
 		printf("Connection closed manually.");
