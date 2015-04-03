@@ -94,7 +94,6 @@ rel_t *rel_list;
  * rel_demux.) */
 rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct config_common *cc)
 {
-	printf("rel_create\n");
 	/* allocate and zero memory for reliable struct */
 	rel_t *r = xmalloc(sizeof(*r));
 	memset(r, 0, sizeof(*r));
@@ -150,7 +149,6 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 void rel_destroy(rel_t *r)
 {
-	printf("rel_destroy\n");
 	/* reassigned linked list pointers */
 	if (r->next)
 		r->next->prev = r->prev;
@@ -185,7 +183,6 @@ void rel_demux (const struct config_common *cc, const struct sockaddr_storage *s
 
 void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 {
-	printf("rel_recvpkt\n");
 	/* verify packet length */
 	if(pkt->len < n) {
 		return;
