@@ -268,8 +268,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 void rel_read(rel_t *s)
 {
 	printf("rel_read\n");
-	printf("r->send_buf = %x\n", s->send_buffer);
-	printf("r->send_buf[0] = %d\n", s->send_buffer[0]);
 	int rd_len;
 
 	//TODO protocol for determining how to structure packets
@@ -278,7 +276,7 @@ void rel_read(rel_t *s)
 	while (SEND_BUF_SPACE(s) > 0) {
 
 		/* read user data input send buffer */
-		char* temp = xmalloc(MAX_PACKET_SIZE);
+		char *temp = xmalloc(MAX_PACKET_SIZE);
 		rd_len = conn_input(s->c, temp, MAX_PACKET_SIZE);
 
 		/* handle EOF */
@@ -299,7 +297,7 @@ void rel_read(rel_t *s)
 			pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
 			sbuf->seqno = s->last_pkt_written + 1;
 			sbuf->data_len = rd_len;
-			memcpy(temp, sbuf->data, sbuf->data_len);
+			memcpy(temp, sbuf->data, rd_len);
 
 			/* update last packet written */
 			s->last_pkt_written++;
@@ -367,12 +365,11 @@ void rel_timer ()
 /* create send receive buffer */
 pbuf_t **create_srbuf(pbuf_t **srbuf, int len) {
 	srbuf = xmalloc(len * sizeof(*srbuf));
-	printf("srbuf = %x\n", srbuf);
 	int i;
 	for(i = 0; i < len; i++) {
 		srbuf[i] = xmalloc(sizeof(**srbuf));
+		srbuf[i]->data = xmalloc(MAX_PACKET_SIZE);
 	}
-	printf("srbuf[0] = %x\n", srbuf[0]);
 	return srbuf;
 }
 
