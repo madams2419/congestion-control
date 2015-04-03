@@ -281,39 +281,34 @@ void rel_read(rel_t *s)
 
 	while (SEND_BUF_SPACE(s) > 0) {
 
-		/* read user data input send buffer */
-		char *temp = xmalloc(MAX_PACKET_SIZE);
-		rd_len = conn_input(s->c, temp, MAX_PACKET_SIZE);
-
-		//DEBUG
-		printf("rd_len : %d\n", rd_len);
-		printf("read data:\n");
-		printf(temp);
+		/* get send buffer */
+		pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
+		rd_len = conn_input(s->c, sbuf->data, MAX_PACKET_SIZE);
 
 		/* handle EOF */
 		if(rd_len == -1) {
 			s->rcvd_local_eof = 1;
 			handle_connection_close(s);
+			return;
+		}
+
+		/* handle no data */
+		else if(rd_len == 0) {
+			return;
 		}
 
 		/* handle data */
-		else if(rd_len > 0) {
-
-			/* copy data data into send buffer */
-			pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
+		else {
+			/* set sent buffer seqno and length */
 			sbuf->seqno = s->last_pkt_written + 1;
 			sbuf->data_len = rd_len;
-			memcpy(sbuf->data, temp, rd_len);
 
 			/* update last packet written */
 			s->last_pkt_written++;
 
 			/* send next packet */
 			send_next_packet(s);
-
 		}
-
-		free(temp);
 
 	}
 }
@@ -460,6 +455,8 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 		fprintf(stderr, "Packet sending failed!\n");
 	}
 
+	free(pkt);
+
 	print_buf_ptrs(s); //DEBUG
 }
 
@@ -485,6 +482,7 @@ void send_ack(rel_t *s) {
 	ack->ackno = s->next_pkt_expected;
 	ack->cksum = cksum(ack, ack->len);
 	conn_sendpkt(s->c, ack, ack->len);
+	free(ack);
 }
 
 void print_buf_ptrs(rel_t *r) {
