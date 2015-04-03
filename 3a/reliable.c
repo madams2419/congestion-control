@@ -158,10 +158,10 @@ void rel_destroy(rel_t *r)
 	conn_destroy(r->c);
 
 	/* free send buffer */
-	destroy_srbuf(r->send_buffer, sizeof(r->send_buffer)); //TODO proper send buffer size
+	destroy_srbuf(r->send_buffer, r->max_send_buffer);
 
 	/* free receive buffers */
-	destroy_srbuf(r->rcv_buffer, sizeof(r->rcv_buffer));
+	destroy_srbuf(r->rcv_buffer, r->max_rcv_buffer);
 
 	/* free reliable protocol struct */
 	free(r);
@@ -264,6 +264,8 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 		/* additional EOF handling */
 		if(pkt->len == PKT_HDR_LEN) {
+			print_buf_ptrs(r);
+			printf("EOF received!\n");
 			r->rcvd_remote_eof = 1;
 			handle_connection_close(r, WAIT);
 		}
@@ -293,7 +295,7 @@ void rel_read(rel_t *s)
 
 		/* set sent buffer seqno and length */
 		sbuf->seqno = s->last_pkt_written + 1;
-		sbuf->data_len = (isEOF) ? PKT_HDR_LEN : rd_len;
+		sbuf->data_len = (isEOF) ? 0 : rd_len;
 
 		/* update last packet written */
 		s->last_pkt_written++;
@@ -303,6 +305,8 @@ void rel_read(rel_t *s)
 
 		/* handle EOF */
 		if(isEOF) {
+			print_buf_ptrs(s);
+			printf("Sent EOF!\n");
 			s->rcvd_local_eof = 1;
 			handle_connection_close(s, NO_WAIT);
 		}
@@ -426,7 +430,7 @@ pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
 void handle_connection_close(rel_t *r, int wait) {
 	if(r->rcvd_local_eof == 1
 			&& r->rcvd_remote_eof  == 1
-			&& r->last_pkt_acked == r->last_pkt_written) {
+			&& r->last_pkt_acked == r->last_pkt_sent) {
 
 		/* wait two segment lifetimes if wait flag set */
 		if(wait) {
@@ -510,4 +514,10 @@ void print_buf_ptrs(rel_t *r) {
 	fprintf(stderr, "next_pkt_expected : %d\n", r->next_pkt_expected);
 	fprintf(stderr, "last_pkt_received : %d\n", r->last_pkt_received);
 	fprintf(stderr, "==========================\n");
+
+	fprintf(stderr, "==========================\n");
+	fprintf(stderr, "CLOSE STATE\n");
+	fprintf(stderr, "==========================\n");
+	fprintf(stderr, "rcvd_remote_eof   : %d\n", r->rcvd_remote_eof);
+	fprintf(stderr, "rcvd_local_eof    : %d\n", r->rcvd_local_eof);
 }
