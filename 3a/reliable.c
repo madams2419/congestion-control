@@ -58,6 +58,7 @@ struct reliable_state
 	int timeout;
 	int rcvd_remote_eof;
 	int rcvd_local_eof;
+	int fin_wait;
 
 	pbuf_t **send_buffer;
 	int max_send_buffer;
@@ -124,6 +125,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	/* initialize booleans */
 	r->rcvd_remote_eof = 0;
 	r->rcvd_local_eof = 0;
+	r->fin_wait = 0;
 
 	/* initialize send side */
 	r->max_send_buffer = r->window;
@@ -434,11 +436,10 @@ void handle_connection_close(rel_t *r, int wait) {
 
 		/* wait two segment lifetimes if wait flag set */
 		if(wait) {
-			printf("sleeping for %d ms\n", r->timeout);
-			sleep(2 * r->timeout / 1000);
+			r->fin_wait = 1;
 		}
 
-		printf("Connection closed manually.");
+		printf("Connection closed manually.\n");
 		rel_destroy(r);
 	}
 }
