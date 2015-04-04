@@ -297,6 +297,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 void rel_read(rel_t *s)
 {
 	per("rel_read");
+	fprintf(stderr, "%d : rel_read\n", getpid());
 
 	//TODO protocol for determining how to structure packets
 	//TODO convert send buffer from packet to byte granularity
