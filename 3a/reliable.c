@@ -380,7 +380,7 @@ void rel_timer ()
 		double t_elapsed_ms = 1000 * difftime(tbuf->tv_sec, sbuf->send_time.tv_sec);
 
 		if(t_elapsed_ms >= r->timeout) {
-			send_packet(sbuf, r);
+			//send_packet(sbuf, r); //DEBUG
 		}
 
 	}
@@ -543,20 +543,20 @@ void send_ack(rel_t *s) {
 
 /* convert packet fields from network to host byte order */
 void ntoh_pconvert(packet_t *pkt) {
-	pkt->len = ntohs(pkt->len);
-	pkt->ackno = ntohl(pkt->ackno);
 	if(pkt->len > ACK_LEN) {
 		pkt->seqno = ntohl(pkt->seqno);
 	}
+	pkt->len = ntohs(pkt->len);
+	pkt->ackno = ntohl(pkt->ackno);
 }
 
 /* convert packet fields from host to network byte order */
 void hton_pconvert(packet_t *pkt) {
-	pkt->len = htons(pkt->len);
-	pkt->ackno = htonl(pkt->ackno);
 	if(pkt->len > ACK_LEN) {
 		pkt->seqno = htonl(pkt->seqno);
 	}
+	pkt->len = htons(pkt->len);
+	pkt->ackno = htonl(pkt->ackno);
 }
 
 
