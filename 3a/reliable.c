@@ -213,6 +213,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) {
 		r->last_pkt_acked = pkt->ackno - 1;
 		r->sbuf_start_index = get_sbuf_index(r->last_pkt_acked + 1, r);
+		rel_read(r);
 	}
 
 	/* handle ack packet */
@@ -573,10 +574,10 @@ void hton_pconvert(packet_t *pkt) {
 
 /* print message with PID to standard error */
 void per(char *st) {
-	fprintf(stderr, "%d: %s\n", getpid(), st);
+	fprintf(stderr, "%d: %s\n", gettid(), st);
 }
 void per2(char *st, int i) {
-	fprintf(stderr, "%d: %s %d\n", getpid(), st, i);
+	fprintf(stderr, "%d: %s %d\n", gettid(), st, i);
 }
 
 
