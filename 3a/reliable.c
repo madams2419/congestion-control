@@ -144,7 +144,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->num_dpkts_rcvd = 0;
 	r->last_pkt_read = 0;
 	r->rbuf_start_index = 0;
-	r->next_pkt_expected = 0;
+	r->next_pkt_expected = 1;
 	r->last_pkt_received = 0;
 
 	return r;
@@ -193,8 +193,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	/* verify packet length */
 	if(pkt_len > n) {
 		per("Packet length invalid!");
-		fprintf(stderr, "pkt_len : %d", pkt_len);
-		fprintf(stderr, "n       : %lu", n);
 		return;
 	}
 
@@ -218,7 +216,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 	/* handle ack packet */
 	if(pkt->len == ACK_LEN) {
-		per2("Received ACK", pkt->ackno);
+		fprintf(stderr, "recv AckP {ackNo = %d}\n", pkt->ackno); //DEBUG
 		handle_connection_close(r, NO_WAIT);
 	}
 
@@ -230,11 +228,10 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 		/* debug printing */
 		if(isEOF) {
-			per("received EOF packet");
+			fprintf(stderr, "recv DataP {ackNo = %d, seqnoP = %d, payload = %s}\n", pkt->ackno, pkt->seqno, "Empty"); //DEBUG
 		} else {
-			per("received DATA packet");
+			fprintf(stderr, "recv DataP {ackNo = %d, seqnoP = %d, payload = \"%.*s\\n\"}\n", pkt->ackno, pkt->seqno, pkt->len-PKT_HDR_LEN-1, pkt->data); //DEBUG
 		}
-		ppkt(pkt);
 
 		/* return if packet is a duplicate */
 		if(pkt->seqno < r->next_pkt_expected) {
@@ -254,7 +251,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			/* return if there is insufficient space in the buffer */
 			int space_required = (r->last_pkt_received == -1) ? 1 : pkt->seqno - r->last_pkt_received;
 			if(space_required > RCV_BUF_SPACE(r)) {
-				print_buf_ptrs(r);
 				per("Insufficient RCV buffer space.");
 				return;
 			}
@@ -488,15 +484,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	pkt->seqno = pbuf->seqno;
 	memcpy(pkt->data, pbuf->data, pbuf->data_len);
 
-	/* debug printing */
-	if(pkt_len == 12) {
-		per("sent EOF packet");
-	} else {
-		per("sent data packet");
-	}
-	ppkt(pkt);
-
-	/* convert to network byte order */
+		/* convert to network byte order */
 	hton_pconvert(pkt);
 
 	/* compute checksum */
@@ -506,6 +494,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	if(conn_sendpkt(s->c, pkt, pkt_len) > 0) {
 		s->last_pkt_sent = (pbuf->seqno > s->last_pkt_sent) ? pbuf->seqno : s->last_pkt_sent;
 		clock_gettime(CLOCK_MONOTONIC, &pbuf->send_time);
+		fprintf(stderr, "send DataP {ackNo = %d, seqnoP = %d, payloadP = \"%.*s\\n\"}\n", s->next_pkt_expected, pbuf->seqno, pbuf->data_len-1, pkt->data); //DEBUG
 	} else {
 		per("Packet sending failed!");
 	}
@@ -546,8 +535,7 @@ void send_ack(rel_t *s) {
 	if(conn_sendpkt(s->c, ack, ACK_LEN) < 0) {
 		per2("Send failed for ACK", s->next_pkt_expected);
 	} else {
-		/* debug printing */
-		per2("Sent ACK", s->next_pkt_expected);
+		fprintf(stderr, "send Ackp {ackNo = %d}\n", s->next_pkt_expected); //DEBUG
 	}
 
 	free(ack);
@@ -574,10 +562,10 @@ void hton_pconvert(packet_t *pkt) {
 
 /* print message with PID to standard error */
 void per(char *st) {
-	fprintf(stderr, "%d: %s\n", gettid(), st);
+	//fprintf(stderr, "%d: %s\n", getpid(), st);
 }
 void per2(char *st, int i) {
-	fprintf(stderr, "%d: %s %d\n", gettid(), st, i);
+	//fprintf(stderr, "%d: %s %d\n", getpid(), st, i);
 }
 
 
