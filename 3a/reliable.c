@@ -339,6 +339,8 @@ void rel_output(rel_t *r)
 		r->last_pkt_read++;
 		r->rbuf_start_index = get_rbuf_index(r->last_pkt_read + 1, r);
 
+		/* check connection closed */
+		handle_connection_close(r, NO_WAIT);
 	}
 
 }
@@ -430,12 +432,13 @@ pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
 
 /* checks if connection is closed and calls rel_destroy if so */
 void handle_connection_close(rel_t *r, int wait) {
-	if(r->local_eof_seqno > 0 &&
-		r->remote_eof_seqno > 0 &&
-		r->last_pkt_acked == r->last_pkt_sent) {
-
+	if(r->local_eof_seqno > 0 &&							// local eof received
+		r->remote_eof_seqno > 0 &&							// remote eof received
+		r->last_pkt_acked == r->last_pkt_sent &&		// all packets sent have been acked
+		r->last_pkt_read == r->remote_eof_seqno - 1)	// all packets up to eof have been outputted
+	{
 		/* wait two segment lifetimes if wait flag set */
-		if(wait) {
+		if(wait == WAIT) {
 			r->fin_wait = 1;
 		}
 
