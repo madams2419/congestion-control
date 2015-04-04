@@ -44,9 +44,11 @@ void handle_connection_close(rel_t *r, int wait);
 void send_packet(pbuf_t *pbuf, rel_t *s);
 void send_next_packet(rel_t *s);
 void send_ack(rel_t *s);
-void print_buf_ptrs(rel_t *r);
 void hton_pconvert(packet_t *pkt);
 void ntoh_pconvert(packet_t *pkt);
+void per(char *st);
+void ppkt(packet_t *pkt);
+void print_buf_ptrs(rel_t *r);
 
 
 struct reliable_state
@@ -185,10 +187,14 @@ void rel_demux (const struct config_common *cc, const struct sockaddr_storage *s
 
 void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 {
+	per("rel_recvpkt");
 	uint16_t pkt_len = ntohs(pkt->len);
 
 	/* verify packet length */
 	if(pkt_len > n) {
+		per("Packet length invalid!");
+		fprintf(stderr, "pkt_len : %d", pkt_len);
+		fprintf(stderr, "n       : %lu", n);
 		return;
 	}
 
@@ -196,7 +202,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	uint16_t cks = pkt->cksum;
 	pkt->cksum = 0;
 	if(cks != cksum(pkt, pkt_len)) {
-		fprintf(stderr, "Checksum failed!\n");
+		per("Checksum failed!");
 		return;
 	}
 
@@ -211,30 +217,43 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 	/* handle ack packet */
 	if(pkt->len == ACK_LEN) {
+		per("received ACK");
 		handle_connection_close(r, NO_WAIT);
 	}
 
 	/* handle eof or data packet */
 	else if(pkt->len >= PKT_HDR_LEN) {
 
+		/* eof boolean */
+		int isEOF = (pkt->len == PKT_HDR_LEN);
+
+		/* debug printing */
+		if(isEOF) {
+			per("received EOF packet");
+		} else {
+			per("received DATA packet");
+		}
+		ppkt(pkt);
+
 		/* return if packet is a duplicate */
 		if(pkt->seqno < r->next_pkt_expected) {
+			per("Packet is duplicate!");
 			return;
 		}
 
 		/* return if packet sequenced after eof */
 		if(r->remote_eof_seqno > 0 && pkt->seqno >= r->remote_eof_seqno) {
+			per("Packet sequenced after EOF");
 			return;
 		}
-
-		/* eof boolean */
-		int isEOF = (pkt->len == PKT_HDR_LEN);
 
 		/* handle data packet */
 		if(!isEOF) {
 			/* return if there is insufficient space in the buffer */
 			int space_required = (r->last_pkt_received == -1) ? 1 : pkt->seqno - r->last_pkt_received;
 			if(space_required > RCV_BUF_SPACE(r)) {
+				print_buf_ptrs(r);
+				per("Insufficient RCV buffer space.");
 				return;
 			}
 
@@ -282,6 +301,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 void rel_read(rel_t *s)
 {
+	per("rel_read");
 
 	//TODO protocol for determining how to structure packets
 	//TODO convert send buffer from packet to byte granularity
@@ -295,6 +315,7 @@ void rel_read(rel_t *s)
 
 		/* handle no data */
 		if(rd_len == 0) {
+			per("rel_read : no data");
 			return;
 		}
 
@@ -315,6 +336,8 @@ void rel_read(rel_t *s)
 		}
 
 	}
+
+	per("rel_read : end of while");
 }
 
 
@@ -348,15 +371,20 @@ void rel_output(rel_t *r)
 void rel_timer ()
 {
 	// TODO loop through all connections
+	per("rel_timer");
 	rel_t *r = rel_list;
 	struct timespec *tbuf = xmalloc(sizeof(struct timespec));
 	int sn;
-	for(sn = r->last_pkt_acked + 1; sn < r->last_pkt_sent; sn++) {
+	for(sn = r->last_pkt_acked + 1; sn <= r->last_pkt_sent; sn++) {
 		pbuf_t *sbuf = sbuf_from_seqno(sn, r);
 		clock_gettime(CLOCK_MONOTONIC, tbuf);
-		double t_elapsed_ms = 1000 * difftime(sbuf->send_time.tv_sec, tbuf->tv_sec);
+		double t_elapsed_ms = 1000 * difftime(tbuf->tv_sec, sbuf->send_time.tv_sec);
 
-		if(t_elapsed_ms > r->timeout) {
+		per("timer");
+		fprintf(stderr, "time elapsed : %f\n", t_elapsed_ms);
+		fprintf(stderr, "timeout      : %d\n", r->timeout);
+
+		if(t_elapsed_ms >= r->timeout) {
 			send_packet(sbuf, r);
 		}
 
@@ -459,6 +487,14 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	pkt->seqno = pbuf->seqno;
 	memcpy(pkt->data, pbuf->data, pbuf->data_len);
 
+	/* debug printing */
+	if(pkt_len == 12) {
+		per("sent EOF packet");
+	} else {
+		per("sent data packet");
+	}
+	ppkt(pkt);
+
 	/* convert to network byte order */
 	hton_pconvert(pkt);
 
@@ -470,7 +506,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 		s->last_pkt_sent++;
 		clock_gettime(CLOCK_MONOTONIC, &pbuf->send_time);
 	} else {
-		fprintf(stderr, "Packet sending failed!\n");
+		per("Packet sending failed!");
 	}
 
 	free(pkt);
@@ -527,6 +563,25 @@ void hton_pconvert(packet_t *pkt) {
 		pkt->seqno = htonl(pkt->seqno);
 	}
 }
+
+
+/* print message with PID to standard error */
+void per(char *st) {
+	fprintf(stderr, "%d: %s\n", getpid(), st);
+}
+
+
+/* print packet data */
+void ppkt(packet_t *pkt) {
+	fprintf(stderr, "==========================\n");
+	per("PACKET");
+	fprintf(stderr, "==========================\n");
+	fprintf(stderr, "length : %d\n", pkt->len);
+	fprintf(stderr, "seqno  : %d\n", pkt->seqno);
+	fprintf(stderr, "data   : %s\n", pkt->data);
+	fprintf(stderr, "==========================\n");
+}
+
 
 /* print send and receive buffer pointers */
 void print_buf_ptrs(rel_t *r) {
