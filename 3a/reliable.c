@@ -223,7 +223,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		}
 
 		/* return if packet sequenced after eof */
-		if(pkt->seqno >= r->remote_eof_seqno) {
+		if(r->remote_eof_seqno > 0 && pkt->seqno >= r->remote_eof_seqno) {
 			return;
 		}
 
@@ -286,7 +286,7 @@ void rel_read(rel_t *s)
 	//TODO protocol for determining how to structure packets
 	//TODO convert send buffer from packet to byte granularity
 
-	while (SEND_BUF_SPACE(s) > 0 && s->local_eof_seqno > 0) {
+	while (SEND_BUF_SPACE(s) > 0 && s->local_eof_seqno == 0) {
 
 		/* get send buffer */
 		pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
@@ -310,7 +310,7 @@ void rel_read(rel_t *s)
 
 		/* handle EOF */
 		if(isEOF) {
-			s->local_eof_seqno = 1;
+			s->local_eof_seqno = sbuf->seqno;
 			handle_connection_close(s, NO_WAIT);
 		}
 
@@ -431,7 +431,7 @@ pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
 /* checks if connection is closed and calls rel_destroy if so */
 void handle_connection_close(rel_t *r, int wait) {
 	if(r->local_eof_seqno > 0 &&
-		r->remote_eof_seqno &&
+		r->remote_eof_seqno > 0 &&
 		r->last_pkt_acked == r->last_pkt_sent) {
 
 		/* wait two segment lifetimes if wait flag set */
