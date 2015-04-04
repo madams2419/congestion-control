@@ -278,10 +278,12 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			r->next_pkt_expected++;
 		}
 
-		/* additional EOF handling */
+		/* send ack */
+		send_ack(r);
+
+		/* final handling */
 		if(isEOF) {
 			r->remote_eof_seqno = pkt->seqno;
-			send_ack(r);
 			handle_connection_close(r, WAIT);
 		} else {
 			rel_output(r);
@@ -336,7 +338,9 @@ void rel_read(rel_t *s)
 void rel_output(rel_t *r)
 {
 	per("rel_output");
-	while (r->last_pkt_read < (r->next_pkt_expected - 1)) {
+	while (r->last_pkt_read + 1 != r->remote_eof_seqno &&
+			 r->last_pkt_read + 1 < r->next_pkt_expected) {
+
 		size_t buf_space = conn_bufspace(r->c);
 		pbuf_t *rbuf = rbuf_from_seqno(r->last_pkt_read + 1, r);
 
@@ -356,9 +360,6 @@ void rel_output(rel_t *r)
 		/* update last packet read seqno and buffer index */
 		r->last_pkt_read++;
 		r->rbuf_start_index = get_rbuf_index(r->last_pkt_read + 1, r);
-
-		/* send ack */
-		send_ack(r);
 
 		/* check connection closed */
 		handle_connection_close(r, NO_WAIT);

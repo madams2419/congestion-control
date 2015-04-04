@@ -1,0 +1,73 @@
+[listening on UDP port 56708]
+[listening on UDP port 38545]
+28048: rel_read
+28048: sent data packet
+==========================
+28048: PACKET
+==========================
+length : 20
+seqno  : 1
+data   : request
+
+==========================
+28048: rel_read : end of while
+28048: rel_read
+28048: rel_read : end of while
+28048: rel_recvpkt
+28048: rel_read
+28048: sent EOF packet
+==========================
+28048: PACKET
+==========================
+length : 12
+seqno  : 2
+data   : 
+==========================
+28048: rel_read : end of while
+28048: Received ACK 2
+28049: rel_recvpkt
+28049: received DATA packet
+==========================
+28049: PACKET
+==========================
+length : 20
+seqno  : 1
+data   : request
+
+==========================
+28049: rel_output
+28049: Sent ACK 2
+28049: rel_recvpkt
+28049: received EOF packet
+==========================
+28049: PACKET
+==========================
+length : 12
+seqno  : 2
+data   : ииииииии
+==========================
+28048: retransmitting 2
+28048: sent EOF packet
+==========================
+28048: PACKET
+==========================
+length : 12
+seqno  : 2
+data   : 
+==========================
+28049: rel_recvpkt
+28049: received EOF packet
+==========================
+28049: PACKET
+==========================
+length : 12
+seqno  : 2
+data   : ииииииии
+==========================
+28049: Packet is duplicate!
+28049: rel_output
+28049: Sent ACK 3
+28048: rel_recvpkt
+28048: rel_read
+28048: rel_read : end of while
+28048: Received ACK 3
