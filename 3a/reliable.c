@@ -264,12 +264,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			rbuf->data_len = data_len;
 			memcpy(rbuf->data, pkt->data, data_len);
 
-			/* handle first data packet */
-			if(r->num_dpkts_rcvd == 0) {
-				r->next_pkt_expected = pkt->seqno + 1;
-				r->last_pkt_read = pkt->seqno - 1;
-			}
-
 			/* increment num data packets received */
 			r->num_dpkts_rcvd++;
 		}
