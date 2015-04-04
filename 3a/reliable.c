@@ -278,13 +278,13 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			r->next_pkt_expected++;
 		}
 
-		/* output packet */
-		if(!isEOF) rel_output(r);
-
 		/* additional EOF handling */
 		if(isEOF) {
 			r->remote_eof_seqno = pkt->seqno;
+			send_ack(r);
 			handle_connection_close(r, WAIT);
+		} else {
+			rel_output(r);
 		}
 
 	}
