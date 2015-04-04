@@ -58,8 +58,8 @@ struct reliable_state
 
 	int window;
 	int timeout;
-	int rcvd_remote_eof;
-	int rcvd_local_eof;
+	int remote_eof_seqno;
+	int local_eof_seqno;
 	int fin_wait;
 
 	pbuf_t **send_buffer;
@@ -124,8 +124,8 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->timeout = cc->timeout;
 
 	/* initialize booleans */
-	r->rcvd_remote_eof = 0;
-	r->rcvd_local_eof = 0;
+	r->remote_eof_seqno = 0;
+	r->local_eof_seqno = 0;
 	r->fin_wait = 0;
 
 	/* initialize send side */
@@ -222,6 +222,11 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			return;
 		}
 
+		/* return if packet sequenced after eof */
+		if(pkt->seqno >= r->remote_eof_seqno) {
+			return;
+		}
+
 		/* eof boolean */
 		int isEOF = (pkt->len == PKT_HDR_LEN);
 
@@ -267,7 +272,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 		/* additional EOF handling */
 		if(isEOF) {
-			r->rcvd_remote_eof = 1;
+			r->remote_eof_seqno = pkt->seqno;
 			handle_connection_close(r, WAIT);
 		}
 
@@ -281,7 +286,7 @@ void rel_read(rel_t *s)
 	//TODO protocol for determining how to structure packets
 	//TODO convert send buffer from packet to byte granularity
 
-	while (SEND_BUF_SPACE(s) > 0) {
+	while (SEND_BUF_SPACE(s) > 0 && s->local_eof_seqno > 0) {
 
 		/* get send buffer */
 		pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
@@ -305,7 +310,7 @@ void rel_read(rel_t *s)
 
 		/* handle EOF */
 		if(isEOF) {
-			s->rcvd_local_eof = 1;
+			s->local_eof_seqno = 1;
 			handle_connection_close(s, NO_WAIT);
 		}
 
@@ -425,9 +430,9 @@ pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
 
 /* checks if connection is closed and calls rel_destroy if so */
 void handle_connection_close(rel_t *r, int wait) {
-	if(r->rcvd_local_eof == 1
-			&& r->rcvd_remote_eof  == 1
-			&& r->last_pkt_acked == r->last_pkt_sent) {
+	if(r->local_eof_seqno > 0 &&
+		r->remote_eof_seqno &&
+		r->last_pkt_acked == r->last_pkt_sent) {
 
 		/* wait two segment lifetimes if wait flag set */
 		if(wait) {
@@ -543,6 +548,6 @@ void print_buf_ptrs(rel_t *r) {
 	fprintf(stderr, "==========================\n");
 	fprintf(stderr, "CLOSE STATE\n");
 	fprintf(stderr, "==========================\n");
-	fprintf(stderr, "rcvd_remote_eof   : %d\n", r->rcvd_remote_eof);
-	fprintf(stderr, "rcvd_local_eof    : %d\n", r->rcvd_local_eof);
+	fprintf(stderr, "remote_eof_seqno   : %d\n", r->remote_eof_seqno);
+	fprintf(stderr, "local_eof_seqno    : %d\n", r->local_eof_seqno);
 }
