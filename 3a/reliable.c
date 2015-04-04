@@ -297,12 +297,11 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 void rel_read(rel_t *s)
 {
 	per("rel_read");
-	print_buf_ptrs(s);
 
 	//TODO protocol for determining how to structure packets
 	//TODO convert send buffer from packet to byte granularity
 
-	while (SEND_BUF_SPACE(s) > 0) {
+	while (SEND_BUF_SPACE(s) > 0 && s->local_eof_seqno == 0) {
 
 		/* get send buffer */
 		pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);

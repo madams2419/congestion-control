@@ -1,102 +1,14 @@
-[listening on UDP port 56797]
-[listening on UDP port 59030]
-==========================
-SEND BUFFER
-==========================
-sbuf_start_index  : 0
-last_pkt_acked    : 0
-last_pkt_sent     : 0
-last_pkt_written  : 0
-max_send_buffer   : 1
-==========================
-==========================
-RECEIVE BUFFER
-==========================
-rbuf_start_index  : 0
-last_pkt_read     : 0
-next_pkt_expected : 1
-last_pkt_received : 0
-==========================
-==========================
-CLOSE STATE
-==========================
-remote_eof_seqno   : 0
-local_eof_seqno    : 0
-25252 : send DataP {acknoP = 1, seqnoP = 1, payloadP = "request\n"}
-==========================
-SEND BUFFER
-==========================
-sbuf_start_index  : 0
-last_pkt_acked    : 0
-last_pkt_sent     : 1
-last_pkt_written  : 1
-max_send_buffer   : 1
-==========================
-==========================
-RECEIVE BUFFER
-==========================
-rbuf_start_index  : 0
-last_pkt_read     : 0
-next_pkt_expected : 1
-last_pkt_received : 0
-==========================
-==========================
-CLOSE STATE
-==========================
-remote_eof_seqno   : 0
-local_eof_seqno    : 0
-==========================
-SEND BUFFER
-==========================
-sbuf_start_index  : 0
-last_pkt_acked    : 1
-last_pkt_sent     : 1
-last_pkt_written  : 1
-max_send_buffer   : 1
-==========================
-==========================
-RECEIVE BUFFER
-==========================
-rbuf_start_index  : 0
-last_pkt_read     : 0
-next_pkt_expected : 1
-last_pkt_received : 0
-==========================
-==========================
-CLOSE STATE
-==========================
-remote_eof_seqno   : 0
-local_eof_seqno    : 0
-25252 : send DataP {acknoP = 1, seqnoP = 2, payloadP = "\n"}
-25252 : recv AckP {ackNo = 2}
-25253 : recv DataP {acknoP = 1, seqnoP = 1, payload = "request\n"}
-25253 : send Ackp {ackNo = 2}
-25253 : recv DataP {acknoP = 1, seqnoP = 2, payload = Empty}
-25253 : send Ackp {ackNo = 3}
-==========================
-SEND BUFFER
-==========================
-sbuf_start_index  : 0
-last_pkt_acked    : 2
-last_pkt_sent     : 2
-last_pkt_written  : 2
-max_send_buffer   : 1
-==========================
-==========================
-RECEIVE BUFFER
-==========================
-rbuf_start_index  : 0
-last_pkt_read     : 0
-next_pkt_expected : 1
-last_pkt_received : 0
-==========================
-==========================
-CLOSE STATE
-==========================
-remote_eof_seqno   : 0
-local_eof_seqno    : 2
-25252 : send DataP {acknoP = 1, seqnoP = 3, payloadP = "\n"}
-25252 : recv AckP {ackNo = 3}
-25253 : recv DataP {acknoP = 1, seqnoP = 3, payload = Empty}
-25253 : recv DataP {acknoP = 1, seqnoP = 3, payload = Empty}
-25252 : send DataP {acknoP = 1, seqnoP = 3, payloadP = "\n"}
+[listening on UDP port 33461]
+[listening on UDP port 34315]
+26458 : recv DataP {acknoP = 1, seqnoP = 1, payload = "request\n"}
+26458 : send Ackp {ackNo = 2}
+26457 : send DataP {acknoP = 1, seqnoP = 1, payloadP = "request\n"}
+26457 : recv AckP {ackNo = 2}
+26457 : send DataP {acknoP = 1, seqnoP = 2, payloadP = "\n"}
+26458 : recv DataP {acknoP = 1, seqnoP = 2, payload = Empty}
+26458 : send Ackp {ackNo = 3}
+26458 : recv DataP {acknoP = 1, seqnoP = 3, payload = Empty}
+26457 : recv AckP {ackNo = 3}
+26457 : send DataP {acknoP = 1, seqnoP = 3, payloadP = "\n"}
+26457 : send DataP {acknoP = 1, seqnoP = 3, payloadP = "\n"}
+26458 : recv DataP {acknoP = 1, seqnoP = 3, payload = Empty}
