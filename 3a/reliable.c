@@ -47,6 +47,7 @@ void send_ack(rel_t *s);
 void hton_pconvert(packet_t *pkt);
 void ntoh_pconvert(packet_t *pkt);
 void per(char *st);
+void per2(char *st, int i);
 void ppkt(packet_t *pkt);
 void print_buf_ptrs(rel_t *r);
 
@@ -217,7 +218,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 	/* handle ack packet */
 	if(pkt->len == ACK_LEN) {
-		per("received ACK");
+		per2("Received ACK", pkt->ackno);
 		handle_connection_close(r, NO_WAIT);
 	}
 
@@ -238,6 +239,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		/* return if packet is a duplicate */
 		if(pkt->seqno < r->next_pkt_expected) {
 			per("Packet is duplicate!");
+			rel_output(r);
 			return;
 		}
 
@@ -285,9 +287,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 		/* output packet */
 		if(!isEOF) rel_output(r);
-
-		/* send ack */
-		send_ack(r);
 
 		/* additional EOF handling */
 		if(isEOF) {
@@ -355,12 +354,16 @@ void rel_output(rel_t *r)
 		/* output packet */
 		int out_len = conn_output(r->c, rbuf->data, rbuf->data_len);
 		if(out_len <= 0) {
+			per("Data output error.");
 			return;
 		}
 
 		/* update last packet read seqno and buffer index */
 		r->last_pkt_read++;
 		r->rbuf_start_index = get_rbuf_index(r->last_pkt_read + 1, r);
+
+		/* send ack */
+		send_ack(r);
 
 		/* check connection closed */
 		handle_connection_close(r, NO_WAIT);
@@ -537,7 +540,13 @@ void send_ack(rel_t *s) {
 	ack->cksum = cksum(ack, ACK_LEN);
 
 	/* send packet */
-	conn_sendpkt(s->c, ack, ACK_LEN);
+	if(conn_sendpkt(s->c, ack, ACK_LEN) < 0) {
+		per2("Send failed for ACK", s->next_pkt_expected);
+	} else {
+		/* debug printing */
+		per2("Sent ACK", s->next_pkt_expected);
+	}
+
 	free(ack);
 }
 
@@ -563,6 +572,9 @@ void hton_pconvert(packet_t *pkt) {
 /* print message with PID to standard error */
 void per(char *st) {
 	fprintf(stderr, "%d: %s\n", getpid(), st);
+}
+void per2(char *st, int i) {
+	fprintf(stderr, "%d: %s %d\n", getpid(), st, i);
 }
 
 
