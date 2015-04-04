@@ -207,7 +207,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	}
 
 	/* convert packet to host byte order */
-	hton_pconvert(pkt);
+	ntoh_pconvert(pkt);
 
 	/* update last byte acked regardless of packet type */
 	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) {
