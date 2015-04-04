@@ -371,7 +371,6 @@ void rel_output(rel_t *r)
 void rel_timer ()
 {
 	// TODO loop through all connections
-	per("rel_timer");
 	rel_t *r = rel_list;
 	struct timespec *tbuf = xmalloc(sizeof(struct timespec));
 	int sn;
@@ -379,10 +378,6 @@ void rel_timer ()
 		pbuf_t *sbuf = sbuf_from_seqno(sn, r);
 		clock_gettime(CLOCK_MONOTONIC, tbuf);
 		double t_elapsed_ms = 1000 * difftime(tbuf->tv_sec, sbuf->send_time.tv_sec);
-
-		per("timer");
-		fprintf(stderr, "time elapsed : %f\n", t_elapsed_ms);
-		fprintf(stderr, "timeout      : %d\n", r->timeout);
 
 		if(t_elapsed_ms >= r->timeout) {
 			send_packet(sbuf, r);
@@ -426,7 +421,7 @@ int get_buf_index(int sq_start, int sq_target, int buf_start, int buf_length) {
 
 	/* validate offset */
 	if(offset < 0 || offset > buf_length) {
-		fprintf(stderr, "Invalid offset.\n");
+		per("Invalid offset.");
 		return -1;
 	}
 
@@ -503,7 +498,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 
 	/* send packet */
 	if(conn_sendpkt(s->c, pkt, pkt_len) > 0) {
-		s->last_pkt_sent++;
+		s->last_pkt_sent = (pbuf->seqno > s->last_pkt_sent) ? pbuf->seqno : s->last_pkt_sent;
 		clock_gettime(CLOCK_MONOTONIC, &pbuf->send_time);
 	} else {
 		per("Packet sending failed!");
