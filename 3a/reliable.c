@@ -26,7 +26,9 @@
 // Questions:
 
 // TODO
-// - figure out connection closing
+// - debug first packet is EOF
+// - debug EOF retransmission
+// - debug print last rcvd data when receive ACK
 // - check all requirements in 356 handout and Stanford handout
 
 
@@ -228,9 +230,9 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 		/* debug printing */
 		if(isEOF) {
-			fprintf(stderr, "recv DataP {ackNo = %d, seqnoP = %d, payload = %s}\n", pkt->ackno, pkt->seqno, "Empty"); //DEBUG
+			fprintf(stderr, "recv DataP {acknoP = %d, seqnoP = %d, payload = %s}\n", pkt->ackno, pkt->seqno, "Empty"); //DEBUG
 		} else {
-			fprintf(stderr, "recv DataP {ackNo = %d, seqnoP = %d, payload = \"%.*s\\n\"}\n", pkt->ackno, pkt->seqno, pkt->len-PKT_HDR_LEN-1, pkt->data); //DEBUG
+			fprintf(stderr, "recv DataP {acknoP = %d, seqnoP = %d, payload = \"%.*s\\n\"}\n", pkt->ackno, pkt->seqno, pkt->len-PKT_HDR_LEN-1, pkt->data); //DEBUG
 		}
 
 		/* return if packet is a duplicate */
@@ -270,11 +272,12 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 			/* increment num data packets received */
 			r->num_dpkts_rcvd++;
-
 		}
 
 		/* update last packet received */
-		r->last_pkt_received = pkt->seqno;
+		if(pkt->seqno > r->last_pkt_received) {
+			r->last_pkt_received = pkt->seqno;
+		}
 
 		/* update next packet expected */
 		if(pkt->seqno == r->next_pkt_expected) {
@@ -494,7 +497,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	if(conn_sendpkt(s->c, pkt, pkt_len) > 0) {
 		s->last_pkt_sent = (pbuf->seqno > s->last_pkt_sent) ? pbuf->seqno : s->last_pkt_sent;
 		clock_gettime(CLOCK_MONOTONIC, &pbuf->send_time);
-		fprintf(stderr, "send DataP {ackNo = %d, seqnoP = %d, payloadP = \"%.*s\\n\"}\n", s->next_pkt_expected, pbuf->seqno, pbuf->data_len-1, pkt->data); //DEBUG
+		fprintf(stderr, "send DataP {acknoP = %d, seqnoP = %d, payloadP = \"%.*s\\n\"}\n", s->next_pkt_expected, pbuf->seqno, pbuf->data_len-1, pkt->data); //DEBUG
 	} else {
 		per("Packet sending failed!");
 	}
