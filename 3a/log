@@ -1,73 +1,102 @@
-[listening on UDP port 56708]
-[listening on UDP port 38545]
-28048: rel_read
-28048: sent data packet
+[listening on UDP port 56797]
+[listening on UDP port 59030]
 ==========================
-28048: PACKET
+SEND BUFFER
 ==========================
-length : 20
-seqno  : 1
-data   : request
-
+sbuf_start_index  : 0
+last_pkt_acked    : 0
+last_pkt_sent     : 0
+last_pkt_written  : 0
+max_send_buffer   : 1
 ==========================
-28048: rel_read : end of while
-28048: rel_read
-28048: rel_read : end of while
-28048: rel_recvpkt
-28048: rel_read
-28048: sent EOF packet
 ==========================
-28048: PACKET
+RECEIVE BUFFER
 ==========================
-length : 12
-seqno  : 2
-data   : 
+rbuf_start_index  : 0
+last_pkt_read     : 0
+next_pkt_expected : 1
+last_pkt_received : 0
 ==========================
-28048: rel_read : end of while
-28048: Received ACK 2
-28049: rel_recvpkt
-28049: received DATA packet
 ==========================
-28049: PACKET
+CLOSE STATE
 ==========================
-length : 20
-seqno  : 1
-data   : request
-
+remote_eof_seqno   : 0
+local_eof_seqno    : 0
+25252 : send DataP {acknoP = 1, seqnoP = 1, payloadP = "request\n"}
 ==========================
-28049: rel_output
-28049: Sent ACK 2
-28049: rel_recvpkt
-28049: received EOF packet
+SEND BUFFER
 ==========================
-28049: PACKET
+sbuf_start_index  : 0
+last_pkt_acked    : 0
+last_pkt_sent     : 1
+last_pkt_written  : 1
+max_send_buffer   : 1
 ==========================
-length : 12
-seqno  : 2
-data   : ииииииии
 ==========================
-28048: retransmitting 2
-28048: sent EOF packet
+RECEIVE BUFFER
 ==========================
-28048: PACKET
+rbuf_start_index  : 0
+last_pkt_read     : 0
+next_pkt_expected : 1
+last_pkt_received : 0
 ==========================
-length : 12
-seqno  : 2
-data   : 
 ==========================
-28049: rel_recvpkt
-28049: received EOF packet
+CLOSE STATE
 ==========================
-28049: PACKET
+remote_eof_seqno   : 0
+local_eof_seqno    : 0
 ==========================
-length : 12
-seqno  : 2
-data   : ииииииии
+SEND BUFFER
 ==========================
-28049: Packet is duplicate!
-28049: rel_output
-28049: Sent ACK 3
-28048: rel_recvpkt
-28048: rel_read
-28048: rel_read : end of while
-28048: Received ACK 3
+sbuf_start_index  : 0
+last_pkt_acked    : 1
+last_pkt_sent     : 1
+last_pkt_written  : 1
+max_send_buffer   : 1
+==========================
+==========================
+RECEIVE BUFFER
+==========================
+rbuf_start_index  : 0
+last_pkt_read     : 0
+next_pkt_expected : 1
+last_pkt_received : 0
+==========================
+==========================
+CLOSE STATE
+==========================
+remote_eof_seqno   : 0
+local_eof_seqno    : 0
+25252 : send DataP {acknoP = 1, seqnoP = 2, payloadP = "\n"}
+25252 : recv AckP {ackNo = 2}
+25253 : recv DataP {acknoP = 1, seqnoP = 1, payload = "request\n"}
+25253 : send Ackp {ackNo = 2}
+25253 : recv DataP {acknoP = 1, seqnoP = 2, payload = Empty}
+25253 : send Ackp {ackNo = 3}
+==========================
+SEND BUFFER
+==========================
+sbuf_start_index  : 0
+last_pkt_acked    : 2
+last_pkt_sent     : 2
+last_pkt_written  : 2
+max_send_buffer   : 1
+==========================
+==========================
+RECEIVE BUFFER
+==========================
+rbuf_start_index  : 0
+last_pkt_read     : 0
+next_pkt_expected : 1
+last_pkt_received : 0
+==========================
+==========================
+CLOSE STATE
+==========================
+remote_eof_seqno   : 0
+local_eof_seqno    : 2
+25252 : send DataP {acknoP = 1, seqnoP = 3, payloadP = "\n"}
+25252 : recv AckP {ackNo = 3}
+25253 : recv DataP {acknoP = 1, seqnoP = 3, payload = Empty}
+25253 : recv DataP {acknoP = 1, seqnoP = 3, payload = Empty}
+25252 : send DataP {acknoP = 1, seqnoP = 3, payloadP = "\n"}

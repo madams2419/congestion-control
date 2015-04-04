@@ -30,6 +30,7 @@
 // - debug EOF retransmission
 // - debug print last rcvd data when receive ACK
 // - check all requirements in 356 handout and Stanford handout
+// - have handle_connection_close return an boolean and return from calling function if true
 
 
 typedef struct packet_buf pbuf_t;
@@ -209,17 +210,17 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	/* convert packet to host byte order */
 	ntoh_pconvert(pkt);
 
+	/* debug */
+	if(pkt->len == ACK_LEN) {
+		fprintf(stderr, "%d : recv AckP {ackNo = %d}\n", getpid(), pkt->ackno); //DEBUG
+	}
+
 	/* update last byte acked regardless of packet type */
 	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) {
 		r->last_pkt_acked = pkt->ackno - 1;
 		r->sbuf_start_index = get_sbuf_index(r->last_pkt_acked + 1, r);
-		rel_read(r);
-	}
-
-	/* handle ack packet */
-	if(pkt->len == ACK_LEN) {
-		fprintf(stderr, "recv AckP {ackNo = %d}\n", pkt->ackno); //DEBUG
 		handle_connection_close(r, NO_WAIT);
+		rel_read(r);
 	}
 
 	/* handle eof or data packet */
@@ -230,9 +231,9 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 		/* debug printing */
 		if(isEOF) {
-			fprintf(stderr, "recv DataP {acknoP = %d, seqnoP = %d, payload = %s}\n", pkt->ackno, pkt->seqno, "Empty"); //DEBUG
+			fprintf(stderr, "%d : recv DataP {acknoP = %d, seqnoP = %d, payload = %s}\n", getpid(), pkt->ackno, pkt->seqno, "Empty"); //DEBUG
 		} else {
-			fprintf(stderr, "recv DataP {acknoP = %d, seqnoP = %d, payload = \"%.*s\\n\"}\n", pkt->ackno, pkt->seqno, pkt->len-PKT_HDR_LEN-1, pkt->data); //DEBUG
+			fprintf(stderr, "%d : recv DataP {acknoP = %d, seqnoP = %d, payload = \"%.*s\\n\"}\n", getpid(), pkt->ackno, pkt->seqno, pkt->len-PKT_HDR_LEN-1, pkt->data); //DEBUG
 		}
 
 		/* return if packet is a duplicate */
@@ -296,11 +297,12 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 void rel_read(rel_t *s)
 {
 	per("rel_read");
+	print_buf_ptrs(s);
 
 	//TODO protocol for determining how to structure packets
 	//TODO convert send buffer from packet to byte granularity
 
-	while (SEND_BUF_SPACE(s) > 0 && s->local_eof_seqno == 0) {
+	while (SEND_BUF_SPACE(s) > 0) {
 
 		/* get send buffer */
 		pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
@@ -492,7 +494,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	if(conn_sendpkt(s->c, pkt, pkt_len) > 0) {
 		s->last_pkt_sent = (pbuf->seqno > s->last_pkt_sent) ? pbuf->seqno : s->last_pkt_sent;
 		clock_gettime(CLOCK_MONOTONIC, &pbuf->send_time);
-		fprintf(stderr, "send DataP {acknoP = %d, seqnoP = %d, payloadP = \"%.*s\\n\"}\n", s->next_pkt_expected, pbuf->seqno, pbuf->data_len-1, pkt->data); //DEBUG
+		fprintf(stderr, "%d : send DataP {acknoP = %d, seqnoP = %d, payloadP = \"%.*s\\n\"}\n", getpid(), s->next_pkt_expected, pbuf->seqno, pbuf->data_len-1, pkt->data); //DEBUG
 	} else {
 		per("Packet sending failed!");
 	}
@@ -533,7 +535,7 @@ void send_ack(rel_t *s) {
 	if(conn_sendpkt(s->c, ack, ACK_LEN) < 0) {
 		per2("Send failed for ACK", s->next_pkt_expected);
 	} else {
-		fprintf(stderr, "send Ackp {ackNo = %d}\n", s->next_pkt_expected); //DEBUG
+		fprintf(stderr, "%d : send Ackp {ackNo = %d}\n", getpid(), s->next_pkt_expected); //DEBUG
 	}
 
 	free(ack);
@@ -588,6 +590,7 @@ void print_buf_ptrs(rel_t *r) {
 	fprintf(stderr, "last_pkt_acked    : %d\n", r->last_pkt_acked);
 	fprintf(stderr, "last_pkt_sent     : %d\n", r->last_pkt_sent);
 	fprintf(stderr, "last_pkt_written  : %d\n", r->last_pkt_written);
+	fprintf(stderr, "max_send_buffer   : %d\n", r->max_send_buffer);
 	fprintf(stderr, "==========================\n");
 
 	fprintf(stderr, "==========================\n");
