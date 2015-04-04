@@ -380,7 +380,7 @@ void rel_timer ()
 		double t_elapsed_ms = 1000 * difftime(tbuf->tv_sec, sbuf->send_time.tv_sec);
 
 		if(t_elapsed_ms >= r->timeout) {
-			//send_packet(sbuf, r); //DEBUG
+			send_packet(sbuf, r);
 		}
 
 	}
