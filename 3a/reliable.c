@@ -17,7 +17,6 @@
 #define ACK_LEN 8
 #define PKT_HDR_LEN 12
 #define MAX_PACKET_SIZE 500
-#define RCV_BUF_SIZE 10
 #define WAIT 1
 #define NO_WAIT 0
 
@@ -140,7 +139,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->last_pkt_written = 0;
 
 	/* initialize receive side */
-	r->max_rcv_buffer = RCV_BUF_SIZE; //TODO what should this be
+	r->max_rcv_buffer = r->window; //TODO what should this be
 	r->rcv_buffer = create_srbuf(r->rcv_buffer, r->max_rcv_buffer);
 	r->num_dpkts_rcvd = 0;
 	r->last_pkt_read = 0;
@@ -342,12 +341,14 @@ void rel_read(rel_t *s)
 
 void rel_output(rel_t *r)
 {
+	per("rel_output");
 	while (r->last_pkt_read < (r->next_pkt_expected - 1)) {
 		size_t buf_space = conn_bufspace(r->c);
 		pbuf_t *rbuf = rbuf_from_seqno(r->last_pkt_read + 1, r);
 
 		/* return if there is insufficient space in the application buffer */
 		if(buf_space < rbuf->data_len) {
+			per("Insufficient space in conn_buffer.");
 			return;
 		}
 
@@ -383,6 +384,7 @@ void rel_timer ()
 		double t_elapsed_ms = 1000 * difftime(tbuf->tv_sec, sbuf->send_time.tv_sec);
 
 		if(t_elapsed_ms >= r->timeout) {
+			per2("retransmitting", sbuf->seqno);
 			send_packet(sbuf, r);
 		}
 
