@@ -244,7 +244,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		}
 
 		/* return if packet sequenced after eof */
-		if(r->remote_eof_seqno > 0 && pkt->seqno >= r->remote_eof_seqno) {
+		if(r->remote_eof_seqno > 0 && pkt->seqno > r->remote_eof_seqno) {
 			per("Packet sequenced after EOF");
 			return;
 		}
@@ -298,7 +298,7 @@ void rel_read(rel_t *s)
 	//TODO protocol for determining how to structure packets
 	//TODO convert send buffer from packet to byte granularity
 
-	while (SEND_BUF_SPACE(s) > 0 && s->local_eof_seqno == 0) {
+	while (SEND_BUF_SPACE(s) > 0) {
 
 		/* get send buffer */
 		pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
@@ -556,10 +556,10 @@ void hton_pconvert(packet_t *pkt) {
 
 /* print message with PID to standard error */
 void per(char *st) {
-	fprintf(stderr, "%d: %s\n", getpid(), st);
+	//fprintf(stderr, "%d: %s\n", getpid(), st);
 }
 void per2(char *st, int i) {
-	fprintf(stderr, "%d: %s %d\n", getpid(), st, i);
+	//fprintf(stderr, "%d: %s %d\n", getpid(), st, i);
 }
 
 
