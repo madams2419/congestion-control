@@ -239,6 +239,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		/* return if packet is a duplicate */
 		if(pkt->seqno < r->next_pkt_expected) {
 			per("Packet is duplicate!");
+			send_ack(r);
 			rel_output(r);
 			return;
 		}
