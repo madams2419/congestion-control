@@ -276,6 +276,9 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			r->next_pkt_expected++;
 		}
 
+		/* send ack */
+		send_ack(r);
+
 		/* output packets */
 		rel_output(r);
 
@@ -354,9 +357,6 @@ void rel_output(rel_t *r)
 		/* update last packet read seqno and buffer index */
 		r->last_pkt_read++;
 		r->rbuf_start_index = get_rbuf_index(r->last_pkt_read + 1, r);
-
-		/* send ack */
-		send_ack(r);
 
 		/* check connection closed */
 		handle_connection_close(r, NO_WAIT);
