@@ -15,14 +15,14 @@
 #include "rlib.h"
 
 #define ACK_LEN 8
-#define PKT_HDR_LEN 12
-#define PKT_DATA_LEN 500
+#define PKT_HDR_LEN 12 //3B this might be different
+#define PKT_DATA_LEN 500 //3B this should be 1000 for 3B I think
 #define WAIT 1
 #define NO_WAIT 0
 
 #define ADVERTISED_WINDOW(r) r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
-#define EFFECTIVE_WINDOW(r) r->advertised_window - (r->last_pkt_sent - r->last_pkt_acked)
+#define EFFECTIVE_WINDOW(r) r->remote_window - (r->last_pkt_sent - r->last_pkt_acked)
 
 // Questions:
 
@@ -70,7 +70,7 @@ struct reliable_state
 
 	pbuf_t **send_buffer;
 	int max_send_buffer;
-	int advertised_window; //3B this must be updated on every valid packet received in rel_recvpkt
+	int remote_window; //3B this must be updated on every valid packet received in rel_recvpkt
 	int last_pkt_acked;
 	int sbuf_start_index;
 	int last_pkt_sent;
@@ -136,7 +136,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* initialize send side */
 	r->max_send_buffer = r->window; //3B I think this is specified differently in 3B
-	r->advertised_window = r->window; //3B not sure what this should be initialized to
+	r->remote_window = r->window; //3B not sure what this should be initialized to
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
 	r->sbuf_start_index = 0;
@@ -224,6 +224,9 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		handle_connection_close(r, NO_WAIT);
 		rel_read(r);
 	}
+
+	/* update remote advertised window regardless of packet type */
+	//r->remote_window = pkt->rwnd; //3B this is essentially what we want to set the remote window. might want to only do it under certain conditions though...
 
 	/* handle eof or data packet */
 	else if(pkt->len >= PKT_HDR_LEN) {
@@ -477,6 +480,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	pkt->cksum = 0;
 	pkt->len = pkt_len;
 	pkt->ackno = s->next_pkt_expected;
+	//pkt->rwnd = ADVERTISED_WINDOW(s); //3B this populates packet with advertised window
 	pkt->seqno = pbuf->seqno;
 	memcpy(pkt->data, pbuf->data, pbuf->data_len);
 
@@ -506,8 +510,8 @@ void send_next_packet(rel_t *s) {
 		return;
 	}
 
-	/* return if effective window is zero */
-	if(EFFECTIVE_WINDOW(s) == 0) {
+	/* return if effective window is too small */
+	if(EFFECTIVE_WINDOW(s) <= 0) {
 		return;
 	}
 
@@ -526,6 +530,7 @@ void send_ack(rel_t *s) {
 	ack->cksum = 0;
 	ack->len = ACK_LEN;
 	ack->ackno = s->next_pkt_expected;
+	//ack->rwnd = ADVERTISED_WINDOW(s); //3B this populates ack with advertised window
 
 	/* convert to network byte order */
 	hton_pconvert(ack);
