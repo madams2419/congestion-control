@@ -225,7 +225,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 	/* handle eof or data packet */
 	else if(pkt->len >= PKT_HDR_LEN) {
-
 		/* eof boolean */
 		int isEOF = (pkt->len == PKT_HDR_LEN);
 
@@ -249,25 +248,22 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			return;
 		}
 
-		/* handle data packet */
-		if(!isEOF) {
-			/* return if there is insufficient space in the buffer */
-			int space_required = (r->last_pkt_received == -1) ? 1 : pkt->seqno - r->last_pkt_received;
-			if(space_required > RCV_BUF_SPACE(r)) {
-				per("Insufficient RCV buffer space.");
-				return;
-			}
-
-			/* copy payload to receive buffer */
-			int data_len = pkt->len - PKT_HDR_LEN;
-			pbuf_t *rbuf = rbuf_from_seqno(pkt->seqno, r);
-			rbuf->seqno = pkt->seqno;
-			rbuf->data_len = data_len;
-			memcpy(rbuf->data, pkt->data, data_len);
-
-			/* increment num data packets received */
-			r->num_dpkts_rcvd++;
+		/* return if there is insufficient space in the buffer */
+		int space_required = (r->last_pkt_received == -1) ? 1 : pkt->seqno - r->last_pkt_received;
+		if(space_required > RCV_BUF_SPACE(r)) {
+			per("Insufficient RCV buffer space.");
+			return;
 		}
+
+		/* copy payload to receive buffer */
+		int data_len = pkt->len - PKT_HDR_LEN;
+		pbuf_t *rbuf = rbuf_from_seqno(pkt->seqno, r);
+		rbuf->seqno = pkt->seqno;
+		rbuf->data_len = data_len;
+		memcpy(rbuf->data, pkt->data, data_len);
+
+		/* increment num data packets received */
+		r->num_dpkts_rcvd++;
 
 		/* update last packet received */
 		if(pkt->seqno > r->last_pkt_received) {
@@ -282,14 +278,14 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		/* send ack */
 		send_ack(r);
 
-		/* final handling */
+		/* output packets */
+		rel_output(r);
+
+		/* additional eof handling */
 		if(isEOF) {
 			r->remote_eof_seqno = pkt->seqno;
 			handle_connection_close(r, WAIT);
-		} else {
-			rel_output(r);
 		}
-
 	}
 }
 
@@ -297,7 +293,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 void rel_read(rel_t *s)
 {
 	per("rel_read");
-	fprintf(stderr, "%d : rel_read\n", getpid());
 
 	//TODO protocol for determining how to structure packets
 	//TODO convert send buffer from packet to byte granularity
@@ -340,8 +335,7 @@ void rel_read(rel_t *s)
 void rel_output(rel_t *r)
 {
 	per("rel_output");
-	while (r->last_pkt_read + 1 != r->remote_eof_seqno &&
-			 r->last_pkt_read + 1 < r->next_pkt_expected) {
+	while (r->last_pkt_read + 1 < r->next_pkt_expected) {
 
 		size_t buf_space = conn_bufspace(r->c);
 		pbuf_t *rbuf = rbuf_from_seqno(r->last_pkt_read + 1, r);
@@ -366,7 +360,6 @@ void rel_output(rel_t *r)
 		/* check connection closed */
 		handle_connection_close(r, NO_WAIT);
 	}
-
 }
 
 void rel_timer ()

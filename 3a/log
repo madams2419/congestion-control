@@ -1,14 +1,644 @@
-[listening on UDP port 54886]
-[listening on UDP port 46799]
-28715 : rel_read
-28716 : recv DataP {acknoP = 1, seqnoP = 1, payload = "request\n"}
-28716 : send Ackp {ackNo = 2}
-28716 : recv DataP {acknoP = 1, seqnoP = 2, payload = Empty}
-28716 : send Ackp {ackNo = 3}
-28715 : send DataP {acknoP = 1, seqnoP = 1, payloadP = "request\n"}
-28715 : rel_read
-28715 : recv AckP {ackNo = 2}
-28715 : rel_read
-28715 : send DataP {acknoP = 1, seqnoP = 2, payloadP = "\n"}
-28715 : recv AckP {ackNo = 3}
-28715 : rel_read
+[listening on UDP port 44513]
+[listening on UDP port 44234]
+4376 : recv DataP {acknoP = 1, seqnoP = 1, payload = Empty}
+4376 : send Ackp {ackNo = 2}
+4378 : send DataP {acknoP = 1, seqnoP = 1, payloadP = "\n"}
+4378 : recv AckP {ackNo = 2}
+4376 : send DataP {acknoP = 2, seqnoP = 1, payloadP = "ÔÀ q¾Zcùƒ\·[ÕqŽ¾b‘iO\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 1, payload = "ÔÀ q¾Zcùƒ\·[ÕqŽ¾b‘iO\n"}
+4378 : send Ackp {ackNo = 2}
+4376 : recv AckP {ackNo = 2}
+4376 : send DataP {acknoP = 2, seqnoP = 2, payloadP = "	VØ7\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 2, payload = "	VØ7\n"}
+4378 : send Ackp {ackNo = 3}
+4376 : recv AckP {ackNo = 3}
+4376 : send DataP {acknoP = 2, seqnoP = 3, payloadP = "õ	ªG9ø÷\ž?p·…mATÔG]”Q'zÁ;èAXuewNB^s8âs39‚Oå#Êã1q`wí:¿½'Ò(îý]®:”•¥s\›Ú9*r_f2´,(#õlsÓº«ï…ôÀ`GòÙß FÆèOrC´Š|ùÅ1à©zw,t´(Þ"šÍSk²v6¡Ë£(·yYT&“o¤ 'édÁ$2™ž1(2Ö8È¯ß/XÐ?Œbmf¥˜îvá­€DOásn´|CcùãSô'F¤dÉ;¡þžK­ÄñóÆ}àÍm3À9)ø¾¶¸²4xøÄ â•+Õ7þ!Ûç?äàÚÖÌE+ÿEDÞŸ~ÊéB|~ ef½tçš  ŒœåHðâf:UaœcÀ»H¾È‡î‘61ÉLÉ˜Eý¦ïù¯ø‰’ÎÑg–œqúr‘±ñòÓµèñ évAºI‡|o{H“ê¡S4þWŸ™‹éo·ðsHh_|ˆ~IïhÜ†ˆ§‚}¼Ü¯ÖbIiˆîê_jpÇŠîL™I2‘†ªdº¢¹ü%´´ìsaEÔƒdŽzÌø_ÝZ9ž“2‰Ùgdsû	!ûÑå°Œ=l=+­³ÛÓoL¦jzêXÏwøer€¹ƒS¼‘ˆŸTMÀ¯Òº\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 3, payload = "õ	ªG9ø÷\ž?p·…mATÔG]”Q'zÁ;èAXuewNB^s8âs39‚Oå#Êã1q`wí:¿½'Ò(îý]®:”•¥s\›Ú9*r_f2´,(#õlsÓº«ï…ôÀ`GòÙß FÆèOrC´Š|ùÅ1à©zw,t´(Þ"šÍSk²v6¡Ë£(·yYT&“o¤ 'édÁ$2™ž1(2Ö8È¯ß/XÐ?Œbmf¥˜îvá­€DOásn´|CcùãSô'F¤dÉ;¡þžK­ÄñóÆ}àÍm3À9)ø¾¶¸²4xøÄ â•+Õ7þ!Ûç?äàÚÖÌE+ÿEDÞŸ~ÊéB|~ ef½tçš  ŒœåHðâf:UaœcÀ»H¾È‡î‘61ÉLÉ˜Eý¦ïù¯ø‰’ÎÑg–œqúr‘±ñòÓµèñ évAºI‡|o{H“ê¡S4þWŸ™‹éo·ðsHh_|ˆ~IïhÜ†ˆ§‚}¼Ü¯ÖbIiˆîê_jpÇŠîL™I2‘†ªdº¢¹ü%´´ìsaEÔƒdŽzÌø_ÝZ9ž“2‰Ùgdsû	!ûÑå°Œ=l=+­³ÛÓoL¦jzêXÏwøer€¹ƒS¼‘ˆŸTMÀ¯Òº\n"}
+4378 : send Ackp {ackNo = 4}
+4376 : recv AckP {ackNo = 4}
+4376 : send DataP {acknoP = 2, seqnoP = 4, payloadP = "÷ÞBCd÷¯«^4@FzZ¨ |üç—¬Ø–wÊÊ8ôÈ—ëTíH²>‘ýÑ¬´•C¬”*'ïÞ«¨­û¢¦‡±EKIHö4ßé­Â9,YÓ¦qYokB¢Æ»éL×	oTqÆ»0Q`b®¤4Ø^./oÂà—5/6†È-Ë(3mø6Rß72¨úÿùt¸X¬Žú+ µûè
+Òmí„4+6uÖjûwu<á«+|~Óª˜É]¾/Qö&/ÈÉxL }nžÚ–ŒAš¹ÓúM0êUOQ2•Êä…P=NÎe½b~ãÜõÇŒ§váb½aÉŽáàÖ1({L<âœ_½4Ìn¹É/KX‚æª«‡.@r…í]3o\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 4, payload = "÷ÞBCd÷¯«^4@FzZ¨ |üç—¬Ø–wÊÊ8ôÈ—ëTíH²>‘ýÑ¬´•C¬”*'ïÞ«¨­û¢¦‡±EKIHö4ßé­Â9,YÓ¦qYokB¢Æ»éL×	oTqÆ»0Q`b®¤4Ø^./oÂà—5/6†È-Ë(3mø6Rß72¨úÿùt¸X¬Žú+ µûè
+Òmí„4+6uÖjûwu<á«+|~Óª˜É]¾/Qö&/ÈÉxL }nžÚ–ŒAš¹ÓúM0êUOQ2•Êä…P=NÎe½b~ãÜõÇŒ§váb½aÉŽáàÖ1({L<âœ_½4Ìn¹É/KX‚æª«‡.@r…í]3o\n"}
+4378 : send Ackp {ackNo = 5}
+4378 : recv DataP {acknoP = 2, seqnoP = 5, payload = "WÆ;¨´Lªá-EúýujŽa¿q“ì¯¦1¤¨nªè”h1×oxæ»C¢9(îÀ+íö©$’Ç-$ÅËê.€gÞdqÏð`òøž…F2îê¨¿³uÛ*ç‡ÛÐcá±&(Ÿ±'Õ¸L!,@¤4ká"³Àß•òp§·ííË+	Øæ¤pí¬Pî.ÒîõÅ¯¸{êà1¾$ÿWz	}¯úê'‰Ð]È=ûÆaoÒŽ'X¸Q³å1X=Mt,¹YÁ:sJ¢\CH²ìŒ3Ý9>ÞNîSÖnT%ŒðkšmhNJY}­e½÷>cmçYqñ½2,SÌÕÞk®4;žÁóžÄT¤žÙ†NÈÛ¶9
+AâìãÁäöÕ*dñ¥®¼ªa(Ý!£nê2(û	-É#3mKu,{fï=PDá€7ÎÀbžt5ÖÎí¡í/ÄpF’‹1wÄûÅò@²yQìÊÀ‰û
+×}©1¤ÀIKb#Ó€×¾dè,­ˆó$Qp]s0ÊÂmÀ¤Ó,®3L¡CöAœE2A?,&„FÀŽ®±ŠhÚb¾*­Ñ­6(§¦“Èp<Ðƒ_:W!MÀÿAŸºwZ¸QÏDâ\n"}
+4378 : send Ackp {ackNo = 6}
+4376 : recv AckP {ackNo = 5}
+4376 : send DataP {acknoP = 2, seqnoP = 5, payloadP = "WÆ;¨´Lªá-EúýujŽa¿q“ì¯¦1¤¨nªè”h1×oxæ»C¢9(îÀ+íö©$’Ç-$ÅËê.€gÞdqÏð`òøž…F2îê¨¿³uÛ*ç‡ÛÐcá±&(Ÿ±'Õ¸L!,@¤4ká"³Àß•òp§·ííË+	Øæ¤pí¬Pî.ÒîõÅ¯¸{êà1¾$ÿWz	}¯úê'‰Ð]È=ûÆaoÒŽ'X¸Q³å1X=Mt,¹YÁ:sJ¢\CH²ìŒ3Ý9>ÞNîSÖnT%ŒðkšmhNJY}­e½÷>cmçYqñ½2,SÌÕÞk®4;žÁóžÄT¤žÙ†NÈÛ¶9
+AâìãÁäöÕ*dñ¥®¼ªa(Ý!£nê2(û	-É#3mKu,{fï=PDá€7ÎÀbžt5ÖÎí¡í/ÄpF’‹1wÄûÅò@²yQìÊÀ‰û
+×}©1¤ÀIKb#Ó€×¾dè,­ˆó$Qp]s0ÊÂmÀ¤Ó,®3L¡CöAœE2A?,&„FÀŽ®±ŠhÚb¾*­Ñ­6(§¦“Èp<Ðƒ_:W!MÀÿAŸºwZ¸QÏDâ\n"}
+4376 : recv AckP {ackNo = 6}
+4376 : send DataP {acknoP = 2, seqnoP = 6, payloadP = "!aË´ý˜-ˆw·ÏH¿”Å“£äÑÀRÆ¤áUóª1÷‹ý}ºYìæÓI×h"„6JêÎ8”KÏˆÐÝ±5îMT3—Jôí–Nì\ÕR¢EÍÆèHU\çIwŸÊOÂ¤Íé¿ßÑÆó÷UÞ×ìðW´Bò‚Ê°'=+G‰­óáFYhLˆ¨'ø®á¨Ø]	.k[9ë¼íôéÓfÞ26¥Ìf#†•‚Êº<Xø´vŸÔK’œàÑ5LÞ[‚îà¿~\n"}
+4376 : recv AckP {ackNo = 7}
+4376 : send DataP {acknoP = 2, seqnoP = 7, payloadP = "u£4¯‰’Vì]ô¬7ÇX60^ûœö³Ãf¡\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 6, payload = "!aË´ý˜-ˆw·ÏH¿”Å“£äÑÀRÆ¤áUóª1÷‹ý}ºYìæÓI×h"„6JêÎ8”KÏˆÐÝ±5îMT3—Jôí–Nì\ÕR¢EÍÆèHU\çIwŸÊOÂ¤Íé¿ßÑÆó÷UÞ×ìðW´Bò‚Ê°'=+G‰­óáFYhLˆ¨'ø®á¨Ø]	.k[9ë¼íôéÓfÞ26¥Ìf#†•‚Êº<Xø´vŸÔK’œàÑ5LÞ[‚îà¿~\n"}
+4378 : send Ackp {ackNo = 7}
+4378 : recv DataP {acknoP = 2, seqnoP = 7, payload = "u£4¯‰’Vì]ô¬7ÇX60^ûœö³Ãf¡\n"}
+4378 : send Ackp {ackNo = 8}
+4378 : recv DataP {acknoP = 2, seqnoP = 8, payload = "ž2”a
+8<ŒnÑ¹§ÌÔ§õ©˜ƒÔ|%X-óK–´{œ©\n"}
+4378 : send Ackp {ackNo = 9}
+4376 : recv AckP {ackNo = 8}
+4376 : send DataP {acknoP = 2, seqnoP = 8, payloadP = "ž2”a
+8<ŒnÑ¹§ÌÔ§õ©˜ƒÔ|%X-óK–´{œ©\n"}
+4376 : recv AckP {ackNo = 9}
+4376 : send DataP {acknoP = 2, seqnoP = 9, payloadP = "ØÆ¢ôÆ\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 9, payloadP = "ØÆ¢ôÆ\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 9, payload = "ØÆ¢ôÆ\n"}
+4378 : send Ackp {ackNo = 10}
+4376 : recv AckP {ackNo = 10}
+4376 : send DataP {acknoP = 2, seqnoP = 10, payloadP = "ŸZ^“û£1m›±JVCWGÆÈìºÝâ÷†ÿÆOF×ß
+ç³##»ÝÛžZ	 ƒI?‡\ðDÛàÍ>.gýù§ÓÝ[àãö¬f®-NåC0Oê7T$ÆëX=¸oL9gòoÌìŽ²uãZT€¬“ø¡naLê˜ö®ä×a±q7õEÆ¨·«ðqH>SMYµÛíÒwmu‡?*ˆð¾9¥W—ŽùÅ§Ö¹iáE½¿õ©?9Øvv!·OÌGL=ZÅ,4Öäu|uá$ûýRò±àE		ó¾ßf³Yã²'ôJYñø}5´Á¬‘°â<ò³‚h¦ý¦Õy\n"}
+4376 : recv AckP {ackNo = 11}
+4376 : send DataP {acknoP = 2, seqnoP = 11, payloadP = "½Ïö¢$eK4,+ä‰ì#ë°®sU”!z»}¹?ž»q}jp"p-Kýy÷cŠqlÖœ‚*‰f|‡¾äT`áj•!?í¡u¥cÆ>ügÈq~;Ü”a-µ¬˜ûHQ@j¨l,÷2bOë©lÞfÇMÎc¾Y¢ÒÊx#)x®T¤`%'ÜŠIg(¿v•»k?•[ªH¹^
+vlú~í­‡‘¾&¥Ì"™âÀd ˆ3äSÀNœJú\ÜE¾Ü*Hâ{Ø,1Nš90¨²U<càÂŸ&|`ú£¦ÆÌÓèà<øaƒÇÄÁí†¡Gi)pâ|rèâþæºmŽ
+Œ;€²”¿¾öÒ*šaGœP¾[‡µíVÔ5µ†šm¦õVM*VþF¥ÖœšZ¢¼$ÅÃŠ‹ÿwh»ÕJÙ~@f€+v,ä ›WÔòáÆö(ž‘Qå€üô2:¥–Fú}<A²øÃ„	ò¾ø‹ÞàˆF æ&ùf_®{ep †’to¾wœ¬°.ŠûËÿí…¤ŸÛ‘¨Xb+weÄX¼PJ/œ>É!™<‚õ†§ÝRÈt8¤7©\Ð‡Š6ñ\n"}
+4376 : recv AckP {ackNo = 12}
+4376 : send DataP {acknoP = 2, seqnoP = 12, payloadP = "e‡Õ¹=F¼4OCpÿ¡Ó¢µS‰g¹ž22â£è‡ÄˆÅNX)þ÷|iï¨^zU™D>ó“Ï¦l¾ôÜY¶âŠ.£Ž3&pòÛT©’ôú@$ÝÂ}Ìæü»`Ž_`ðÉ–²»Z	0ì/Ï°³)d7Ö‘Ü™ò³(H¤pÛ$’¬VWHb¿’£cÑuØ¶Kß»$Oû„ë}â¦EzBW2ÑïAæHPå¨×Ö½!3õ¹Šúl8á:Ù¹Ú9ôëQeÞºÎ´â™áà·xŒ·“œóð‡£L©áö10ê4(t%p}T‰©¼À« ãþvi½jÇ„Éè´'^“UÍˆç¼4¥ªÄG.ƒ	_3+šË¾ùyŽ†°”ÆårîÛN'¦Ûy7Œ‰XYg„û©¦L³K­ñ2(·åPÁ+ˆ=7CB¹(ðÌ¢(DÚÍ‰þqdÔJ<K¹IQ>.?–4“‡s.‚ÔÛ“£°&7ö]Í_¹\!ëÿÎábÐ!x9	YrôW³4÷ùkÃrÇîq‹°ÑÂùx÷€”h•eéŽò+Ãöæ-K]Ð}Þ#È°#1%·5">f­û{½»†¹]†°_U7C}Ç€Íq\=”´í ‡¯'q stçÑx.Ä¸mKcJÐ-¥1;\n"}
+4376 : recv AckP {ackNo = 13}
+4376 : send DataP {acknoP = 2, seqnoP = 13, payloadP = "™õ˜dx/oeØõN¢Çó¤†í°ëˆ‘˜Š;@@p[ÅAÆR‚TÝ_ê÷ü¨v!Ã]èY?FEo¡MGKÅíö?Hÿ”ŸÚ«¡NúÍÁ(;>B2‘uZÇM×®„9ï"øÇ«_Æ'ÓsÃeLZJ­ú¶i·(ôÿ®¶à¯mŠÝ0.ˆCC`D»Ü¨eñªTÒ¥¯?,?FÚ—®0;,«™¡‹œñ§5;6B	u3ýŒœ·\Žá"w|ÈÌÞBPŠëTpjÑÇ2â÷QC­áózŽ¡¾”Ô©o¨bŸK\n"}
+4376 : recv AckP {ackNo = 14}
+4376 : send DataP {acknoP = 2, seqnoP = 14, payloadP = "â#aj‰ò0­þÅ‡K*g°Ÿ¤íî³5î~&Ññ¶¨ÉÆÇ´'ÀI‡\n"}
+4376 : recv AckP {ackNo = 15}
+4376 : send DataP {acknoP = 2, seqnoP = 15, payloadP = "ïýýÌ5Cú
+DMö´×’6_!ÞÈÝ¬àš`×ýª•¢ ±˜Ñ¢™êÄ±Þ{	&ãK4ø³~!P,µfz¥9ºÿÁ$•Ûõª¿€µ‚@UBàªÉHûb:¡<Ùå±á Õ#ÅÄ$2\n"}
+4376 : recv AckP {ackNo = 16}
+4376 : send DataP {acknoP = 2, seqnoP = 16, payloadP = "\n"}
+4376 : recv AckP {ackNo = 17}
+4376 : send DataP {acknoP = 2, seqnoP = 17, payloadP = "3WMWø†Å¨Œhtrüç,†Ëg2ÊŒ¢ØC;1¥…«C]†âÀ¯xUÃÖéGßz„½&×"(Íø}i¸§Cpo~Æp‰V7ÅüìÀO©zCUF%-a‹kÞ‚ëŸ°\·›ÅwaWh™hú!"M‘Ú7ðß—yâ6~´F£7!^$îÛ?\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 10, payload = "ŸZ^“û£1m›±JVCWGÆÈìºÝâ÷†ÿÆOF×ß
+ç³##»ÝÛžZ	 ƒI?‡\ðDÛàÍ>.gýù§ÓÝ[àãö¬f®-NåC0Oê7T$ÆëX=¸oL9gòoÌìŽ²uãZT€¬“ø¡naLê˜ö®ä×a±q7õEÆ¨·«ðqH>SMYµÛíÒwmu‡?*ˆð¾9¥W—ŽùÅ§Ö¹iáE½¿õ©?9Øvv!·OÌGL=ZÅ,4Öäu|uá$ûýRò±àE		ó¾ßf³Yã²'ôJYñø}5´Á¬‘°â<ò³‚h¦ý¦Õy\n"}
+4378 : send Ackp {ackNo = 11}
+4378 : recv DataP {acknoP = 2, seqnoP = 11, payload = "½Ïö¢$eK4,+ä‰ì#ë°®sU”!z»}¹?ž»q}jp"p-Kýy÷cŠqlÖœ‚*‰f|‡¾äT`áj•!?í¡u¥cÆ>ügÈq~;Ü”a-µ¬˜ûHQ@j¨l,÷2bOë©lÞfÇMÎc¾Y¢ÒÊx#)x®T¤`%'ÜŠIg(¿v•»k?•[ªH¹^
+vlú~í­‡‘¾&¥Ì"™âÀd ˆ3äSÀNœJú\ÜE¾Ü*Hâ{Ø,1Nš90¨²U<càÂŸ&|`ú£¦ÆÌÓèà<øaƒÇÄÁí†¡Gi)pâ|rèâþæºmŽ
+Œ;€²”¿¾öÒ*šaGœP¾[‡µíVÔ5µ†šm¦õVM*VþF¥ÖœšZ¢¼$ÅÃŠ‹ÿwh»ÕJÙ~@f€+v,ä ›WÔòáÆö(ž‘Qå€üô2:¥–Fú}<A²øÃ„	ò¾ø‹ÞàˆF æ&ùf_®{ep †’to¾wœ¬°.ŠûËÿí…¤ŸÛ‘¨Xb+weÄX¼PJ/œ>É!™<‚õ†§ÝRÈt8¤7©\Ð‡Š6ñ\n"}
+4378 : send Ackp {ackNo = 12}
+4378 : recv DataP {acknoP = 2, seqnoP = 12, payload = "e‡Õ¹=F¼4OCpÿ¡Ó¢µS‰g¹ž22â£è‡ÄˆÅNX)þ÷|iï¨^zU™D>ó“Ï¦l¾ôÜY¶âŠ.£Ž3&pòÛT©’ôú@$ÝÂ}Ìæü»`Ž_`ðÉ–²»Z	0ì/Ï°³)d7Ö‘Ü™ò³(H¤pÛ$’¬VWHb¿’£cÑuØ¶Kß»$Oû„ë}â¦EzBW2ÑïAæHPå¨×Ö½!3õ¹Šúl8á:Ù¹Ú9ôëQeÞºÎ´â™áà·xŒ·“œóð‡£L©áö10ê4(t%p}T‰©¼À« ãþvi½jÇ„Éè´'^“UÍˆç¼4¥ªÄG.ƒ	_3+šË¾ùyŽ†°”ÆårîÛN'¦Ûy7Œ‰XYg„û©¦L³K­ñ2(·åPÁ+ˆ=7CB¹(ðÌ¢(DÚÍ‰þqdÔJ<K¹IQ>.?–4“‡s.‚ÔÛ“£°&7ö]Í_¹\!ëÿÎábÐ!x9	YrôW³4÷ùkÃrÇîq‹°ÑÂùx÷€”h•eéŽò+Ãöæ-K]Ð}Þ#È°#1%·5">f­û{½»†¹]†°_U7C}Ç€Íq\=”´í ‡¯'q stçÑx.Ä¸mKcJÐ-¥1;\n"}
+4378 : send Ackp {ackNo = 13}
+4378 : recv DataP {acknoP = 2, seqnoP = 13, payload = "™õ˜dx/oeØõN¢Çó¤†í°ëˆ‘˜Š;@@p[ÅAÆR‚TÝ_ê÷ü¨v!Ã]èY?FEo¡MGKÅíö?Hÿ”ŸÚ«¡NúÍÁ(;>B2‘uZÇM×®„9ï"øÇ«_Æ'ÓsÃeLZJ­ú¶i·(ôÿ®¶à¯mŠÝ0.ˆCC`D»Ü¨eñªTÒ¥¯?,?FÚ—®0;,«™¡‹œñ§5;6B	u3ýŒœ·\Žá"w|ÈÌÞBPŠëTpjÑÇ2â÷QC­áózŽ¡¾”Ô©o¨bŸK\n"}
+4378 : send Ackp {ackNo = 14}
+4378 : recv DataP {acknoP = 2, seqnoP = 14, payload = "â#aj‰ò0­þÅ‡K*g°Ÿ¤íî³5î~&Ññ¶¨ÉÆÇ´'ÀI‡\n"}
+4378 : send Ackp {ackNo = 15}
+4378 : recv DataP {acknoP = 2, seqnoP = 15, payload = "ïýýÌ5Cú
+DMö´×’6_!ÞÈÝ¬àš`×ýª•¢ ±˜Ñ¢™êÄ±Þ{	&ãK4ø³~!P,µfz¥9ºÿÁ$•Ûõª¿€µ‚@UBàªÉHûb:¡<Ùå±á Õ#ÅÄ$2\n"}
+4378 : send Ackp {ackNo = 16}
+4378 : recv DataP {acknoP = 2, seqnoP = 16, payload = "\n"}
+4378 : send Ackp {ackNo = 17}
+4378 : recv DataP {acknoP = 2, seqnoP = 17, payload = "3WMWø†Å¨Œhtrüç,†Ëg2ÊŒ¢ØC;1¥…«C]†âÀ¯xUÃÖéGßz„½&×"(Íø}i¸§Cpo~Æp‰V7ÅüìÀO©zCUF%-a‹kÞ‚ëŸ°\·›ÅwaWh™hú!"M‘Ú7ðß—yâ6~´F£7!^$îÛ?\n"}
+4378 : send Ackp {ackNo = 18}
+4376 : send DataP {acknoP = 2, seqnoP = 17, payloadP = "3WMWø†Å¨Œhtrüç,†Ëg2ÊŒ¢ØC;1¥…«C]†âÀ¯xUÃÖéGßz„½&×"(Íø}i¸§Cpo~Æp‰V7ÅüìÀO©zCUF%-a‹kÞ‚ëŸ°\·›ÅwaWh™hú!"M‘Ú7ðß—yâ6~´F£7!^$îÛ?\n"}
+4376 : recv AckP {ackNo = 18}
+4376 : send DataP {acknoP = 2, seqnoP = 18, payloadP = "èWZ‚áÞ=8ÊßAþÎÞŸï‡Vh×µX®ÄqH6íl\Ü\R½µd&Xp$Ër?¡o4·)tŒbµ
+]˜
+q§©Ë¡ô¯ÒÑ í‘Ü.÷DÝ­‘Om\Îåæ2^SyˆS‚V±tÌ&Ä£¾,lÚÚàr›îÂrVæÞÑ¿LK³‚WÊMæðÑ[Õý\n"}
+4376 : recv AckP {ackNo = 19}
+4376 : send DataP {acknoP = 2, seqnoP = 19, payloadP = "kÐX”–äg§\þhv”¹¢þkåZ˜Ôcš4JŒ£á,X49Õ„beæKÖ kŽñd†÷6‘‹¸Y< gLjù}\Å–ê5¥@rü•‹%=¾X‚Ý‰BN«ã´õ¸5&Ï;‡ô	ÙÊcâ¿TìMHuç©!
+å±ÍÎ/ÿïß3î ¤œÔÆGØBÃ°°5ŠÁN^w†!ùŒÖ‚Ükdû‡-ýS§¸¥‹8§é†">¬È·ç<·W1r‰±¥™²þ¹µÖ¦Ãið9"êk£¼¸Pu×ukœŸÄî!å§áí^„«¿WYå‹P¬ÈLL=•<F8i,œüMó!¦n€Buvé'	Õ¸ü\n"}
+4376 : recv AckP {ackNo = 20}
+4376 : send DataP {acknoP = 2, seqnoP = 20, payloadP = "¦xÁ­yy¹X8PzPtG'gQÑAÅ-/¿„Õ°¸¸m¼4FŽ×œ“z‚io‰
+™~XWi‹Z2Vù¶+ÐªÍq»`rÈd†¬#˜‹”0*óWÛÒÔ#ÜºïR[xtê"®>WÝ¦'“nÑ¶~± tvé9Jñ‚ ÇµZôF‹?ŒÓ…öÅ‘¦+-Ô[NÁíLÆ# Ø>›\BWV„.ŸFC¹°jïèi…N'òÑãp†ëD.k,Ã„±q¼ëTU°{Œê†­¿,ƒ*Ìû¡÷BÝê^ÆJ³«Añ—´?­ª˜xj‚Ò!»Kþþ@¹»-$=ð–Q@1"Tk!#vU[ÀcKyG^Ë|ŽIKh	òËöG«ÝìïZzôÝÝÜ1|¡¿v©Ž¿ŸûÖR‹Œ6Î=‰-‘àqìÛ-\n"}
+4376 : recv AckP {ackNo = 21}
+4376 : send DataP {acknoP = 2, seqnoP = 21, payloadP = "£þ±söWw3¨Ãÿ-E»Êm³€³0‘îŒÞ£–*£ã(‹7Žy"œE¤mÝ6Œ;Ò­`/LÖÚ¯yðG/u˜ï¨“ì<ZY-âÚH|×-Fz.C=1xÙáûùÝkj"ækó\n"}
+4376 : recv AckP {ackNo = 22}
+4376 : send DataP {acknoP = 2, seqnoP = 22, payloadP = "ãuG"9îwôzuó3Fø‘Â›ô¦š¨ª3n`„\øŠÐè2m+©óõØ¥*D‹OàÔë;å{DÍñÐûÚœ¢Ïaþ)[wŽî¶“ú®×…hïÑ±“”-Â‘CDrQj$eITÓ€Eƒ”7bÑ À—¾ß;ÕÞ¾Áô4>=Œ—EA~t|uz(ÔWPç§ÍÃž1“U­-	CÑ$œ¢ÛVÕVéö‰ÌÏâ{BùŠÔwup¼k—U5J¯9úAï¹TïJÚ!U>Í¹j‰·¬ÒÏî¤GÀÇž“‚½Ñ&‚‡ºöÅ¶½eŸKìþp À?2VóÊwXý¥P•êo+’«ñJÍ¼¶´PËûFMF0®Ýëð<¨[,ùüHÊµ€» &ðôî€éSéécCQøsbÏÝ„`¿àVÄù‘Ç¤]ÐM$ÅoïØÁr¹¸}àDèuÍ{²Oôvœ«ï›©Aï˜£¯Öø±³MØq¥©«šÎ`(©¹Ä!ˆæº€ŽD•ÎfÍuš¡²PqÊKÕüÔ&?*æÝ(€…=\ñåâÚóêÌîa^ä/«çê?^)8ë3²OßóÈßˆþJ,_öáH±ˆERÙU(®P}Ÿ½Ñ²Tÿð€òÂ‹Z!¿ñö=ù§ä;\n"}
+4376 : recv AckP {ackNo = 23}
+4376 : send DataP {acknoP = 2, seqnoP = 23, payloadP = "ÖI2Š3ÁïÃˆfÐê†Ê÷Nä8Ø[^š0ÚWz0
+“ñJ¸ŸM\\V40B¬ÚØiû¬^xù®ÏœÝqK¶ú’ž|@š64òªVYP“µDLt·+·æÿvè;j©c'Jº]ø9”~Š<#Ó1,h'—Z“E%O¦—*úË†…B÷Ñ~D
+„¥÷À&¢†ñUŸffv3xÏV×ŸîŠ)–Ü$F%B¢N%r‚gÝì(Ç¼†ÅÀbß]¬îf1Ð«ÉÍ{iP^	‡šG<ƒ¾Û8?¬DKúm±d„vêÒ,œ7¾o×9©1/±àL.…Jö¨""ÜkåÊèGÕ!(09xâÓì4˜^4cXô¤¼ša'çŠ~«–øø†í–s¡.·ÙK \n"}
+4376 : recv AckP {ackNo = 24}
+4376 : send DataP {acknoP = 2, seqnoP = 24, payloadP = "½ÔÇ®áÃ~ŸÀ%åC¡Ûw%Wîn8XjŸ€Ïþío”Ï7îÖýõá,aùm(“Æ8aR“å<Îó5ž¶…ðôŽv6é4}±‹å¢4Ò~ñîWßÎþ.¬>ÞÌ4›"å÷#Ÿøœ&kíÁ'4…BâJ£¼özƒ$øaeûdlÝïô4¨¢“ÃGp‹§…÷¼Í‘t”Otu”ž_KM›<3+N¹—üS)aâºpyVÞJ\‹ÇâòŸþ-ÊWv¤ÓG]Þ¢Ý@A]ñËâU´¯»C‘ß¿‘NÎ:ÞãhlŠ'ƒØßoÌö÷½ð÷ˆz ÊÜ;P…6Y$¾«£‘ˆ±å
+±qoÙÒ:Šiž»Or{rêxgš²Œðžâ,Ùxè±äÛ'ïD’žqûžQ³ÌÏ·ž…c™ƒ,!m—ÍíãÄƒétà7ü%ž\n"}
+4376 : recv AckP {ackNo = 25}
+4376 : send DataP {acknoP = 2, seqnoP = 25, payloadP = "…üm$¹Ouú¾ÂÕØg›o·}×®}•ß'£áù,Ù¡þ´àFR)ißN•kïad«ìDuì45>¯ÌoJºg5€–*^Fôª_9å„.¾†ÿ8æ[u~/=ásE«ÊJ´yzõÂz§‡AO™ø/. ÈvgžbU Ü€Œ_0"w½Ê4û¬¬ÿ,ßQ;ßÆ7FE“¬¤ë’¡Er¿_)¢Ò¾½÷ïý…V’DÌ—Æòr“p¯jô\n"}
+4376 : recv AckP {ackNo = 26}
+4376 : send DataP {acknoP = 2, seqnoP = 26, payloadP = "ñŸ9Éaï©)!v
+†Ø‚m–˜3ág„@[Ÿ}ëz:Ãà†Þ³ŠOt9þkÃ¯ÂÅØ•ü´š"7èžA£”Ã‘.6â¿aÑÕªYê´qh]¼²U	$<%Ý>—‡ª‚V¥“f¬P±¼Q+3·†&ÞÏkP-@€®zÓ)ˆÁácH@Ù{k¡rX\åD©£(%æÚ\n"}
+4376 : recv AckP {ackNo = 27}
+4376 : send DataP {acknoP = 2, seqnoP = 27, payloadP = "øaZÁœŽø!¨Ô£Ïþ*ÅÛïpS=¿>>}ƒ—e¼@pØ…ÛWÕ¢DJO±ÞÓŽx²B,‰eçÿàzm¹N»Ä~|mâ©-†¾&Qê4(ý¿¥%J…Éyj´*!Z_c“G\n"}
+4376 : recv AckP {ackNo = 28}
+4376 : send DataP {acknoP = 2, seqnoP = 28, payloadP = "‡Tfyéƒ¡ÌJ©½I’8Jùj_KÊ]L=¾AÚZ{q²ˆÝ~kÌ»!KNpcV›ü)DqG¸ÛŽß:¬¡gÄŠÇè7ÌüÃ*,&€…etxÄ"Þ>LYø½m˜?6³Ö }f’„Þíª¦-µ—)ðŸ#Âyqâ¹=¯cÐ-%];æ¢›«¸v
+sØLöõ•]CÍU]aLÑBsÿ.p%`I¤øÎú9˜ÌÊHžïøB­GŽ4Žæéû|:e•Ñ·eØ%pÇèìœF4Û«š&¯¶§î\n"}
+4376 : recv AckP {ackNo = 29}
+4376 : send DataP {acknoP = 2, seqnoP = 29, payloadP = "ÁÆS¼÷óý99òˆÿËí!”IÓÛ­'98™É…Lë°é"]°k_Gðu9{µ€Táã=ñÛšÜÛ «f‰¨fê;fLBƒ<¹7Ä1½;LÑr\n"}
+4376 : recv AckP {ackNo = 30}
+4376 : send DataP {acknoP = 2, seqnoP = 30, payloadP = "Á¿Tš(‡ÍñÄÌc-FÔÝ#CP,²²[ŽcÂÒzþøþÞÚ6œ Âý4Í­¨XîÞ¿ÿ÷PRgGî¾6C?#œL?š\¯ïUfy“ð›wºýÂéZ^ÀØx"KaÜ¨ xûh»IÑÈ 'Yý"ÒÀÆD±‰Ü›3 3,á²%*  ÓX$ª2ïìÐ­Q)FªõÌrR2Øc»»è›Îî?&O€éýg™6ooÓ¸#!˜ÝŒµ
+Æ“U0çI,M´€¯M¥V(WG@“[ž7½%–j¦àn2êö£Hñ@:nÕ¶e0aRÉHñUÈÔ>{ö®Ã#ØHysÉ‰§3y‹ü½×÷²6È!$pãª¹]6×yç›-¯{‚Ûíž/[ÓrxE —WäÚž¸ð»ô•’)*ÿ"\r2/ã¶oîÿ¾ ^ðËÙ\DÖ+›vÂÏÉŽÄµì„˜{[ÄÙ»dgÉ‹ð}ï÷‡&)ŽîÊ½óªBfÙ0*rÑõ‡hûÝžì4Ñ[ÀÇI0/h9È\xBœÜ0†'sNC;eC·þœ¤¬v8â»Ï‘º’{xY\humäÜ$Un¤°º¡{Lªø+ÔŠ’ED¡²BÑÕ)æYµÜuIÁËŠF6ê¼‹Îo:0
+\n"}
+4376 : recv AckP {ackNo = 31}
+4376 : send DataP {acknoP = 2, seqnoP = 31, payloadP = "¤óg+¨†’à…¹.ÿ†ðÓYŸÛü?"ß2;eRù›êUÉ(È‰Íˆöì5Ç™åûÂŽ)Ø•ô“ß«gÂŒ÷þˆàhÜà2µN_'ú õ<$a/¤gxðm¿vY„a+€T-·ï,°Ò;Oˆ£“2ÝöXŠÀ.Þñe­úéÈ.—ùyÝ¸×/]
+=`´ B¶å‡‡ÎSMê3ëÈcfòÕsež'uæ¥ÉiÒcÇ~~ÉÜR)ïL="B¥@ÓNÏÚö¤ÃW{$k¤à¢¥ù§¦µù\n"}
+4376 : recv AckP {ackNo = 32}
+4376 : send DataP {acknoP = 2, seqnoP = 32, payloadP = "&OÅˆ-—
+¯\¿0BÊ(\n"}
+4376 : recv AckP {ackNo = 33}
+4376 : send DataP {acknoP = 2, seqnoP = 33, payloadP = "~¦mMÚ÷¿íóì¯œ*•ìÉ!Ç*XtþÐ­!p0¬8<»ÌvÒWûÆî UîÒÚSG–›STUVÒ×Cö¦ŒYŸÎSÐoð5Û-vt¾fE˜ÝsOõLÓ‚q
+RöÍcTÇJ>Dxß fãG7Lo8‚7q†¦>´Ãt–\5“ãÉe³ÿ„lu:izRÓôÐE<°ÎÔ4¢Y<F¨ä‹(•»¼'ßY•ãœ¢,Üµ7	ëG·ç¥s‚c DßWp1HÍ‹CQƒ­ÏÙ¡‹“
+o*s5rüáðïkH+"}ÞžÅtWà_ÿSä×œñ`jÕ‹Úì¿NÌõžTèc\qZI»¥ñO5‰­„ÁæõÁ	á{ÒáÔç¯Ï¿Þ8Ï¯óM§§.÷üGùEšgËûk½G¥¸(ÉˆàíW^í¼¼á\+Qwn…[Ä'.Ö5–î…F¼
+I³¦¥Y‰|$ pòŒ\n"}
+4376 : recv AckP {ackNo = 34}
+4376 : send DataP {acknoP = 2, seqnoP = 34, payloadP = "p†ç&7ô“ÍÈD^wÐ3³³×šŒ×m²X'þbQ(£&!h×ä+«b¯70,^ÄFˆ|¹Žj'É§¼5ÓbcU6ó§u‡Èà‰fŸB	´33(/Z³SÝõEJ¿‰FÈk’]çíDˆLn;&¡E‹Á+$#£î£h^Á0ÀKRNìGœ‚ˆ±/[Ý´I¸}JS³(U£!¤]âËõEnÒïŸW1Ù§„Ü^~Q¬pŽ_N¶\¦ÕÏŒÞ~h"_øòò°·ÿZ	hŠçQ¿à=l§!Ð51æ¯"câåòäñ\n"}
+4376 : recv AckP {ackNo = 35}
+4376 : send DataP {acknoP = 2, seqnoP = 35, payloadP = "Û®Gî0Ç™?F7E}7.¾´Ülº—tËèPÝê©p˜¿¾ÿp7*8+~y¥Uw
+VÙ§IÖ¤TŸ$šCÂn+¤y„ä«|þqÐc#/†÷æn zõñëRq“ìB‡¤Š³œ-1„•\n"}
+4376 : recv AckP {ackNo = 36}
+4376 : send DataP {acknoP = 2, seqnoP = 36, payloadP = "Åó1†øéÌâ!™…Hr¦fü²ßÇÀ¯üGÙŸã,EË­O·GgÆ¸»O\n"}
+4376 : recv AckP {ackNo = 37}
+4376 : send DataP {acknoP = 2, seqnoP = 37, payloadP = "}ra•]Ù½š»M–xEýÝ“TlMÝ„
+w
+â>‰šô]VÕðË7[¤j {¿øÁXG{dõÔ•×Âé_Þ#“†Ý¹ÆÜóû$5Q´DSckÁì–$ÛÀÍŸ¥h.™‘ÍÐ±Û-‹lÀ#0Q´P;±ÚòÎÔ~óZ£Œ¾¦W[µ1wÓøÒ…‡ÈO½ñÙ
+‰DC94}”nö}|R˜\n"}
+4376 : recv AckP {ackNo = 38}
+4376 : send DataP {acknoP = 2, seqnoP = 38, payloadP = "É%{¬ÇN3Åº'{´Ÿ¥•[b9Y²½­^:i€„
+ÿ-Ã~F²!;™LU$ŸyÍ†â©óÿ~KY¿d‡ÆªÔL11{¡™:•\ˆd_LÏÊšŽ‰˜RCŸu‰Eùs:!­“7Œ6êÄõ ðòÞ`²ýK€¡.²öùãý†9Çx‰@æ/³‘‘l=)rŽwÀËq¼Ô^Ìƒ‚ÔO"d;«×
+jy©ÈÒf_šÊ÷š´xïCWàê«˜,çÄ,µÊmKØÅè*r€ðHÊ'û'ò?äFÚîùx]¦ë<ŠapkA´Œ01]þ½útWÛùÊ!Ñ!Å˜?ýãÉ·9RáiJ£çr(ŒGÔ‰¹eñ‹Šc¦ú$›qpÊð‰½è#£Ö¨{RÖ…\ûØs§ð¾¨®—ÎDHã-|¾%(Àr€@FxÑð‡ˆ]Q€=ÿ?Ã0Àµè+Âü¾€Š4¡mQèJµ‘@jŽã6¶ðé±Š€ºe°ízd¤Õ	êÏF\Ñ›e¸nÇáI¡°ÃyÁód4ÀV
+…Ä§ÜÂŸ¤&æ-‰_Ûo)¶k†(“9ŠÔU£¾™1ˆ¥fßêe…}÷9¬ðé8ºæ´ÑBùûgOhíÇçE5ilˆ'u4ÁwªPZRßó\n"}
+4376 : recv AckP {ackNo = 39}
+4376 : send DataP {acknoP = 2, seqnoP = 39, payloadP = "w¼Sz¼vÏ(;äÁuV1s™dþ"ù2S”]HØ’ëŒuKp›‘æE¿ ü\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 18, payload = "èWZ‚áÞ=8ÊßAþÎÞŸï‡Vh×µX®ÄqH6íl\Ü\R½µd&Xp$Ër?¡o4·)tŒbµ
+]˜
+q§©Ë¡ô¯ÒÑ í‘Ü.÷DÝ­‘Om\Îåæ2^SyˆS‚V±tÌ&Ä£¾,lÚÚàr›îÂrVæÞÑ¿LK³‚WÊMæðÑ[Õý\n"}
+4378 : send Ackp {ackNo = 19}
+4378 : recv DataP {acknoP = 2, seqnoP = 19, payload = "kÐX”–äg§\þhv”¹¢þkåZ˜Ôcš4JŒ£á,X49Õ„beæKÖ kŽñd†÷6‘‹¸Y< gLjù}\Å–ê5¥@rü•‹%=¾X‚Ý‰BN«ã´õ¸5&Ï;‡ô	ÙÊcâ¿TìMHuç©!
+å±ÍÎ/ÿïß3î ¤œÔÆGØBÃ°°5ŠÁN^w†!ùŒÖ‚Ükdû‡-ýS§¸¥‹8§é†">¬È·ç<·W1r‰±¥™²þ¹µÖ¦Ãið9"êk£¼¸Pu×ukœŸÄî!å§áí^„«¿WYå‹P¬ÈLL=•<F8i,œüMó!¦n€Buvé'	Õ¸ü\n"}
+4378 : send Ackp {ackNo = 20}
+4378 : recv DataP {acknoP = 2, seqnoP = 20, payload = "¦xÁ­yy¹X8PzPtG'gQÑAÅ-/¿„Õ°¸¸m¼4FŽ×œ“z‚io‰
+™~XWi‹Z2Vù¶+ÐªÍq»`rÈd†¬#˜‹”0*óWÛÒÔ#ÜºïR[xtê"®>WÝ¦'“nÑ¶~± tvé9Jñ‚ ÇµZôF‹?ŒÓ…öÅ‘¦+-Ô[NÁíLÆ# Ø>›\BWV„.ŸFC¹°jïèi…N'òÑãp†ëD.k,Ã„±q¼ëTU°{Œê†­¿,ƒ*Ìû¡÷BÝê^ÆJ³«Añ—´?­ª˜xj‚Ò!»Kþþ@¹»-$=ð–Q@1"Tk!#vU[ÀcKyG^Ë|ŽIKh	òËöG«ÝìïZzôÝÝÜ1|¡¿v©Ž¿ŸûÖR‹Œ6Î=‰-‘àqìÛ-\n"}
+4378 : send Ackp {ackNo = 21}
+4378 : recv DataP {acknoP = 2, seqnoP = 21, payload = "£þ±söWw3¨Ãÿ-E»Êm³€³0‘îŒÞ£–*£ã(‹7Žy"œE¤mÝ6Œ;Ò­`/LÖÚ¯yðG/u˜ï¨“ì<ZY-âÚH|×-Fz.C=1xÙáûùÝkj"ækó\n"}
+4378 : send Ackp {ackNo = 22}
+4378 : recv DataP {acknoP = 2, seqnoP = 22, payload = "ãuG"9îwôzuó3Fø‘Â›ô¦š¨ª3n`„\øŠÐè2m+©óõØ¥*D‹OàÔë;å{DÍñÐûÚœ¢Ïaþ)[wŽî¶“ú®×…hïÑ±“”-Â‘CDrQj$eITÓ€Eƒ”7bÑ À—¾ß;ÕÞ¾Áô4>=Œ—EA~t|uz(ÔWPç§ÍÃž1“U­-	CÑ$œ¢ÛVÕVéö‰ÌÏâ{BùŠÔwup¼k—U5J¯9úAï¹TïJÚ!U>Í¹j‰·¬ÒÏî¤GÀÇž“‚½Ñ&‚‡ºöÅ¶½eŸKìþp À?2VóÊwXý¥P•êo+’«ñJÍ¼¶´PËûFMF0®Ýëð<¨[,ùüHÊµ€» &ðôî€éSéécCQøsbÏÝ„`¿àVÄù‘Ç¤]ÐM$ÅoïØÁr¹¸}àDèuÍ{²Oôvœ«ï›©Aï˜£¯Öø±³MØq¥©«šÎ`(©¹Ä!ˆæº€ŽD•ÎfÍuš¡²PqÊKÕüÔ&?*æÝ(€…=\ñåâÚóêÌîa^ä/«çê?^)8ë3²OßóÈßˆþJ,_öáH±ˆERÙU(®P}Ÿ½Ñ²Tÿð€òÂ‹Z!¿ñö=ù§ä;\n"}
+4378 : send Ackp {ackNo = 23}
+4378 : recv DataP {acknoP = 2, seqnoP = 23, payload = "ÖI2Š3ÁïÃˆfÐê†Ê÷Nä8Ø[^š0ÚWz0
+“ñJ¸ŸM\\V40B¬ÚØiû¬^xù®ÏœÝqK¶ú’ž|@š64òªVYP“µDLt·+·æÿvè;j©c'Jº]ø9”~Š<#Ó1,h'—Z“E%O¦—*úË†…B÷Ñ~D
+„¥÷À&¢†ñUŸffv3xÏV×ŸîŠ)–Ü$F%B¢N%r‚gÝì(Ç¼†ÅÀbß]¬îf1Ð«ÉÍ{iP^	‡šG<ƒ¾Û8?¬DKúm±d„vêÒ,œ7¾o×9©1/±àL.…Jö¨""ÜkåÊèGÕ!(09xâÓì4˜^4cXô¤¼ša'çŠ~«–øø†í–s¡.·ÙK \n"}
+4378 : send Ackp {ackNo = 24}
+4378 : recv DataP {acknoP = 2, seqnoP = 24, payload = "½ÔÇ®áÃ~ŸÀ%åC¡Ûw%Wîn8XjŸ€Ïþío”Ï7îÖýõá,aùm(“Æ8aR“å<Îó5ž¶…ðôŽv6é4}±‹å¢4Ò~ñîWßÎþ.¬>ÞÌ4›"å÷#Ÿøœ&kíÁ'4…BâJ£¼özƒ$øaeûdlÝïô4¨¢“ÃGp‹§…÷¼Í‘t”Otu”ž_KM›<3+N¹—üS)aâºpyVÞJ\‹ÇâòŸþ-ÊWv¤ÓG]Þ¢Ý@A]ñËâU´¯»C‘ß¿‘NÎ:ÞãhlŠ'ƒØßoÌö÷½ð÷ˆz ÊÜ;P…6Y$¾«£‘ˆ±å
+±qoÙÒ:Šiž»Or{rêxgš²Œðžâ,Ùxè±äÛ'ïD’žqûžQ³ÌÏ·ž…c™ƒ,!m—ÍíãÄƒétà7ü%ž\n"}
+4378 : send Ackp {ackNo = 25}
+4378 : recv DataP {acknoP = 2, seqnoP = 25, payload = "…üm$¹Ouú¾ÂÕØg›o·}×®}•ß'£áù,Ù¡þ´àFR)ißN•kïad«ìDuì45>¯ÌoJºg5€–*^Fôª_9å„.¾†ÿ8æ[u~/=ásE«ÊJ´yzõÂz§‡AO™ø/. ÈvgžbU Ü€Œ_0"w½Ê4û¬¬ÿ,ßQ;ßÆ7FE“¬¤ë’¡Er¿_)¢Ò¾½÷ïý…V’DÌ—Æòr“p¯jô\n"}
+4378 : send Ackp {ackNo = 26}
+4378 : recv DataP {acknoP = 2, seqnoP = 26, payload = "ñŸ9Éaï©)!v
+†Ø‚m–˜3ág„@[Ÿ}ëz:Ãà†Þ³ŠOt9þkÃ¯ÂÅØ•ü´š"7èžA£”Ã‘.6â¿aÑÕªYê´qh]¼²U	$<%Ý>—‡ª‚V¥“f¬P±¼Q+3·†&ÞÏkP-@€®zÓ)ˆÁácH@Ù{k¡rX\åD©£(%æÚ\n"}
+4378 : send Ackp {ackNo = 27}
+4378 : recv DataP {acknoP = 2, seqnoP = 27, payload = "øaZÁœŽø!¨Ô£Ïþ*ÅÛïpS=¿>>}ƒ—e¼@pØ…ÛWÕ¢DJO±ÞÓŽx²B,‰eçÿàzm¹N»Ä~|mâ©-†¾&Qê4(ý¿¥%J…Éyj´*!Z_c“G\n"}
+4378 : send Ackp {ackNo = 28}
+4378 : recv DataP {acknoP = 2, seqnoP = 28, payload = "‡Tfyéƒ¡ÌJ©½I’8Jùj_KÊ]L=¾AÚZ{q²ˆÝ~kÌ»!KNpcV›ü)DqG¸ÛŽß:¬¡gÄŠÇè7ÌüÃ*,&€…etxÄ"Þ>LYø½m˜?6³Ö }f’„Þíª¦-µ—)ðŸ#Âyqâ¹=¯cÐ-%];æ¢›«¸v
+sØLöõ•]CÍU]aLÑBsÿ.p%`I¤øÎú9˜ÌÊHžïøB­GŽ4Žæéû|:e•Ñ·eØ%pÇèìœF4Û«š&¯¶§î\n"}
+4378 : send Ackp {ackNo = 29}
+4378 : recv DataP {acknoP = 2, seqnoP = 29, payload = "ÁÆS¼÷óý99òˆÿËí!”IÓÛ­'98™É…Lë°é"]°k_Gðu9{µ€Táã=ñÛšÜÛ «f‰¨fê;fLBƒ<¹7Ä1½;LÑr\n"}
+4378 : send Ackp {ackNo = 30}
+4378 : recv DataP {acknoP = 2, seqnoP = 30, payload = "Á¿Tš(‡ÍñÄÌc-FÔÝ#CP,²²[ŽcÂÒzþøþÞÚ6œ Âý4Í­¨XîÞ¿ÿ÷PRgGî¾6C?#œL?š\¯ïUfy“ð›wºýÂéZ^ÀØx"KaÜ¨ xûh»IÑÈ 'Yý"ÒÀÆD±‰Ü›3 3,á²%*  ÓX$ª2ïìÐ­Q)FªõÌrR2Øc»»è›Îî?&O€éýg™6ooÓ¸#!˜ÝŒµ
+Æ“U0çI,M´€¯M¥V(WG@“[ž7½%–j¦àn2êö£Hñ@:nÕ¶e0aRÉHñUÈÔ>{ö®Ã#ØHysÉ‰§3y‹ü½×÷²6È!$pãª¹]6×yç›-¯{‚Ûíž/[ÓrxE —WäÚž¸ð»ô•’)*ÿ"\r2/ã¶oîÿ¾ ^ðËÙ\DÖ+›vÂÏÉŽÄµì„˜{[ÄÙ»dgÉ‹ð}ï÷‡&)ŽîÊ½óªBfÙ0*rÑõ‡hûÝžì4Ñ[ÀÇI0/h9È\xBœÜ0†'sNC;eC·þœ¤¬v8â»Ï‘º’{xY\humäÜ$Un¤°º¡{Lªø+ÔŠ’ED¡²BÑÕ)æYµÜuIÁËŠF6ê¼‹Îo:0
+\n"}
+4378 : send Ackp {ackNo = 31}
+4378 : recv DataP {acknoP = 2, seqnoP = 31, payload = "¤óg+¨†’à…¹.ÿ†ðÓYŸÛü?"ß2;eRù›êUÉ(È‰Íˆöì5Ç™åûÂŽ)Ø•ô“ß«gÂŒ÷þˆàhÜà2µN_'ú õ<$a/¤gxðm¿vY„a+€T-·ï,°Ò;Oˆ£“2ÝöXŠÀ.Þñe­úéÈ.—ùyÝ¸×/]
+=`´ B¶å‡‡ÎSMê3ëÈcfòÕsež'uæ¥ÉiÒcÇ~~ÉÜR)ïL="B¥@ÓNÏÚö¤ÃW{$k¤à¢¥ù§¦µù\n"}
+4378 : send Ackp {ackNo = 32}
+4378 : recv DataP {acknoP = 2, seqnoP = 32, payload = "&OÅˆ-—
+¯\¿0BÊ(\n"}
+4378 : send Ackp {ackNo = 33}
+4378 : recv DataP {acknoP = 2, seqnoP = 33, payload = "~¦mMÚ÷¿íóì¯œ*•ìÉ!Ç*XtþÐ­!p0¬8<»ÌvÒWûÆî UîÒÚSG–›STUVÒ×Cö¦ŒYŸÎSÐoð5Û-vt¾fE˜ÝsOõLÓ‚q
+RöÍcTÇJ>Dxß fãG7Lo8‚7q†¦>´Ãt–\5“ãÉe³ÿ„lu:izRÓôÐE<°ÎÔ4¢Y<F¨ä‹(•»¼'ßY•ãœ¢,Üµ7	ëG·ç¥s‚c DßWp1HÍ‹CQƒ­ÏÙ¡‹“
+o*s5rüáðïkH+"}ÞžÅtWà_ÿSä×œñ`jÕ‹Úì¿NÌõžTèc\qZI»¥ñO5‰­„ÁæõÁ	á{ÒáÔç¯Ï¿Þ8Ï¯óM§§.÷üGùEšgËûk½G¥¸(ÉˆàíW^í¼¼á\+Qwn…[Ä'.Ö5–î…F¼
+I³¦¥Y‰|$ pòŒ\n"}
+4378 : send Ackp {ackNo = 34}
+4378 : recv DataP {acknoP = 2, seqnoP = 34, payload = "p†ç&7ô“ÍÈD^wÐ3³³×šŒ×m²X'þbQ(£&!h×ä+«b¯70,^ÄFˆ|¹Žj'É§¼5ÓbcU6ó§u‡Èà‰fŸB	´33(/Z³SÝõEJ¿‰FÈk’]çíDˆLn;&¡E‹Á+$#£î£h^Á0ÀKRNìGœ‚ˆ±/[Ý´I¸}JS³(U£!¤]âËõEnÒïŸW1Ù§„Ü^~Q¬pŽ_N¶\¦ÕÏŒÞ~h"_øòò°·ÿZ	hŠçQ¿à=l§!Ð51æ¯"câåòäñ\n"}
+4378 : send Ackp {ackNo = 35}
+4378 : recv DataP {acknoP = 2, seqnoP = 35, payload = "Û®Gî0Ç™?F7E}7.¾´Ülº—tËèPÝê©p˜¿¾ÿp7*8+~y¥Uw
+VÙ§IÖ¤TŸ$šCÂn+¤y„ä«|þqÐc#/†÷æn zõñëRq“ìB‡¤Š³œ-1„•\n"}
+4378 : send Ackp {ackNo = 36}
+4378 : recv DataP {acknoP = 2, seqnoP = 36, payload = "Åó1†øéÌâ!™…Hr¦fü²ßÇÀ¯üGÙŸã,EË­O·GgÆ¸»O\n"}
+4378 : send Ackp {ackNo = 37}
+4378 : recv DataP {acknoP = 2, seqnoP = 37, payload = "}ra•]Ù½š»M–xEýÝ“TlMÝ„
+w
+â>‰šô]VÕðË7[¤j {¿øÁXG{dõÔ•×Âé_Þ#“†Ý¹ÆÜóû$5Q´DSckÁì–$ÛÀÍŸ¥h.™‘ÍÐ±Û-‹lÀ#0Q´P;±ÚòÎÔ~óZ£Œ¾¦W[µ1wÓøÒ…‡ÈO½ñÙ
+‰DC94}”nö}|R˜\n"}
+4378 : send Ackp {ackNo = 38}
+4378 : recv DataP {acknoP = 2, seqnoP = 38, payload = "É%{¬ÇN3Åº'{´Ÿ¥•[b9Y²½­^:i€„
+ÿ-Ã~F²!;™LU$ŸyÍ†â©óÿ~KY¿d‡ÆªÔL11{¡™:•\ˆd_LÏÊšŽ‰˜RCŸu‰Eùs:!­“7Œ6êÄõ ðòÞ`²ýK€¡.²öùãý†9Çx‰@æ/³‘‘l=)rŽwÀËq¼Ô^Ìƒ‚ÔO"d;«×
+jy©ÈÒf_šÊ÷š´xïCWàê«˜,çÄ,µÊmKØÅè*r€ðHÊ'û'ò?äFÚîùx]¦ë<ŠapkA´Œ01]þ½útWÛùÊ!Ñ!Å˜?ýãÉ·9RáiJ£çr(ŒGÔ‰¹eñ‹Šc¦ú$›qpÊð‰½è#£Ö¨{RÖ…\ûØs§ð¾¨®—ÎDHã-|¾%(Àr€@FxÑð‡ˆ]Q€=ÿ?Ã0Àµè+Âü¾€Š4¡mQèJµ‘@jŽã6¶ðé±Š€ºe°ízd¤Õ	êÏF\Ñ›e¸nÇáI¡°ÃyÁód4ÀV
+…Ä§ÜÂŸ¤&æ-‰_Ûo)¶k†(“9ŠÔU£¾™1ˆ¥fßêe…}÷9¬ðé8ºæ´ÑBùûgOhíÇçE5ilˆ'u4ÁwªPZRßó\n"}
+4378 : send Ackp {ackNo = 39}
+4376 : send DataP {acknoP = 2, seqnoP = 39, payloadP = "w¼Sz¼vÏ(;äÁuV1s™dþ"ù2S”]HØ’ëŒuKp›‘æE¿ ü\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 39, payload = "w¼Sz¼vÏ(;äÁuV1s™dþ"ù2S”]HØ’ëŒuKp›‘æE¿ ü\n"}
+4378 : send Ackp {ackNo = 40}
+4376 : recv AckP {ackNo = 40}
+4376 : send DataP {acknoP = 2, seqnoP = 40, payloadP = "ä˜ßœzó¯<\Þ:~¿×¢¨³«g‚›ÿžnì~³„ò‰v‚$Lþ6~;…¿+dX!ŒR6ÚÊäƒ­ìÃ†,;ØU¾sB:Ä`öV¡ÞT7×¾M·´Ë¯Õ{ŽÏT*F²U/¾)m×E£hsß¶
+HRÑÛïŽ£ 19`‚oªÉ·Ô,÷½ã%Yn×Û\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 40, payload = "ä˜ßœzó¯<\Þ:~¿×¢¨³«g‚›ÿžnì~³„ò‰v‚$Lþ6~;…¿+dX!ŒR6ÚÊäƒ­ìÃ†,;ØU¾sB:Ä`öV¡ÞT7×¾M·´Ë¯Õ{ŽÏT*F²U/¾)m×E£hsß¶
+HRÑÛïŽ£ 19`‚oªÉ·Ô,÷½ã%Yn×Û\n"}
+4378 : send Ackp {ackNo = 41}
+4376 : recv AckP {ackNo = 41}
+4376 : send DataP {acknoP = 2, seqnoP = 41, payloadP = "¯5(ù3j\BF½ÖôÁ{¿)õ?z\n"}
+4376 : recv AckP {ackNo = 42}
+4376 : send DataP {acknoP = 2, seqnoP = 42, payloadP = "Ø&=Œ)²ÿóÿTÍ ]Õ!þå‹×ø57Þ1¡†Ç^Î[Ì[1æi^´ï§êÕC;w~e²zö|ÈCòj) ¸ò_?ã
+å‹mÈämr:08#Ä®X|½¯†¦@äqlD…#Ï¥cŸ~àºJÆÎgœÅ+2¶~þ(ÂL÷æù4'’¿Ÿ«• îÂbÏˆ:6DÊ«yõu|%þö}ú¯?GZÎ=çLÏ¸¯n©Èâ<Ñ÷Øe(Tj½ÛÝV¾Ñcÿ]†ÝySúüë-=…Oç¡N6§rºDÉ!Cñ¼FÇá»¿5C>ïƒ\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 41, payload = "¯5(ù3j\BF½ÖôÁ{¿)õ?z\n"}
+4378 : send Ackp {ackNo = 42}
+4378 : recv DataP {acknoP = 2, seqnoP = 42, payload = "Ø&=Œ)²ÿóÿTÍ ]Õ!þå‹×ø57Þ1¡†Ç^Î[Ì[1æi^´ï§êÕC;w~e²zö|ÈCòj) ¸ò_?ã
+å‹mÈämr:08#Ä®X|½¯†¦@äqlD…#Ï¥cŸ~àºJÆÎgœÅ+2¶~þ(ÂL÷æù4'’¿Ÿ«• îÂbÏˆ:6DÊ«yõu|%þö}ú¯?GZÎ=çLÏ¸¯n©Èâ<Ñ÷Øe(Tj½ÛÝV¾Ñcÿ]†ÝySúüë-=…Oç¡N6§rºDÉ!Cñ¼FÇá»¿5C>ïƒ\n"}
+4378 : send Ackp {ackNo = 43}
+4376 : recv AckP {ackNo = 43}
+4376 : send DataP {acknoP = 2, seqnoP = 43, payloadP = "êy#’qÁ’žEHÙìÃô…'qOú¾ÝÌn‘P¥¡·äŸ¢8ÀÓ£cm_xô·9UØªÀ7~ÏD¶êæÎCÒ´¦¤t’Ç^/¿jjTE«\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 43, payload = "êy#’qÁ’žEHÙìÃô…'qOú¾ÝÌn‘P¥¡·äŸ¢8ÀÓ£cm_xô·9UØªÀ7~ÏD¶êæÎCÒ´¦¤t’Ç^/¿jjTE«\n"}
+4378 : send Ackp {ackNo = 44}
+4376 : recv AckP {ackNo = 44}
+4376 : send DataP {acknoP = 2, seqnoP = 44, payloadP = "bƒ–ta:_Ùï5~oÉ1ä^ªÒ#¶Âw!O”Bµ¦!K$ÅÈJ5:WLy÷ÉYÆ¼Íálí\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 44, payload = "bƒ–ta:_Ùï5~oÉ1ä^ªÒ#¶Âw!O”Bµ¦!K$ÅÈJ5:WLy÷ÉYÆ¼Íálí\n"}
+4378 : send Ackp {ackNo = 45}
+4376 : recv AckP {ackNo = 45}
+4376 : send DataP {acknoP = 2, seqnoP = 45, payloadP = "–\¤¼ÿ¼¼ZÖ’@¼Š‹ÑŽûéZ°öúN0ÿKx/=W³Ô¹.Wn>ÁQ&íDP7šjB9·Ü‘òÇ»ù#NæúYæÝÆ,£Dß/¸;'p]êc—÷Ka®ÅðgZ@—ßÀ'åWëÍÒ=|_åEÓŠÈWfÉÃ)Y¢‚4\á›Õî¹à3ÃKb#—/gA•!¾ÑNè‘~Þm²D>š'ì\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 45, payload = "–\¤¼ÿ¼¼ZÖ’@¼Š‹ÑŽûéZ°öúN0ÿKx/=W³Ô¹.Wn>ÁQ&íDP7šjB9·Ü‘òÇ»ù#NæúYæÝÆ,£Dß/¸;'p]êc—÷Ka®ÅðgZ@—ßÀ'åWëÍÒ=|_åEÓŠÈWfÉÃ)Y¢‚4\á›Õî¹à3ÃKb#—/gA•!¾ÑNè‘~Þm²D>š'ì\n"}
+4378 : send Ackp {ackNo = 46}
+4376 : recv AckP {ackNo = 46}
+4376 : send DataP {acknoP = 2, seqnoP = 46, payloadP = "¹¹Z¢²û,µÎûy¬›£W"×ÛlÀi|Y¡‹E¤Ïþø´›Úƒþ5ŠñÌ÷WGÛñ©„KèÐ€ÊxüÚOÇÖP]ÐžkÅ]å¦@´Ü@xÙpqˆãð÷FQaè.ÏùW»£‰d5Ø7:Ç©ÙØÛ´wÅb/%¸¿mÏ¾v¤Ó‡Ñí ”šìô²EÕ"á¹š6·¨,A†qsp5ªÓkE,ïÞâ8Ÿ*gY•íX\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 46, payload = "¹¹Z¢²û,µÎûy¬›£W"×ÛlÀi|Y¡‹E¤Ïþø´›Úƒþ5ŠñÌ÷WGÛñ©„KèÐ€ÊxüÚOÇÖP]ÐžkÅ]å¦@´Ü@xÙpqˆãð÷FQaè.ÏùW»£‰d5Ø7:Ç©ÙØÛ´wÅb/%¸¿mÏ¾v¤Ó‡Ñí ”šìô²EÕ"á¹š6·¨,A†qsp5ªÓkE,ïÞâ8Ÿ*gY•íX\n"}
+4378 : send Ackp {ackNo = 47}
+4376 : recv AckP {ackNo = 47}
+4376 : send DataP {acknoP = 2, seqnoP = 47, payloadP = "ˆ¡ßÚ•ÕÉœ|HèICÁìÇ	u`‘‰ûÚO±w©&Sp×:zn³FCöS½ÙÀŒ‹øÚz‘›£[Úªc7õ÷‡3@,â—ãš[ÏÊ’¦ýÍUÑmgÎ0=^³~¯Caóõ
+œ©1®1-Ù9\¿Ü4nFŠ,F¹¨Õò6èÉ‹ŸºúG¿g´'“8u†Œjp"”âôbr{%7®ŒêèqMûõì7¢ÈÁc:@*šªØ7áEdÉŽEï.8 ¦£5z4ñ~ß-Ð„Tb®úÉ7Ýr@`¤Q{õêi•(ÛD—ø›Â5 ž€H§°\n"}
+4376 : recv AckP {ackNo = 48}
+4376 : send DataP {acknoP = 2, seqnoP = 48, payloadP = "	ÕÌ ÍŒBˆ‹~ƒ˜àL¨—¼×ù83ì¯£3‚l1˜xhäË5J¿œ‹Ë=Ð¸$®Ò´^PÚ#	v7ñÐ¿«	7åP`LåÇpÅž™£Ì76X‹®y}A„1&m]åGƒDš÷nª1SÜì¿wdI2…q"ÿäaÄ/®X¹^Ñ
+\n"}
+4376 : recv AckP {ackNo = 49}
+4376 : send DataP {acknoP = 2, seqnoP = 49, payloadP = "¾2L®GøæºY–øØBZ˜ë‰—©BÛ‹4ÉÐ³R±Ð 
+Â‹ß>ÞéÌA‰jÛÒÏ~m˜×«\n"}
+4376 : recv AckP {ackNo = 50}
+4376 : send DataP {acknoP = 2, seqnoP = 50, payloadP = " 0„&^h¼íKB«g)a:×¿8ØªiùÏÀ­SôY@'úRzõb7ñbCýþ©Ctžç¢¾J‘Œç,»$Oh6A,˜ù€\sB
+ 8SSPBHÐõ’TîY*ÖNÐÀak÷£aÒÜS`[^*0ÚXFˆfkÇ	•ØòD”•èh“);šA”RÍmyêmƒ„Ærˆ¨rSÄÈ¤÷\îÿÉ»RÃ{sm`^=Äá:ú`«c¯É™År—©ä€ÕåöÂ+¢š“Xº5KÃ˜ªÇ7ÇJ?Å._ÑÍ«(ãž±´”2lá0úªsK 1¦¯ÈÁ7~&{5	ó§!g–OòV¬Íghœ­'êùaÛ5fÿ’jûgjÿÛøŸËº¼¦-à¡qrò´û·uˆÎÙš^•5Ý­„³XDm¨x™ƒDP«*ÌŸÞ^i¾¹ÌÒ˜N¤³¯w,oDan¸+­îrô÷Il"þO¶¸¼)G“Ç×ÙÄ)t§Öoõ4¸7Ô$ýCÜêüc©!¦cæÁADœ¤vDBtð8XGo7'L:Å²yª´²Øï­w±ùôçg’qÛ3‹¸2¡1ç%y~Íã®Èâã‹(”FŸBc&3›­&N^A³ÏÍ³Í_ K-\n"}
+4376 : recv AckP {ackNo = 51}
+4376 : send DataP {acknoP = 2, seqnoP = 51, payloadP = "íêÐu‚:ÃBtÄxWV‘4Â¼Z·ž¤ÎÎõ\Ú·F“Åµþ?—…[$„fÃhÓÂ\n"}
+4376 : recv AckP {ackNo = 52}
+4376 : send DataP {acknoP = 2, seqnoP = 52, payloadP = "y´Ç‹|’ÛÜË–éÅ†ÜqW3~_w…Òæˆ`­tÚ­`Ÿñ]ìK2¯ñ<ggÿ{Î¢Ý³H¸Äw”¥ÉGäÚgè‚[3 'Z™-“
+‘ê"Ê1ÐÛ‘\ÉŽ"J–€ûy¬˜´Ê=%ÛþGç	t—’]½b_â\(CÙƒK ñ¥}Ôªžüªòlè«CÈc˜w®TÒ)ð$ç‚{àì}ÖäÝ^G¶ª;ÊT$3dR˜õ¢3žÒ•Õþ¡ãHqjcYyò½[´—žj¬¯ˆÏUÆ:6U¨?Ó–è›Ÿ>‘ñšŽ(,–š™Ûè*™>×@5×’}WeÅÜ>z;Æ&$¦#óQÙù} 
+mKÐç°«E‘,¤‘Œ •È+!î˜÷­b®ž0x´O¸—\«*ð±
+÷¯±D1™“$™	Í¥cÖ€Öí-µÈŒ^4^w­¸I¼xVbûJ°¨*UpEÐ’ª,µ3¨>Œ‚AÜ^ê^•íäè×Ä´3°”‘½¶ûc+¾t,™dò„pè€W/*êë!9—ksï—²Ç2
+Eï÷›h.ºãY£õƒzRA¹~„›ikÒT.6^¯QÓ.7áþ…|e”5jFLÁùQü6{Â}‘Z_s}áÍÓ…É7û\n"}
+4376 : recv AckP {ackNo = 53}
+4376 : send DataP {acknoP = 2, seqnoP = 53, payloadP = "¬ËeÞã§µG-›‚4‚I?;âKÞÂÉ†ážvwô¥<_»hâN#²p•ÁãžPÛ!%nx›lÀ„É<N‡È¹Â{^ÞûjºJn6ü§I×bC09åW­`N)¿¨€ÍŽë]ªj¯+qòµÏûÅíÖ¯n.ÉÓñ4!Ø©Ù4·5[ÌKJ¹/wÜYàõ^…Èø'ŽÓ˜ýŸÐôùÑSžjÎ\n"}
+4376 : recv AckP {ackNo = 54}
+4376 : send DataP {acknoP = 2, seqnoP = 54, payloadP = "^Ì XòfÇí"ôZÒ‡èàpkc\x\n"}
+4376 : recv AckP {ackNo = 55}
+4376 : send DataP {acknoP = 2, seqnoP = 55, payloadP = "‹×Oö^!'™ÿ/_W¶v¼-_p‘9(CžjF±Ãov¢F¿ù6mOT±£S‡ðé/›±¡'iGÏŠj‚lLÔËñìÊ6£±Šo¡ìÂmLb$ÆXÁú‘zâäø#á#5Æh{¯‘ÖãÖŸgîA)AGL(:C¤¾G­˜ <´S’‘\æª ñY÷<sîßcŒS[“éUÅd?ÃÉá‚¨æ‚ÿÐWt+²yÕUÉxPÎäfÍC¨‚xzeÖÙØ `q~Ä^6›´€Q³W
+	8yä­À
+y*R¿²üeBqŸ*bt^\ÚJæï'jRM†@Ød	™©.ö¤]Kzã’[\n"}
+4376 : recv AckP {ackNo = 56}
+4376 : send DataP {acknoP = 2, seqnoP = 56, payloadP = "ò¹„{Mc$æGà>#àvßÌý#-ˆÃ˜¸Ø”mLn·.´¼£»\„·ð¹™3;YuåÑÍ9©ÏhAÊ™6£mêÕM“·JXdré¡#ê¬ˆQxøêŽËœùˆýl¾1a|Ýa{Ü‹q7M–
+eõ©×Äô"ÛÇèt:îhŒÜâ-å‚5?]6»'„:Ü	3êØÉ¸©rø¥oªp7Q‚¨N¹N·0²™: ƒMžÒIu:fÔIÿYÏëF•JÅƒ›\n"}
+4376 : recv AckP {ackNo = 57}
+4376 : send DataP {acknoP = 2, seqnoP = 57, payloadP = "E9}`¾jÝFQÚ?C9£ˆNQ]²'ôñº-Œ•Fêl\ªp‹áy¹
+ffóüh¼”&UäïYVý}Y—i–{$@B}iN²ÅýIj¤Ëú÷Oùˆ¸EØ‹Ô,C#}fñŒD-ˆ#1D1d<f<&ÿŽ×n£Ï]r&m{Ooœ({Üuõ±¶*âr…Íqà¿<÷0/ãAÿÔi†Çz±í‘.iG—¼)¤>Û‰Ý`‹:í7ð*WbºÏæÛQÇëÓD+Ò‡‹ŽÚ3B±/ÕŒ¡¶®"Òë´‹m¼óƒèØU²Sƒ‘Ý«üâoÛ©ƒTPÕÖ#˜TÝèÚD„tMi#ó%º|ÿU"ÁBÐTn\n"}
+4376 : recv AckP {ackNo = 58}
+4376 : send DataP {acknoP = 2, seqnoP = 58, payloadP = "AÊL²úûh”“b‘0)ì}’ÿ\¼9ëM@ñ0*	(dÆ Ó­
+â†ŽþkÊ‹8¾íi€ºßt€W/NyGÝƒ¬Íû—æÏp=ìÇ~3†Í“vF`¡Õc%éâ|3Òþôè¶±xY…Ë‡Å }¸ÌÚDþe©©ÇywL/D¡ÿêKmÊênk›tm€D «kžUÄ {Ð^‹¦{qµBz}}­Íy$»>D59cZscð{VóÏˆÖâ×¦VÍÞH42Ã'ÇQÔŒÊ[ªÐ@Ì!Ëfå©8Ýâx¦›5Çó´Ïs´ßZe]toìÑï¿ ›YuÇýå±×:d€/‰4‹=ÞfÚOm8«ºt\Œïâ˜ï•‰"´Ÿi+Ûcö¦”„S£%‰u0õŽ¦MÇ’›¼§{Ž«x¥k­é|Ñ-žx—üÐ˜Ðˆ04Ã!“)âM4Ýkþ˜xEB¸‰$
+	˜¶”Z™õp}ö‡šX~¼9`2“Ñ¡wyOkÉ‘2i—€šcTfrá`£&7´õ,öèŒB¸ïZi%Î}\n"}
+4376 : recv AckP {ackNo = 59}
+4376 : send DataP {acknoP = 2, seqnoP = 59, payloadP = "
+›/&\Þj—c¥÷°ñgìÚmnK5ªŠÌ¦÷TÍŒ¥ùY)7=$W£íC}8,––Š2Áë Ná\¹fí‘öÿd£“Št <ŠÑªßÄ8»b)?Bº0°4ãäÏ«ð¨+žË›çjÃÃGgÙ¨ñÁÈÓ÷ïÎBÈÔdÔÉ”æ²Ýâàht-æºZck•VU6]:Ü>9“¯÷WÏ¹èäº+>ï~¬%Ýå÷HéÊ<Eßó‘³ãGCÙw„fq¡ðŽ¥ö5Ñ2º˜œ»ìœ—Î˜¢â$”õ:½ª};ývÞŠó 2—ëæÐå¡ÆÊéçy0žÓLvEë¹73Ñ>8X;—Øj;‡f)&]Ì‹BgÏ€BIÒ¼‹ß{Ž
+ØñX8¥=Ü™)Amª(øÈHqÌ›Ðp¯^×+Ÿä»!b&ØìŸ…éÄ'un?·è!XŸy\n"}
+4376 : recv AckP {ackNo = 60}
+4376 : send DataP {acknoP = 2, seqnoP = 60, payloadP = "k0ÃÚúýœ9tyüEÁ[8r“—ÂÓÞ(0·Õ(’¥ªCÿ9©èÖ&R“N9›ù—0Akcr¸¤HEY~ŽoÀGY‡÷‘ÚÂøÆZZ/Ç2\€ïÖgì¬UñRoeR$Ù()*wAÕó\n"}
+4376 : recv AckP {ackNo = 61}
+4376 : send DataP {acknoP = 2, seqnoP = 61, payloadP = "Éüo‹ãxqÌˆÈê•Œx„eâ–‚õ5@¦1NƒUOÝL‚GhEùÅ8Íøp¸Yô³ˆè€#p6ï¤n5W2Ç±Óo%WkezÝü÷ß÷vw]].¤D™TÊV”ÀAë™»,ß·bA¸•Žxg ‘¬¥m†<ðŠ²‡b\n"}
+4376 : recv AckP {ackNo = 62}
+4376 : send DataP {acknoP = 2, seqnoP = 62, payloadP = "=èÇxÈcmTäÐì_áÙ•ï\;;Qó<ÝîÚ£{›6R>Ûeÿ‹Ùþ•¸W³uìíP0YÌ`{q£RwÞÆ’
+5›ôœQIÅ†™ŠnSÓò®¿L—"O#w˜”Ñû+Ã†÷Ìž½…_ësÄö+ˆeÍÉÜc?ö§T¹#®ux©)÷ýÐXDò¸MÍèý­!m¾Œ‚ã #—–e§í\n"}
+4376 : recv AckP {ackNo = 63}
+4376 : send DataP {acknoP = 2, seqnoP = 63, payloadP = "ð÷¨ËËfLŽ®ºÑÓ¯‹ŠžíD'‹Ã¬«.ô=®–ÌÀ°c+ÊŠ£¯ÿ™\n"}
+4376 : recv AckP {ackNo = 64}
+4376 : send DataP {acknoP = 2, seqnoP = 64, payloadP = "0F8$2$®õ*ÉÎ%8{ãGÓzT-©†¬Í{R\n"}
+4376 : recv AckP {ackNo = 65}
+4376 : send DataP {acknoP = 2, seqnoP = 65, payloadP = "çý[Uþ²ål5ëUÇMwYõü<’sr;à6Ÿ5=÷¬Q8O^¥d¥r†Þ–wt<våž…Ä_³"R7p2FQ“+ÒHßÒÀ,(WaH” 	¹¾xVì”áðËT‡ŒÀ?Ãß ˆºÌ*—fýw:Üƒxh¤Û1ºØqã³ê {ˆýést[{˜Àqë¹g ›ØÕ’üSñ+Ñd¨³ªÏLþGâ¹ß[fÌR‘eó<ÉÔ‡·'»\Ióü+÷šNëä
+›EÐ<3Ä¦ÌŽ*ß…òÑÜª\¿íDfMû/ÇÑ°û7ëÏœ8Uõ“Ñ‰Šñyû;ÜÈ*m~YJn*Ì^MŒjvCîŒ cR(ÌÔ<šæ»â¡tÊ¿f™CoGÿ¯V~©ceî‡µÜ“-‡·R°BúËE¿àTƒ¤,½Të“ÁÖb¬¶I}›!-š§î °oYÙ„¡–JÈ¿½Ý€Y©ŠÞTÌ,ìÔ¼Õh‚þi¬Âòìéùîi6ˆ…cñÈL¤à'&…á@0Ÿ²¤-j%È‡Út#›5üª9ÇQùŸµØõLú¦TWÝE$W`aiðœ­ã¨T°>3êzHÈ\n"}
+4376 : recv AckP {ackNo = 66}
+4376 : send DataP {acknoP = 2, seqnoP = 66, payloadP = "ÉÒ›räNyL­1ªÑ8Ç.'Ý¸HH ©†`\¹Ýs‘Õz…ˆPBš‘­á®qq„ëè2ŠE´æê’Ï1(a
+@L×“uqV¿
+BÖéµDÐŠÀñŸ¥ÐžKF0óÍˆrÜîËtõ—þþšÛ‚†{âœ&{•‡‚ŠTÛÞkªá>%V·ó}Ï{\n"}
+4376 : recv AckP {ackNo = 67}
+4376 : send DataP {acknoP = 2, seqnoP = 67, payloadP = "¸}¾è¾ÕaN%\n"}
+4376 : recv AckP {ackNo = 68}
+4376 : send DataP {acknoP = 2, seqnoP = 68, payloadP = "K9³íÓ]^Ô¿îåWyz4íÞ½Œè10»o@Õõ[ÅÏTôwùk“ééÏCú G36 ÚbE,Ç#¦OTFÒP`1æÂÜT­‰à˜–i¥ôTÖöéÖaK–¸h	ùñê,ò[±”úŠ ‹á">Îâ¡WÒ³á°"UŠM1A>Vãr’Â#Pñt¬Šî`Y#º«ô¨]òíÐ©Åá¾²iŸsž²)ÐË4ˆ)@r…äîú§IýUº7Ï	ç$â4_˜OF¨L°2gçQt·9ßV3Òð&P(xý•r%W÷[ìX=§Q<A¯0fãK‡‰`QõAÓwz·ë`×ùUŽE)øx)å¬÷8Åã`¤ýà½°®ÉJñ£NàÛøYí£ÙS!¬ë„@Yzæ™½kuSl¶ZY¼°§…zŒHœ¦Çã„q=¼Üp"«CnÌv°€Ûþ§ÍÑ™…dÖb`v÷•í¨»	I!Ýù+Í%f‹Ø¤°pÂ4ÑðÂHõ›{5KñTæc¸à¢ßX%hvk)Àk§å©¨|bë]@oÝÆrMÙéMÙ~UÅî÷S…íÂ1^vr”§ôõGxè]K¼*Ò,îü0Îb TF¬€;µ4å+nNL	Ý@\n"}
+4376 : recv AckP {ackNo = 69}
+4376 : send DataP {acknoP = 2, seqnoP = 69, payloadP = "–H&*ý5ÒF€ÿÝ.>V6¡Èq9äÃ)5ñìèyUÜÔb%}%¥ãäpÀ5TÞ1‰ÕË”>zâ‰ê§*„®žü#h©éfz¦‚kIMã=¾"‹™ðü˜g¼&—ðµ4¹u¼~zém•B~
+ÿ×_¯5!ætIŒŸƒž½>,÷SÿµÑkÕçe°ï³Þ«k:¾`òÖéÑfÛlÖôŠD2°žÝ(ˆò°ùÿ“Í%É
+%NTV4Ÿû­ôM^Í)ÿñN¶He‹¿œWn=þàMƒ¤
+C­k,‚ÍUÒM·¢äë“ºí­S^—0°{jèöÍ\Ùe­BÏêãÉfÉy†$Cj›º+
+	²ø…3-ïam}ö|•MÿLÐ¤mAÁÆL@AïÙÎ¡ÿjÀ¹‰íu©Á]W­Ë,92Ý˜Á¥cêGeGVÍ¹GŸ	ü}"MT ôOó„F¥èÄ\n"}
+4376 : recv AckP {ackNo = 70}
+4376 : send DataP {acknoP = 2, seqnoP = 70, payloadP = "Æ,8ãâìÐ[ñ€ö
+‹Y€<rßy&B¶×òÑvnm
+\e\’«ÄC÷€\iÉZ²Øžé¡jAˆÄw¢­CkX½ì¦è3¯é"KóãötU \`ÌËjh8ÖsˆÅ=7¨à¡þ‹2hŸ³i³ê7W÷‰m¢²¹…ÈO&ŒÄ	3Mr05˜ø—	Še”ß\f¼àÐÆ\_:Þ‘uÝªÙÙô2bÀ`˜nàþ3r4Ïy‰›Ÿœí¾ .jY)òJ\n"}
+4376 : recv AckP {ackNo = 71}
+4376 : send DataP {acknoP = 2, seqnoP = 71, payloadP = "®7¥êS6Ša>§±bP$ .†Ãç¤g_‹)Ÿøˆì¢¡gÖ‹[xð·éÓçPs:ŸŠ}¥qHsUt–JþR{ËÖw‘ÜbúÕˆfK®58´X"¨a\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 47, payload = "ˆ¡ßÚ•ÕÉœ|HèICÁìÇ	u`‘‰ûÚO±w©&Sp×:zn³FCöS½ÙÀŒ‹øÚz‘›£[Úªc7õ÷‡3@,â—ãš[ÏÊ’¦ýÍUÑmgÎ0=^³~¯Caóõ
+œ©1®1-Ù9\¿Ü4nFŠ,F¹¨Õò6èÉ‹ŸºúG¿g´'“8u†Œjp"”âôbr{%7®ŒêèqMûõì7¢ÈÁc:@*šªØ7áEdÉŽEï.8 ¦£5z4ñ~ß-Ð„Tb®úÉ7Ýr@`¤Q{õêi•(ÛD—ø›Â5 ž€H§°\n"}
+4378 : send Ackp {ackNo = 48}
+4378 : recv DataP {acknoP = 2, seqnoP = 48, payload = "	ÕÌ ÍŒBˆ‹~ƒ˜àL¨—¼×ù83ì¯£3‚l1˜xhäË5J¿œ‹Ë=Ð¸$®Ò´^PÚ#	v7ñÐ¿«	7åP`LåÇpÅž™£Ì76X‹®y}A„1&m]åGƒDš÷nª1SÜì¿wdI2…q"ÿäaÄ/®X¹^Ñ
+\n"}
+4378 : send Ackp {ackNo = 49}
+4378 : recv DataP {acknoP = 2, seqnoP = 49, payload = "¾2L®GøæºY–øØBZ˜ë‰—©BÛ‹4ÉÐ³R±Ð 
+Â‹ß>ÞéÌA‰jÛÒÏ~m˜×«\n"}
+4378 : send Ackp {ackNo = 50}
+4378 : recv DataP {acknoP = 2, seqnoP = 50, payload = " 0„&^h¼íKB«g)a:×¿8ØªiùÏÀ­SôY@'úRzõb7ñbCýþ©Ctžç¢¾J‘Œç,»$Oh6A,˜ù€\sB
+ 8SSPBHÐõ’TîY*ÖNÐÀak÷£aÒÜS`[^*0ÚXFˆfkÇ	•ØòD”•èh“);šA”RÍmyêmƒ„Ærˆ¨rSÄÈ¤÷\îÿÉ»RÃ{sm`^=Äá:ú`«c¯É™År—©ä€ÕåöÂ+¢š“Xº5KÃ˜ªÇ7ÇJ?Å._ÑÍ«(ãž±´”2lá0úªsK 1¦¯ÈÁ7~&{5	ó§!g–OòV¬Íghœ­'êùaÛ5fÿ’jûgjÿÛøŸËº¼¦-à¡qrò´û·uˆÎÙš^•5Ý­„³XDm¨x™ƒDP«*ÌŸÞ^i¾¹ÌÒ˜N¤³¯w,oDan¸+­îrô÷Il"þO¶¸¼)G“Ç×ÙÄ)t§Öoõ4¸7Ô$ýCÜêüc©!¦cæÁADœ¤vDBtð8XGo7'L:Å²yª´²Øï­w±ùôçg’qÛ3‹¸2¡1ç%y~Íã®Èâã‹(”FŸBc&3›­&N^A³ÏÍ³Í_ K-\n"}
+4378 : send Ackp {ackNo = 51}
+4378 : recv DataP {acknoP = 2, seqnoP = 51, payload = "íêÐu‚:ÃBtÄxWV‘4Â¼Z·ž¤ÎÎõ\Ú·F“Åµþ?—…[$„fÃhÓÂ\n"}
+4378 : send Ackp {ackNo = 52}
+4378 : recv DataP {acknoP = 2, seqnoP = 52, payload = "y´Ç‹|’ÛÜË–éÅ†ÜqW3~_w…Òæˆ`­tÚ­`Ÿñ]ìK2¯ñ<ggÿ{Î¢Ý³H¸Äw”¥ÉGäÚgè‚[3 'Z™-“
+‘ê"Ê1ÐÛ‘\ÉŽ"J–€ûy¬˜´Ê=%ÛþGç	t—’]½b_â\(CÙƒK ñ¥}Ôªžüªòlè«CÈc˜w®TÒ)ð$ç‚{àì}ÖäÝ^G¶ª;ÊT$3dR˜õ¢3žÒ•Õþ¡ãHqjcYyò½[´—žj¬¯ˆÏUÆ:6U¨?Ó–è›Ÿ>‘ñšŽ(,–š™Ûè*™>×@5×’}WeÅÜ>z;Æ&$¦#óQÙù} 
+mKÐç°«E‘,¤‘Œ •È+!î˜÷­b®ž0x´O¸—\«*ð±
+÷¯±D1™“$™	Í¥cÖ€Öí-µÈŒ^4^w­¸I¼xVbûJ°¨*UpEÐ’ª,µ3¨>Œ‚AÜ^ê^•íäè×Ä´3°”‘½¶ûc+¾t,™dò„pè€W/*êë!9—ksï—²Ç2
+Eï÷›h.ºãY£õƒzRA¹~„›ikÒT.6^¯QÓ.7áþ…|e”5jFLÁùQü6{Â}‘Z_s}áÍÓ…É7û\n"}
+4378 : send Ackp {ackNo = 53}
+4378 : recv DataP {acknoP = 2, seqnoP = 53, payload = "¬ËeÞã§µG-›‚4‚I?;âKÞÂÉ†ážvwô¥<_»hâN#²p•ÁãžPÛ!%nx›lÀ„É<N‡È¹Â{^ÞûjºJn6ü§I×bC09åW­`N)¿¨€ÍŽë]ªj¯+qòµÏûÅíÖ¯n.ÉÓñ4!Ø©Ù4·5[ÌKJ¹/wÜYàõ^…Èø'ŽÓ˜ýŸÐôùÑSžjÎ\n"}
+4378 : send Ackp {ackNo = 54}
+4378 : recv DataP {acknoP = 2, seqnoP = 54, payload = "^Ì XòfÇí"ôZÒ‡èàpkc\x\n"}
+4378 : send Ackp {ackNo = 55}
+4378 : recv DataP {acknoP = 2, seqnoP = 55, payload = "‹×Oö^!'™ÿ/_W¶v¼-_p‘9(CžjF±Ãov¢F¿ù6mOT±£S‡ðé/›±¡'iGÏŠj‚lLÔËñìÊ6£±Šo¡ìÂmLb$ÆXÁú‘zâäø#á#5Æh{¯‘ÖãÖŸgîA)AGL(:C¤¾G­˜ <´S’‘\æª ñY÷<sîßcŒS[“éUÅd?ÃÉá‚¨æ‚ÿÐWt+²yÕUÉxPÎäfÍC¨‚xzeÖÙØ `q~Ä^6›´€Q³W
+	8yä­À
+y*R¿²üeBqŸ*bt^\ÚJæï'jRM†@Ød	™©.ö¤]Kzã’[\n"}
+4378 : send Ackp {ackNo = 56}
+4378 : recv DataP {acknoP = 2, seqnoP = 56, payload = "ò¹„{Mc$æGà>#àvßÌý#-ˆÃ˜¸Ø”mLn·.´¼£»\„·ð¹™3;YuåÑÍ9©ÏhAÊ™6£mêÕM“·JXdré¡#ê¬ˆQxøêŽËœùˆýl¾1a|Ýa{Ü‹q7M–
+eõ©×Äô"ÛÇèt:îhŒÜâ-å‚5?]6»'„:Ü	3êØÉ¸©rø¥oªp7Q‚¨N¹N·0²™: ƒMžÒIu:fÔIÿYÏëF•JÅƒ›\n"}
+4378 : send Ackp {ackNo = 57}
+4378 : recv DataP {acknoP = 2, seqnoP = 57, payload = "E9}`¾jÝFQÚ?C9£ˆNQ]²'ôñº-Œ•Fêl\ªp‹áy¹
+ffóüh¼”&UäïYVý}Y—i–{$@B}iN²ÅýIj¤Ëú÷Oùˆ¸EØ‹Ô,C#}fñŒD-ˆ#1D1d<f<&ÿŽ×n£Ï]r&m{Ooœ({Üuõ±¶*âr…Íqà¿<÷0/ãAÿÔi†Çz±í‘.iG—¼)¤>Û‰Ý`‹:í7ð*WbºÏæÛQÇëÓD+Ò‡‹ŽÚ3B±/ÕŒ¡¶®"Òë´‹m¼óƒèØU²Sƒ‘Ý«üâoÛ©ƒTPÕÖ#˜TÝèÚD„tMi#ó%º|ÿU"ÁBÐTn\n"}
+4378 : send Ackp {ackNo = 58}
+4378 : recv DataP {acknoP = 2, seqnoP = 58, payload = "AÊL²úûh”“b‘0)ì}’ÿ\¼9ëM@ñ0*	(dÆ Ó­
+â†ŽþkÊ‹8¾íi€ºßt€W/NyGÝƒ¬Íû—æÏp=ìÇ~3†Í“vF`¡Õc%éâ|3Òþôè¶±xY…Ë‡Å }¸ÌÚDþe©©ÇywL/D¡ÿêKmÊênk›tm€D «kžUÄ {Ð^‹¦{qµBz}}­Íy$»>D59cZscð{VóÏˆÖâ×¦VÍÞH42Ã'ÇQÔŒÊ[ªÐ@Ì!Ëfå©8Ýâx¦›5Çó´Ïs´ßZe]toìÑï¿ ›YuÇýå±×:d€/‰4‹=ÞfÚOm8«ºt\Œïâ˜ï•‰"´Ÿi+Ûcö¦”„S£%‰u0õŽ¦MÇ’›¼§{Ž«x¥k­é|Ñ-žx—üÐ˜Ðˆ04Ã!“)âM4Ýkþ˜xEB¸‰$
+	˜¶”Z™õp}ö‡šX~¼9`2“Ñ¡wyOkÉ‘2i—€šcTfrá`£&7´õ,öèŒB¸ïZi%Î}\n"}
+4378 : send Ackp {ackNo = 59}
+4378 : recv DataP {acknoP = 2, seqnoP = 59, payload = "
+›/&\Þj—c¥÷°ñgìÚmnK5ªŠÌ¦÷TÍŒ¥ùY)7=$W£íC}8,––Š2Áë Ná\¹fí‘öÿd£“Št <ŠÑªßÄ8»b)?Bº0°4ãäÏ«ð¨+žË›çjÃÃGgÙ¨ñÁÈÓ÷ïÎBÈÔdÔÉ”æ²Ýâàht-æºZck•VU6]:Ü>9“¯÷WÏ¹èäº+>ï~¬%Ýå÷HéÊ<Eßó‘³ãGCÙw„fq¡ðŽ¥ö5Ñ2º˜œ»ìœ—Î˜¢â$”õ:½ª};ývÞŠó 2—ëæÐå¡ÆÊéçy0žÓLvEë¹73Ñ>8X;—Øj;‡f)&]Ì‹BgÏ€BIÒ¼‹ß{Ž
+ØñX8¥=Ü™)Amª(øÈHqÌ›Ðp¯^×+Ÿä»!b&ØìŸ…éÄ'un?·è!XŸy\n"}
+4378 : send Ackp {ackNo = 60}
+4378 : recv DataP {acknoP = 2, seqnoP = 60, payload = "k0ÃÚúýœ9tyüEÁ[8r“—ÂÓÞ(0·Õ(’¥ªCÿ9©èÖ&R“N9›ù—0Akcr¸¤HEY~ŽoÀGY‡÷‘ÚÂøÆZZ/Ç2\€ïÖgì¬UñRoeR$Ù()*wAÕó\n"}
+4378 : send Ackp {ackNo = 61}
+4378 : recv DataP {acknoP = 2, seqnoP = 61, payload = "Éüo‹ãxqÌˆÈê•Œx„eâ–‚õ5@¦1NƒUOÝL‚GhEùÅ8Íøp¸Yô³ˆè€#p6ï¤n5W2Ç±Óo%WkezÝü÷ß÷vw]].¤D™TÊV”ÀAë™»,ß·bA¸•Žxg ‘¬¥m†<ðŠ²‡b\n"}
+4378 : send Ackp {ackNo = 62}
+4378 : recv DataP {acknoP = 2, seqnoP = 62, payload = "=èÇxÈcmTäÐì_áÙ•ï\;;Qó<ÝîÚ£{›6R>Ûeÿ‹Ùþ•¸W³uìíP0YÌ`{q£RwÞÆ’
+5›ôœQIÅ†™ŠnSÓò®¿L—"O#w˜”Ñû+Ã†÷Ìž½…_ësÄö+ˆeÍÉÜc?ö§T¹#®ux©)÷ýÐXDò¸MÍèý­!m¾Œ‚ã #—–e§í\n"}
+4378 : send Ackp {ackNo = 63}
+4378 : recv DataP {acknoP = 2, seqnoP = 63, payload = "ð÷¨ËËfLŽ®ºÑÓ¯‹ŠžíD'‹Ã¬«.ô=®–ÌÀ°c+ÊŠ£¯ÿ™\n"}
+4378 : send Ackp {ackNo = 64}
+4378 : recv DataP {acknoP = 2, seqnoP = 64, payload = "0F8$2$®õ*ÉÎ%8{ãGÓzT-©†¬Í{R\n"}
+4378 : send Ackp {ackNo = 65}
+4378 : recv DataP {acknoP = 2, seqnoP = 65, payload = "çý[Uþ²ål5ëUÇMwYõü<’sr;à6Ÿ5=÷¬Q8O^¥d¥r†Þ–wt<våž…Ä_³"R7p2FQ“+ÒHßÒÀ,(WaH” 	¹¾xVì”áðËT‡ŒÀ?Ãß ˆºÌ*—fýw:Üƒxh¤Û1ºØqã³ê {ˆýést[{˜Àqë¹g ›ØÕ’üSñ+Ñd¨³ªÏLþGâ¹ß[fÌR‘eó<ÉÔ‡·'»\Ióü+÷šNëä
+›EÐ<3Ä¦ÌŽ*ß…òÑÜª\¿íDfMû/ÇÑ°û7ëÏœ8Uõ“Ñ‰Šñyû;ÜÈ*m~YJn*Ì^MŒjvCîŒ cR(ÌÔ<šæ»â¡tÊ¿f™CoGÿ¯V~©ceî‡µÜ“-‡·R°BúËE¿àTƒ¤,½Të“ÁÖb¬¶I}›!-š§î °oYÙ„¡–JÈ¿½Ý€Y©ŠÞTÌ,ìÔ¼Õh‚þi¬Âòìéùîi6ˆ…cñÈL¤à'&…á@0Ÿ²¤-j%È‡Út#›5üª9ÇQùŸµØõLú¦TWÝE$W`aiðœ­ã¨T°>3êzHÈ\n"}
+4378 : send Ackp {ackNo = 66}
+4378 : recv DataP {acknoP = 2, seqnoP = 66, payload = "ÉÒ›räNyL­1ªÑ8Ç.'Ý¸HH ©†`\¹Ýs‘Õz…ˆPBš‘­á®qq„ëè2ŠE´æê’Ï1(a
+@L×“uqV¿
+BÖéµDÐŠÀñŸ¥ÐžKF0óÍˆrÜîËtõ—þþšÛ‚†{âœ&{•‡‚ŠTÛÞkªá>%V·ó}Ï{\n"}
+4378 : send Ackp {ackNo = 67}
+4378 : recv DataP {acknoP = 2, seqnoP = 67, payload = "¸}¾è¾ÕaN%\n"}
+4378 : send Ackp {ackNo = 68}
+4378 : recv DataP {acknoP = 2, seqnoP = 68, payload = "K9³íÓ]^Ô¿îåWyz4íÞ½Œè10»o@Õõ[ÅÏTôwùk“ééÏCú G36 ÚbE,Ç#¦OTFÒP`1æÂÜT­‰à˜–i¥ôTÖöéÖaK–¸h	ùñê,ò[±”úŠ ‹á">Îâ¡WÒ³á°"UŠM1A>Vãr’Â#Pñt¬Šî`Y#º«ô¨]òíÐ©Åá¾²iŸsž²)ÐË4ˆ)@r…äîú§IýUº7Ï	ç$â4_˜OF¨L°2gçQt·9ßV3Òð&P(xý•r%W÷[ìX=§Q<A¯0fãK‡‰`QõAÓwz·ë`×ùUŽE)øx)å¬÷8Åã`¤ýà½°®ÉJñ£NàÛøYí£ÙS!¬ë„@Yzæ™½kuSl¶ZY¼°§…zŒHœ¦Çã„q=¼Üp"«CnÌv°€Ûþ§ÍÑ™…dÖb`v÷•í¨»	I!Ýù+Í%f‹Ø¤°pÂ4ÑðÂHõ›{5KñTæc¸à¢ßX%hvk)Àk§å©¨|bë]@oÝÆrMÙéMÙ~UÅî÷S…íÂ1^vr”§ôõGxè]K¼*Ò,îü0Îb TF¬€;µ4å+nNL	Ý@\n"}
+4378 : send Ackp {ackNo = 69}
+4378 : recv DataP {acknoP = 2, seqnoP = 69, payload = "–H&*ý5ÒF€ÿÝ.>V6¡Èq9äÃ)5ñìèyUÜÔb%}%¥ãäpÀ5TÞ1‰ÕË”>zâ‰ê§*„®žü#h©éfz¦‚kIMã=¾"‹™ðü˜g¼&—ðµ4¹u¼~zém•B~
+ÿ×_¯5!ætIŒŸƒž½>,÷SÿµÑkÕçe°ï³Þ«k:¾`òÖéÑfÛlÖôŠD2°žÝ(ˆò°ùÿ“Í%É
+%NTV4Ÿû­ôM^Í)ÿñN¶He‹¿œWn=þàMƒ¤
+C­k,‚ÍUÒM·¢äë“ºí­S^—0°{jèöÍ\Ùe­BÏêãÉfÉy†$Cj›º+
+	²ø…3-ïam}ö|•MÿLÐ¤mAÁÆL@AïÙÎ¡ÿjÀ¹‰íu©Á]W­Ë,92Ý˜Á¥cêGeGVÍ¹GŸ	ü}"MT ôOó„F¥èÄ\n"}
+4378 : send Ackp {ackNo = 70}
+4378 : recv DataP {acknoP = 2, seqnoP = 70, payload = "Æ,8ãâìÐ[ñ€ö
+‹Y€<rßy&B¶×òÑvnm
+\e\’«ÄC÷€\iÉZ²Øžé¡jAˆÄw¢­CkX½ì¦è3¯é"KóãötU \`ÌËjh8ÖsˆÅ=7¨à¡þ‹2hŸ³i³ê7W÷‰m¢²¹…ÈO&ŒÄ	3Mr05˜ø—	Še”ß\f¼àÐÆ\_:Þ‘uÝªÙÙô2bÀ`˜nàþ3r4Ïy‰›Ÿœí¾ .jY)òJ\n"}
+4378 : send Ackp {ackNo = 71}
+4378 : recv DataP {acknoP = 2, seqnoP = 71, payload = "®7¥êS6Ša>§±bP$ .†Ãç¤g_‹)Ÿøˆì¢¡gÖ‹[xð·éÓçPs:ŸŠ}¥qHsUt–JþR{ËÖw‘ÜbúÕˆfK®58´X"¨a\n"}
+4378 : send Ackp {ackNo = 72}
+4376 : recv AckP {ackNo = 72}
+4376 : send DataP {acknoP = 2, seqnoP = 72, payloadP = "ªƒ€F`ëø¹ä°«D¸&¨z5/ACú#Ä§©aõdÛôÆØµ·u¯§Uá«©‹¦R_qÊÀ@ùkÅ‚<”§6ÊÛ`Ç`OÔVhcýtyHšÆ„ñT¿cŠuÓ›¹»i_•²¶|<Hñ6éeÓlGÙ»ÝªbÁü*jBÐ#1rfÜ ¨±FÁ1·+’¬ƒš" zà’hìšÙâM(s”ùÓ‚ÊëTqr¹ƒYÉdN½ÍÃ<ú€«:órsW=öÕ+jÆg>©ó·Á‰˜É@˜ÅuàˆFÛ¥ÔÑpƒwufæ&8‘Ra],¥}×˜ÂˆŽâ3ÅÁKn©ßår£åTSÊ¸³¡š°@ÃÞÁÒM~_m,¦ööÀ>a¸’ÞòbÑ‰}-È~£…ŒËqVmXÕH9ë„7‡àç´Â§OÂ“¼èVBqÏÍXéÚt˜Ç¶ã/›ØÌ±í“'Ü
+Ð°Í6 sáÔ¹#ŽU©vê1Úu­„ÒìByšÄôÎ;ÂMº^^éjÀ;ÖMÔ3æL¬ßÀm²*4bÙÑÏœ]Üzæš€Åöð sô–‹¡ ÜR3MùIŽ‡Æ¸Qí¹ó›çVVkÍaXB¤§Ëbä§€äØ„*µß¤ÀEàAr\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 72, payload = "ªƒ€F`ëø¹ä°«D¸&¨z5/ACú#Ä§©aõdÛôÆØµ·u¯§Uá«©‹¦R_qÊÀ@ùkÅ‚<”§6ÊÛ`Ç`OÔVhcýtyHšÆ„ñT¿cŠuÓ›¹»i_•²¶|<Hñ6éeÓlGÙ»ÝªbÁü*jBÐ#1rfÜ ¨±FÁ1·+’¬ƒš" zà’hìšÙâM(s”ùÓ‚ÊëTqr¹ƒYÉdN½ÍÃ<ú€«:órsW=öÕ+jÆg>©ó·Á‰˜É@˜ÅuàˆFÛ¥ÔÑpƒwufæ&8‘Ra],¥}×˜ÂˆŽâ3ÅÁKn©ßår£åTSÊ¸³¡š°@ÃÞÁÒM~_m,¦ööÀ>a¸’ÞòbÑ‰}-È~£…ŒËqVmXÕH9ë„7‡àç´Â§OÂ“¼èVBqÏÍXéÚt˜Ç¶ã/›ØÌ±í“'Ü
+Ð°Í6 sáÔ¹#ŽU©vê1Úu­„ÒìByšÄôÎ;ÂMº^^éjÀ;ÖMÔ3æL¬ßÀm²*4bÙÑÏœ]Üzæš€Åöð sô–‹¡ ÜR3MùIŽ‡Æ¸Qí¹ó›çVVkÍaXB¤§Ëbä§€äØ„*µß¤ÀEàAr\n"}
+4378 : send Ackp {ackNo = 73}
+4378 : recv DataP {acknoP = 2, seqnoP = 73, payload = "¶še00YÏ+#Áº‰²Ï€¬Ïé%^iêàm üGà¡
+INT4·g®ÓËˆåFOzEÔ#,æ~žŠÊ9Zë\DIÙ"cÇ¤$µ—Ú{v¬Ó¶\~6uµÈVÆ†’6»cW\n"}
+4378 : send Ackp {ackNo = 74}
+4376 : recv AckP {ackNo = 73}
+4376 : send DataP {acknoP = 2, seqnoP = 73, payloadP = "¶še00YÏ+#Áº‰²Ï€¬Ïé%^iêàm üGà¡
+INT4·g®ÓËˆåFOzEÔ#,æ~žŠÊ9Zë\DIÙ"cÇ¤$µ—Ú{v¬Ó¶\~6uµÈVÆ†’6»cW\n"}
+4376 : recv AckP {ackNo = 74}
+4376 : send DataP {acknoP = 2, seqnoP = 74, payloadP = ".HHAdøTGÙ‡ÀS¯õ•‚5&{Ñ‹ÚQ=‰®?Þ}ÑœæK7DH*A×ñ	^B‚ï¯QiÁ”ŽË¿ XA†îèªv“üý­LXW0"Is”N/0H3LRƒ—Y{5ü)ŸîõÂ^¬9<"ˆ»5Å›™¤`¿j§~õ£=f¾ÂÔÍÑ/æQþ}I‚	/W';´°l·\u¬H±.Ì#§Ï,³îWæ”¯îèÄ¾®¢´aÄ8i¬áTyè6iQµñGÉÈ›,áKk¦b[EÂ-ëTBèIöŠ\n"}
+4376 : recv AckP {ackNo = 75}
+4376 : send DataP {acknoP = 2, seqnoP = 75, payloadP = "§
+$,Q„€¿PÙcÃne=ß2¬ù©¢éi^„ˆ–Ì%iLø !® ²’ÂÈP”‘¡›°O{g_:½«¥{ƒ„¨˜†qœ¶&$œM\2,¹ò:á¼;¦˜ùqÞD}ìC_Yspûž}ºfÜ§2¬_ûÄß¸Òôc2£,ŒÀðÞIk!Ö¹èOj½té/8ê,lˆYíA«â-Åb¼é¼3Û°”ŒinC¬„µ„[Ÿ?+I§¹>,Yfp‹åšJa ï<µèæýä[ç—í#¶?áy¹%Øðÿªåä)fC"éiCÇ›ƒ9jâñö1:PT5Ã¾3+WuÌXR•ÙÒ€#oq¸ƒ¯m;û c3n$GðnB2ÐÒõö&·Ù(<ÐIø‹×²]
+×gð’W@´C5Z¦€j+ÆqiÛ+=ÃÉDìTp\n"}
+4376 : recv AckP {ackNo = 76}
+4376 : send DataP {acknoP = 2, seqnoP = 76, payloadP = "ˆ%.áâÖ5Îî‰³#§gaƒGbÕäXdNùt¶@Ü¸æ¥ÍáCEƒ²ÌêÛ8ü*_ÚÏ®*†zJ	²”0QžÑCê¢9^G/mäNœçk÷‘­õŒ™õRœî*jPïˆw³fG¶}rÅoéâb¯4„à·JaF¶ìx™p9ÅTµy]ÊÞK~èp“k¯XŸ‰ÙºBìûüÕ¡ã{b@l×ÊHœáÃ²˜‰Fò|vÞÃ^!ßlÝÛØø	a“n‘Ü~þ„jg3iÖ”­ÌØ´!múèOþ¿mCJoª~–0_x]Dâ¡k t´4Ý¬Kð`–†òšò¡#ìoÞØ7ÏweºÖJF%Å÷¶^ßW½2\n"}
+4376 : recv AckP {ackNo = 77}
+4376 : send DataP {acknoP = 2, seqnoP = 77, payloadP = "–$'ÁäŽ‡kF@¬.Fæ)Ë-”¶ª|J*aìNr¶CAPYŽÊ€úZfo«˜8ðx¿a?ÙüOt¡1gzðp	PyŸ^éÐ×–wß¥ßI?„ù!3ÊrVÎU;o4$Æån¯m<ˆê”ÕxVyEû*
+íÑ6ŸÑÕ‹¶-™ZÒ¯±Sµnîåvã‡îÕé<rw’Éd+°×P¼Y´o9Ñ9qÕÝ{8œ0ýe¼z¯Díæ$T˜vÍ˜eU¬wL‘¯x(zúƒ½‹ŠÌ›ø7ö$¸™ÚA³E
+M E?ÎIr˜#Õœ½‚ñÈ_¡go°Õb(t¥†´!Øj9éV­¹DgžYz·¨ÚMmuÈº10ÉÉóØg*Ý©)¸¤òñÚËbËV˜Œ£êŽ=¤W¾èË6wu"Â]z'Åä·È*c³Ð]Ã'P{o"!Pè þÑ\¾æ=>Æ¾o	ØèüD¦ÃÕÐphë{·‘\n"}
+4376 : recv AckP {ackNo = 78}
+4376 : send DataP {acknoP = 2, seqnoP = 78, payloadP = "ÁÛ|å.°bÇ`¨Î.W ÃëÆ£A¦áo1À%•*Ó¢çôÛvç¯ŠüLûï’u;;1™2\Öj®lƒ –ƒ¥¯Ó
+ï°Áý›œ–hòA[¸ŸàBEaKXs6·ái…uÿ÷åÝRÒÛ;lßþhˆÝõüÔö‘ñsRNÚy#s/?o‡ä=“]ÜU‰æý¸è“ä‡-<®žÅöŸx[óKªT¡ÆKª}ü¬•£ñvxð4gƒTùº ¿O(ä·GÆ ý¯¤{µR,ðj“WkäŒŒ€]fÏ®hß"Ê'ŽCœÑ+ˆ±^\n"}
+4376 : recv AckP {ackNo = 79}
+4376 : send DataP {acknoP = 2, seqnoP = 79, payloadP = "©"Ø{îú%csÛÁµ<Â]/Áô,ìÎIHˆ²14²×CúŒ¥ä;6]£ïücC£qˆAæ¶v’Ù'PHK™Þ¼Ú¸é@?¯…¼ô¹TD-#I·=`JôQß9…âœ3]q÷\”f‹NxuyŸ}›Éô=ùpê'£Š¼¢Ã'á0àËAû–Ó.ø}à•)hÃvØÕÐ8M+!RL=$åWí¼Q +qN]Ý&æ/·Êš6ò£çGÛ§-íUá¤\_)hóº-Ž±óÕ&!•’¶m€)Ø‘»týešRïóKaî?Ð“¢¤UÈº|Ñ\Rp
+÷m¬«µA¸“ú3¡_b‘g*¯á?F“Ïã‰ÄÈA‡‚ûî,h9î¥öðeƒ›jU,³'G4‚0¼,—Ð	Öò‘€¥#J‡/H Ý4rRÓ†3W“Ç"6~HÖÔV¾ƒ
+‚LqöUŒ'Ì$×§aøÚ¡}­…T….
+Ç	ŽÐÏ©¶°h±­u†(¤‡[”RXó¬ˆÔ˜Æ´1°IÀL+³þÖs½(|¨ªÀ)¼÷çžP¼ÁÃêxôQv2ÊòÚñþµÌ(hÏkeµ÷‘ZÚ5ì…\«Õò*º¤«3ÿ¶)ì“°±\n"}
+4376 : recv AckP {ackNo = 80}
+4376 : send DataP {acknoP = 2, seqnoP = 80, payloadP = "¡€\n£ö1kW ;0-ú8¿ú´¦œoÉ?•]üb»?»ŒüoÝkRÈ«äéSj,˜<×ågúQNHkšôò4ï ÓIc£yº+fÈÊ1I;tç)éóô“U{²à6YNWy%ÈÆb7,WYZ9„â2úRµÈ›xT3žƒ—êÛá‘Â‡ª:åiØß-ÙœØÈÄd²»™6Ñ@}¶©2¿+lÉ×9mî+XaÂöVîXÎ{Œ¬7ù×
+ÃÎOU	HÇx	ÅQ(M~–q¨j¡[[7¾D5™ª—¶ÝMký‘SN·KŸ˜îB;GBUâf-J2K–ÁsôiÄÈkÑŽ(a«¥(ˆnçƒ›	œÙ^¥[åý©;´ñEÆFå©;¤ÀàŽRjdA½ŒÂ€t”|…'C6Ír ’~eÂX€ì°¯M§íg5üÝIÜÝ„4•ÞœŒŠ¾}v!@7…Î
+¸°Ç;FA¬Égõê@‰óå€®:“
+]àãÆÐçhCD¯ž5Æ­<øÑC2j_ºƒÈRùDÄž%ÇáÀâøÍxÃÓy>cÕò\n"}
+4376 : recv AckP {ackNo = 81}
+4376 : send DataP {acknoP = 2, seqnoP = 81, payloadP = "*§fôFÎeÌ(KX…~8åŸÓíX^ÿD;G‡"gþ¬_.^ßE<Q/œ]B—ÿdu®açµ9Îù9hÔçˆ'z²JWUV™{.ƒWRÔ8Ú)—1ïWšÈ8—"‰aP6_u‰¼»þ¨X^{²&> ?¹ÿÂ—¶@YHWöy“–ò5n¹ÙpñÒqYI.ªpìT´y€–&Äyi1•Eqªôþ¼7TÌ2v÷îP’)'‹`6YðeÒ¬¡[gÌüæŒ¬î(L¾§ú©Éf9ƒXl
+$Ø°­X"…—
+¥PË\»´œEG^\[Õ}ßð,§¬I70ß"ŸAZQ•ÙÔØäIrFC1…"ÐÐM¼À<pžîe¿.Ô‚ªk‰õÚÒ‘¼˜ÄO)÷0óãp-ª .bo3íPo=•€*,´þÝÁÄa‘º_²; .Ó$Ó[Ï=³w02ƒêðŽf®Þ¹J³Ç+šBÓ0)ÿ„ßBO~„4vBNnÜ™úˆ¹&Õâÿ˜)xÑ%z¾É91TæüK]«KS´)Œ&,ESøÏ/ÚK]âûÚš!K¬öÞ¬,¢ÎpYv¦z¤•3f~|Ê£Iù~C‹˜¥ªÿ[jT`ŠÑÑ¢:>è¿>Z„‡p¶\n"}
+4376 : recv AckP {ackNo = 82}
+4376 : send DataP {acknoP = 2, seqnoP = 82, payloadP = "W‡çäþ÷¤–Ú" <™ˆãÀ^~7‹Þf·Lïªàk÷£Ø:“YåYXMÜ½^òwébjÛTè6ñðžÕ0ãuâ›Ò¶ÝÚgÐ%7~¥Le–Ñ.?mPÎ–:«øSÚJr]æìÄy“Ô‡H³R®mÄeYÿòî´+èWŒÕuñ·û™_‰ÅÙï	ËKMbZ( O¼“Çƒý"^:Å)÷©:àeŠ–’}Îßž0íQJ¼k[_ñCÎ¬á$mF¾j<2½³aÖW§q›£û¤¤Ôyõ©hæg>¬”ÁÈž=Ù*z4<þõù–ŠL¹ÎŠO»àýG™Ú:«¡ ]j
+šú†9Iï#Á‰X#ï‰%ôçN¬íáGýÌÆ—UÏú¬F$`2ÿIåÌë5Êr€4ßað$³c+ªª‹ü„ÓúãšýÊ‹5ž›\n"}
+4376 : recv AckP {ackNo = 83}
+4376 : send DataP {acknoP = 2, seqnoP = 83, payloadP = "ÇÄËÜÕ>’ nL™ñÛ\n"}
+4376 : recv AckP {ackNo = 84}
+4376 : send DataP {acknoP = 2, seqnoP = 84, payloadP = "ç…UÄ«#ÛÏý¹èÀ”"Ü$¤X4+„Àÿl‹½Q.÷)ýÇ©E®¤ È,Õt´ù{¦‹dÉ^çª¥6i­–²•`¶úÓmb®I)½]³ÞÔXwú³ËÁ[&9_I—ø\n"}
+4376 : recv AckP {ackNo = 85}
+4376 : send DataP {acknoP = 2, seqnoP = 85, payloadP = "ãªs(aHƒÆÄºð}Õ…O…8iû¹%ÙŒú_ŒQ;sV]vH!}«`è¶~Ú¬ø4”ÃÃœ_îna¨^Ê(ÈoÀ,œ¬úšäÿµ<Y nHË²Çe÷8þÔœ\‡^¾À/|ÑùS\n"}
+4376 : recv AckP {ackNo = 86}
+4376 : send DataP {acknoP = 2, seqnoP = 86, payloadP = "¢¨ºzR‚PÏH
+IzØ‰„Tî™SÙÏ‘ó†°ç,ÖçãKq tënËHÓ>¹ŸŠx¨;Ò|…ØÎ£IúF²Ç·;·A(íñC×F¾Ø fN†¡÷½>Ö¬Æ˜=ªG¶ù™“#»ü–v7’à&¢å(¾ÛëÜ•+ec3H|·AFéb‡ VóÍÞ£Ý¿®öNe\LLÜqâFžc†¤&mê‘E»ƒXŒàk/¶pbÂ¬Î 7=À¦PSvÅ÷†G°ŒxPƒ)…:­#<®¾ÎÀŒ;[þ bÔî¡Z*~sß%"ìÛ±;@4³.cÄl	øÆfSpýÃÌÉGŒÝ¶äN1Ø½›ò‚®Ê	9Þ„&ŸÚº@¡#^Ðè•lø‘®×º¤³½‡iBv1a5#Ö…ö»ü£;lÂSŸ:½À»3 º¼ÏJ¾Táeõ‘¼h»é~`‰a±UŽîK}Cû¨æ!ü´Ù†.šµÂ,'–K•ïjÞW~§—Ðˆ˜$€ƒÒSRzÎª¾„*~Š7Ç›—|!a	2I-©”±'\îÎ 'í,V(“½yÍr‘~F=×UÍÀìîß\E–ƒä<´'pÓðI`E½Š¥y²Jg9GÙŸ ª/QÆåå‡Á[7¡;¬\n"}
+4376 : recv AckP {ackNo = 87}
+4376 : send DataP {acknoP = 2, seqnoP = 87, payloadP = "ÙZþo£RÙãŠÉx±¸ÿ(/õVÂS›† ˜@‡º`•!Ã¨åû»†g¸‚’B÷*9VÏ×æäa¸|ƒpçe³ñÕËkü²‰2X¨ƒÞß¢ýÏè»ÆÛòTþ93ìˆ;ºŸÁÐÁ=¥÷$Yž]`£°èâ<F{¿€º/5ý×câb|=ÎL;p¹xÐa7‚ÇA[µ»§ÚBfPó»VŠ¼jÑ~OSÒUºj®(ÝØ†Ä³ª€!‚³øÞv“Ñû,gçÙ®ÇhÞŠw«»ÂþŠ„QOÿz¿Ð'€’sÖš$ÃYMkú³ÇÀ²ñœ/–HŠHÞü
+ìbë_qo,Ð5çš/[F¬U?é¸–Ÿs.°°mÉž3øƒN¶Jd#mqãoÒÊÙÙkžâLÖ5ŒU¬)>,Gr¦€a\íXsôöïZŽ\¼—òÂ?ø‰þI}“ä†Šwdð2–2ù2cŸÖ8ù‘æÌjþoÀ¯žAÐC*ºT´F¢¡}¢.¤æXÉ+ ¢w~N_fö¬÷úä¼´ªÿf­3ÀÀÛ‡*'œŸÜÀE{@8ŸöÜÄÌš…âåþ$Eÿ°a´ÕÑM`o~ÁÁýb±iÐÿ»ºêûj±ÃTW3í/|€öj†cÖà¹¸Òâmî„çÏ»©úêD
+\n"}
+4376 : recv AckP {ackNo = 88}
+4376 : send DataP {acknoP = 2, seqnoP = 88, payloadP = "¨ [ô#·>i€…ÿk·:rZk¾pïT,	áœ·W¸l¿„»»\n"}
+4376 : recv AckP {ackNo = 89}
+4376 : send DataP {acknoP = 2, seqnoP = 89, payloadP = "˜ˆòEjÑ”9´’þbµð}3}þÔßŸ]9÷á¯·ÖC†ºG	«êræfF3†ø‹ŽÔÜÊñU¨ø~JŒEÜëPÄºIí!×ÿÖ~\3ñ.¯+ ƒ‘ï7‘‚e O²‚ÈLæ}ø;n‚¥­›_ÙùVmå,¢ÈD‰:¡Ïs‡óˆ±€•Ñ¬:ˆíó×0y¥H£(‹3—Ÿl’4-‰==@[÷Ý×¾¯J	A¼³cf°¦3×†ë_:ñÁ”¨Y1rÛÞî²Þ³aïÑ~ÞŠ—ÖæÎ€ˆ“DÆ8Õ|÷¯]Ò`C,k¼¶&æW w”mèf‘\n"}
+4376 : recv AckP {ackNo = 90}
+4376 : send DataP {acknoP = 2, seqnoP = 90, payloadP = "
+T±:×›‡V‘Žz˜âzsnßóR—o¶²–ö Õ–ïÌû£ :ý4gHdÏâ?¹ú†dc°Næaêw€Ü*VeÅÌûâP{ÆùáŠ¹²‰ù½4wÈÉ)vÿÓ	\zù`Ë§B+¿WÍV 3F]ƒ0ÅfG,e`ô¶mzO4ÅíâQ°ý«‹ÎY‚€TT!PÀV44+ÈfmÍ2%:’+cãj«yè5¡‚Phd¢dÔíñä—?×ÈPãf²ÇÃ§[‚BSBìKin#,¦³Ü\n"}
+4376 : recv AckP {ackNo = 91}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 74, payload = ".HHAdøTGÙ‡ÀS¯õ•‚5&{Ñ‹ÚQ=‰®?Þ}ÑœæK7DH*A×ñ	^B‚ï¯QiÁ”ŽË¿ XA†îèªv“üý­LXW0"Is”N/0H3LRƒ—Y{5ü)ŸîõÂ^¬9<"ˆ»5Å›™¤`¿j§~õ£=f¾ÂÔÍÑ/æQþ}I‚	/W';´°l·\u¬H±.Ì#§Ï,³îWæ”¯îèÄ¾®¢´aÄ8i¬áTyè6iQµñGÉÈ›,áKk¦b[EÂ-ëTBèIöŠ\n"}
+4378 : send Ackp {ackNo = 75}
+4378 : recv DataP {acknoP = 2, seqnoP = 75, payload = "§
+$,Q„€¿PÙcÃne=ß2¬ù©¢éi^„ˆ–Ì%iLø !® ²’ÂÈP”‘¡›°O{g_:½«¥{ƒ„¨˜†qœ¶&$œM\2,¹ò:á¼;¦˜ùqÞD}ìC_Yspûž}ºfÜ§2¬_ûÄß¸Òôc2£,ŒÀðÞIk!Ö¹èOj½té/8ê,lˆYíA«â-Åb¼é¼3Û°”ŒinC¬„µ„[Ÿ?+I§¹>,Yfp‹åšJa ï<µèæýä[ç—í#¶?áy¹%Øðÿªåä)fC"éiCÇ›ƒ9jâñö1:PT5Ã¾3+WuÌXR•ÙÒ€#oq¸ƒ¯m;û c3n$GðnB2ÐÒõö&·Ù(<ÐIø‹×²]
+×gð’W@´C5Z¦€j+ÆqiÛ+=ÃÉDìTp\n"}
+4378 : send Ackp {ackNo = 76}
+4378 : recv DataP {acknoP = 2, seqnoP = 76, payload = "ˆ%.áâÖ5Îî‰³#§gaƒGbÕäXdNùt¶@Ü¸æ¥ÍáCEƒ²ÌêÛ8ü*_ÚÏ®*†zJ	²”0QžÑCê¢9^G/mäNœçk÷‘­õŒ™õRœî*jPïˆw³fG¶}rÅoéâb¯4„à·JaF¶ìx™p9ÅTµy]ÊÞK~èp“k¯XŸ‰ÙºBìûüÕ¡ã{b@l×ÊHœáÃ²˜‰Fò|vÞÃ^!ßlÝÛØø	a“n‘Ü~þ„jg3iÖ”­ÌØ´!múèOþ¿mCJoª~–0_x]Dâ¡k t´4Ý¬Kð`–†òšò¡#ìoÞØ7ÏweºÖJF%Å÷¶^ßW½2\n"}
+4378 : send Ackp {ackNo = 77}
+4378 : recv DataP {acknoP = 2, seqnoP = 77, payload = "–$'ÁäŽ‡kF@¬.Fæ)Ë-”¶ª|J*aìNr¶CAPYŽÊ€úZfo«˜8ðx¿a?ÙüOt¡1gzðp	PyŸ^éÐ×–wß¥ßI?„ù!3ÊrVÎU;o4$Æån¯m<ˆê”ÕxVyEû*
+íÑ6ŸÑÕ‹¶-™ZÒ¯±Sµnîåvã‡îÕé<rw’Éd+°×P¼Y´o9Ñ9qÕÝ{8œ0ýe¼z¯Díæ$T˜vÍ˜eU¬wL‘¯x(zúƒ½‹ŠÌ›ø7ö$¸™ÚA³E
+M E?ÎIr˜#Õœ½‚ñÈ_¡go°Õb(t¥†´!Øj9éV­¹DgžYz·¨ÚMmuÈº10ÉÉóØg*Ý©)¸¤òñÚËbËV˜Œ£êŽ=¤W¾èË6wu"Â]z'Åä·È*c³Ð]Ã'P{o"!Pè þÑ\¾æ=>Æ¾o	ØèüD¦ÃÕÐphë{·‘\n"}
+4378 : send Ackp {ackNo = 78}
+4378 : recv DataP {acknoP = 2, seqnoP = 78, payload = "ÁÛ|å.°bÇ`¨Î.W ÃëÆ£A¦áo1À%•*Ó¢çôÛvç¯ŠüLûï’u;;1™2\Öj®lƒ –ƒ¥¯Ó
+ï°Áý›œ–hòA[¸ŸàBEaKXs6·ái…uÿ÷åÝRÒÛ;lßþhˆÝõüÔö‘ñsRNÚy#s/?o‡ä=“]ÜU‰æý¸è“ä‡-<®žÅöŸx[óKªT¡ÆKª}ü¬•£ñvxð4gƒTùº ¿O(ä·GÆ ý¯¤{µR,ðj“WkäŒŒ€]fÏ®hß"Ê'ŽCœÑ+ˆ±^\n"}
+4378 : send Ackp {ackNo = 79}
+4378 : recv DataP {acknoP = 2, seqnoP = 79, payload = "©"Ø{îú%csÛÁµ<Â]/Áô,ìÎIHˆ²14²×CúŒ¥ä;6]£ïücC£qˆAæ¶v’Ù'PHK™Þ¼Ú¸é@?¯…¼ô¹TD-#I·=`JôQß9…âœ3]q÷\”f‹NxuyŸ}›Éô=ùpê'£Š¼¢Ã'á0àËAû–Ó.ø}à•)hÃvØÕÐ8M+!RL=$åWí¼Q +qN]Ý&æ/·Êš6ò£çGÛ§-íUá¤\_)hóº-Ž±óÕ&!•’¶m€)Ø‘»týešRïóKaî?Ð“¢¤UÈº|Ñ\Rp
+÷m¬«µA¸“ú3¡_b‘g*¯á?F“Ïã‰ÄÈA‡‚ûî,h9î¥öðeƒ›jU,³'G4‚0¼,—Ð	Öò‘€¥#J‡/H Ý4rRÓ†3W“Ç"6~HÖÔV¾ƒ
+‚LqöUŒ'Ì$×§aøÚ¡}­…T….
+Ç	ŽÐÏ©¶°h±­u†(¤‡[”RXó¬ˆÔ˜Æ´1°IÀL+³þÖs½(|¨ªÀ)¼÷çžP¼ÁÃêxôQv2ÊòÚñþµÌ(hÏkeµ÷‘ZÚ5ì…\«Õò*º¤«3ÿ¶)ì“°±\n"}
+4378 : send Ackp {ackNo = 80}
+4378 : recv DataP {acknoP = 2, seqnoP = 80, payload = "¡€\n£ö1kW ;0-ú8¿ú´¦œoÉ?•]üb»?»ŒüoÝkRÈ«äéSj,˜<×ågúQNHkšôò4ï ÓIc£yº+fÈÊ1I;tç)éóô“U{²à6YNWy%ÈÆb7,WYZ9„â2úRµÈ›xT3žƒ—êÛá‘Â‡ª:åiØß-ÙœØÈÄd²»™6Ñ@}¶©2¿+lÉ×9mî+XaÂöVîXÎ{Œ¬7ù×
+ÃÎOU	HÇx	ÅQ(M~–q¨j¡[[7¾D5™ª—¶ÝMký‘SN·KŸ˜îB;GBUâf-J2K–ÁsôiÄÈkÑŽ(a«¥(ˆnçƒ›	œÙ^¥[åý©;´ñEÆFå©;¤ÀàŽRjdA½ŒÂ€t”|…'C6Ír ’~eÂX€ì°¯M§íg5üÝIÜÝ„4•ÞœŒŠ¾}v!@7…Î
+¸°Ç;FA¬Égõê@‰óå€®:“
+]àãÆÐçhCD¯ž5Æ­<øÑC2j_ºƒÈRùDÄž%ÇáÀâøÍxÃÓy>cÕò\n"}
+4378 : send Ackp {ackNo = 81}
+4378 : recv DataP {acknoP = 2, seqnoP = 81, payload = "*§fôFÎeÌ(KX…~8åŸÓíX^ÿD;G‡"gþ¬_.^ßE<Q/œ]B—ÿdu®açµ9Îù9hÔçˆ'z²JWUV™{.ƒWRÔ8Ú)—1ïWšÈ8—"‰aP6_u‰¼»þ¨X^{²&> ?¹ÿÂ—¶@YHWöy“–ò5n¹ÙpñÒqYI.ªpìT´y€–&Äyi1•Eqªôþ¼7TÌ2v÷îP’)'‹`6YðeÒ¬¡[gÌüæŒ¬î(L¾§ú©Éf9ƒXl
+$Ø°­X"…—
+¥PË\»´œEG^\[Õ}ßð,§¬I70ß"ŸAZQ•ÙÔØäIrFC1…"ÐÐM¼À<pžîe¿.Ô‚ªk‰õÚÒ‘¼˜ÄO)÷0óãp-ª .bo3íPo=•€*,´þÝÁÄa‘º_²; .Ó$Ó[Ï=³w02ƒêðŽf®Þ¹J³Ç+šBÓ0)ÿ„ßBO~„4vBNnÜ™úˆ¹&Õâÿ˜)xÑ%z¾É91TæüK]«KS´)Œ&,ESøÏ/ÚK]âûÚš!K¬öÞ¬,¢ÎpYv¦z¤•3f~|Ê£Iù~C‹˜¥ªÿ[jT`ŠÑÑ¢:>è¿>Z„‡p¶\n"}
+4378 : send Ackp {ackNo = 82}
+4378 : recv DataP {acknoP = 2, seqnoP = 82, payload = "W‡çäþ÷¤–Ú" <™ˆãÀ^~7‹Þf·Lïªàk÷£Ø:“YåYXMÜ½^òwébjÛTè6ñðžÕ0ãuâ›Ò¶ÝÚgÐ%7~¥Le–Ñ.?mPÎ–:«øSÚJr]æìÄy“Ô‡H³R®mÄeYÿòî´+èWŒÕuñ·û™_‰ÅÙï	ËKMbZ( O¼“Çƒý"^:Å)÷©:àeŠ–’}Îßž0íQJ¼k[_ñCÎ¬á$mF¾j<2½³aÖW§q›£û¤¤Ôyõ©hæg>¬”ÁÈž=Ù*z4<þõù–ŠL¹ÎŠO»àýG™Ú:«¡ ]j
+šú†9Iï#Á‰X#ï‰%ôçN¬íáGýÌÆ—UÏú¬F$`2ÿIåÌë5Êr€4ßað$³c+ªª‹ü„ÓúãšýÊ‹5ž›\n"}
+4378 : send Ackp {ackNo = 83}
+4378 : recv DataP {acknoP = 2, seqnoP = 83, payload = "ÇÄËÜÕ>’ nL™ñÛ\n"}
+4378 : send Ackp {ackNo = 84}
+4378 : recv DataP {acknoP = 2, seqnoP = 84, payload = "ç…UÄ«#ÛÏý¹èÀ”"Ü$¤X4+„Àÿl‹½Q.÷)ýÇ©E®¤ È,Õt´ù{¦‹dÉ^çª¥6i­–²•`¶úÓmb®I)½]³ÞÔXwú³ËÁ[&9_I—ø\n"}
+4378 : send Ackp {ackNo = 85}
+4378 : recv DataP {acknoP = 2, seqnoP = 85, payload = "ãªs(aHƒÆÄºð}Õ…O…8iû¹%ÙŒú_ŒQ;sV]vH!}«`è¶~Ú¬ø4”ÃÃœ_îna¨^Ê(ÈoÀ,œ¬úšäÿµ<Y nHË²Çe÷8þÔœ\‡^¾À/|ÑùS\n"}
+4378 : send Ackp {ackNo = 86}
+4378 : recv DataP {acknoP = 2, seqnoP = 86, payload = "¢¨ºzR‚PÏH
+IzØ‰„Tî™SÙÏ‘ó†°ç,ÖçãKq tënËHÓ>¹ŸŠx¨;Ò|…ØÎ£IúF²Ç·;·A(íñC×F¾Ø fN†¡÷½>Ö¬Æ˜=ªG¶ù™“#»ü–v7’à&¢å(¾ÛëÜ•+ec3H|·AFéb‡ VóÍÞ£Ý¿®öNe\LLÜqâFžc†¤&mê‘E»ƒXŒàk/¶pbÂ¬Î 7=À¦PSvÅ÷†G°ŒxPƒ)…:­#<®¾ÎÀŒ;[þ bÔî¡Z*~sß%"ìÛ±;@4³.cÄl	øÆfSpýÃÌÉGŒÝ¶äN1Ø½›ò‚®Ê	9Þ„&ŸÚº@¡#^Ðè•lø‘®×º¤³½‡iBv1a5#Ö…ö»ü£;lÂSŸ:½À»3 º¼ÏJ¾Táeõ‘¼h»é~`‰a±UŽîK}Cû¨æ!ü´Ù†.šµÂ,'–K•ïjÞW~§—Ðˆ˜$€ƒÒSRzÎª¾„*~Š7Ç›—|!a	2I-©”±'\îÎ 'í,V(“½yÍr‘~F=×UÍÀìîß\E–ƒä<´'pÓðI`E½Š¥y²Jg9GÙŸ ª/QÆåå‡Á[7¡;¬\n"}
+4378 : send Ackp {ackNo = 87}
+4378 : recv DataP {acknoP = 2, seqnoP = 87, payload = "ÙZþo£RÙãŠÉx±¸ÿ(/õVÂS›† ˜@‡º`•!Ã¨åû»†g¸‚’B÷*9VÏ×æäa¸|ƒpçe³ñÕËkü²‰2X¨ƒÞß¢ýÏè»ÆÛòTþ93ìˆ;ºŸÁÐÁ=¥÷$Yž]`£°èâ<F{¿€º/5ý×câb|=ÎL;p¹xÐa7‚ÇA[µ»§ÚBfPó»VŠ¼jÑ~OSÒUºj®(ÝØ†Ä³ª€!‚³øÞv“Ñû,gçÙ®ÇhÞŠw«»ÂþŠ„QOÿz¿Ð'€’sÖš$ÃYMkú³ÇÀ²ñœ/–HŠHÞü
+ìbë_qo,Ð5çš/[F¬U?é¸–Ÿs.°°mÉž3øƒN¶Jd#mqãoÒÊÙÙkžâLÖ5ŒU¬)>,Gr¦€a\íXsôöïZŽ\¼—òÂ?ø‰þI}“ä†Šwdð2–2ù2cŸÖ8ù‘æÌjþoÀ¯žAÐC*ºT´F¢¡}¢.¤æXÉ+ ¢w~N_fö¬÷úä¼´ªÿf­3ÀÀÛ‡*'œŸÜÀE{@8ŸöÜÄÌš…âåþ$Eÿ°a´ÕÑM`o~ÁÁýb±iÐÿ»ºêûj±ÃTW3í/|€öj†cÖà¹¸Òâmî„çÏ»©úêD
+\n"}
+4378 : send Ackp {ackNo = 88}
+4378 : recv DataP {acknoP = 2, seqnoP = 88, payload = "¨ [ô#·>i€…ÿk·:rZk¾pïT,	áœ·W¸l¿„»»\n"}
+4378 : send Ackp {ackNo = 89}
+4378 : recv DataP {acknoP = 2, seqnoP = 89, payload = "˜ˆòEjÑ”9´’þbµð}3}þÔßŸ]9÷á¯·ÖC†ºG	«êræfF3†ø‹ŽÔÜÊñU¨ø~JŒEÜëPÄºIí!×ÿÖ~\3ñ.¯+ ƒ‘ï7‘‚e O²‚ÈLæ}ø;n‚¥­›_ÙùVmå,¢ÈD‰:¡Ïs‡óˆ±€•Ñ¬:ˆíó×0y¥H£(‹3—Ÿl’4-‰==@[÷Ý×¾¯J	A¼³cf°¦3×†ë_:ñÁ”¨Y1rÛÞî²Þ³aïÑ~ÞŠ—ÖæÎ€ˆ“DÆ8Õ|÷¯]Ò`C,k¼¶&æW w”mèf‘\n"}
+4378 : send Ackp {ackNo = 90}
+4378 : recv DataP {acknoP = 2, seqnoP = 90, payload = "
+T±:×›‡V‘Žz˜âzsnßóR—o¶²–ö Õ–ïÌû£ :ý4gHdÏâ?¹ú†dc°Næaêw€Ü*VeÅÌûâP{ÆùáŠ¹²‰ù½4wÈÉ)vÿÓ	\zù`Ë§B+¿WÍV 3F]ƒ0ÅfG,e`ô¶mzO4ÅíâQ°ý«‹ÎY‚€TT!PÀV44+ÈfmÍ2%:’+cãj«yè5¡‚Phd¢dÔíñä—?×ÈPãf²ÇÃ§[‚BSBìKin#,¦³Ü\n"}
+4378 : send Ackp {ackNo = 91}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : send Ackp {ackNo = 92}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4378 : recv DataP {acknoP = 2, seqnoP = 91, payload = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
+4376 : send DataP {acknoP = 2, seqnoP = 91, payloadP = "É.ay=Xžú_¤°‚íÿHh1xÓ±“¬Zp_¥oGæ3_K®)ìKª o½/Ù¥ nDž-!ôK´+@WÃÏö±\LíxÆFÊç$»xB´‰UÎÊÒC>Û$œQç —<ÛxÛ­À°ƒ†KLn‘mâ!`úè";=§„Y9Kå—ýô&ª5ÇíÈ|aÓ›ý6Byê|çÇ&ìÊÃ”2²˜f®Ð¬£p˜Y™Ó!@ËLÃ©ÅèžO5¿»ÕÎ>ÃŸè%5§ÏÍ]€ëMó·|íHQãEqiù|¤8ÛO¡¢0Ý`P[È‡ZxÓ–ÎMÓª„^Ô›êÍÖZûOø²™—c;ðò/´,\­ºçRd#’¨Þ_„GÉbáWv3•w›Sßåaø%æý’“ø Å–ƒZ?,QpEz™Z’$­ø†$ªhn¹¤DÓ{möùnóéZp	$ö±q.—-›Gë‹æ^ ‚)ÒŠ³Ø€’œqr>÷’µîæ3g >Y°ö©K§ d‡~«ÊÒdn¢©ièèŽ{m¼’®æ°€…H£7Ú:~vÐ°z2qŒ)«¶[´ªƒnGihiSyî–,’cŠ'.bòYJ›’±6³ŸbÚY£\n"}
