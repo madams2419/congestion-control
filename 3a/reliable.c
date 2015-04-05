@@ -16,7 +16,7 @@
 
 #define ACK_LEN 8
 #define PKT_HDR_LEN 12
-#define MAX_PACKET_SIZE 500
+#define PKT_DATA_LEN 500
 #define WAIT 1
 #define NO_WAIT 0
 
@@ -194,8 +194,9 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	uint16_t pkt_len = ntohs(pkt->len);
 
 	/* verify packet length */
-	if(pkt_len > n) {
+	if(pkt_len > n || pkt_len > PKT_DATA_LEN + PKT_HDR_LEN) {
 		per("Packet length invalid!");
+		fprintf(stderr, "LEN FAIL - pkt_len = %d", pkt_len);
 		return;
 	}
 
@@ -301,7 +302,7 @@ void rel_read(rel_t *s)
 
 		/* get send buffer */
 		pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
-		int rd_len = conn_input(s->c, sbuf->data, MAX_PACKET_SIZE);
+		int rd_len = conn_input(s->c, sbuf->data, PKT_DATA_LEN);
 		int isEOF = (rd_len == -1);
 
 		/* handle no data */
@@ -394,7 +395,7 @@ pbuf_t **create_srbuf(pbuf_t **srbuf, int len) {
 	int i;
 	for(i = 0; i < len; i++) {
 		srbuf[i] = xmalloc(sizeof(**srbuf));
-		srbuf[i]->data = xmalloc(MAX_PACKET_SIZE);
+		srbuf[i]->data = xmalloc(PKT_DATA_LEN);
 	}
 	return srbuf;
 }
