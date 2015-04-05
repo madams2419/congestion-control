@@ -196,7 +196,6 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	/* verify packet length */
 	if(pkt_len > n || pkt_len > PKT_DATA_LEN + PKT_HDR_LEN) {
 		per("Packet length invalid!");
-		fprintf(stderr, "LEN FAIL - pkt_len = %d", pkt_len);
 		return;
 	}
 
@@ -557,10 +556,10 @@ void hton_pconvert(packet_t *pkt) {
 
 /* print message with PID to standard error */
 void per(char *st) {
-	//fprintf(stderr, "%d: %s\n", getpid(), st);
+	fprintf(stderr, "%d: %s\n", getpid(), st);
 }
 void per2(char *st, int i) {
-	//fprintf(stderr, "%d: %s %d\n", getpid(), st, i);
+	fprintf(stderr, "%d: %s %d\n", getpid(), st, i);
 }
 
 
