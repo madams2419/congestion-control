@@ -20,8 +20,9 @@
 #define WAIT 1
 #define NO_WAIT 0
 
-#define RCV_BUF_SPACE(r) r->max_rcv_buffer - (r->last_pkt_received - r->last_pkt_read)
+#define ADVERTISED_WINDOW(r) r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
+#define EFFECTIVE_WINDOW(r) r->advertised_window - (r->last_pkt_sent - r->last_pkt_acked)
 
 // Questions:
 
@@ -69,12 +70,12 @@ struct reliable_state
 
 	pbuf_t **send_buffer;
 	int max_send_buffer;
+	int advertised_window; //3B this must be updated on every valid packet received in rel_recvpkt
 	int last_pkt_acked;
 	int sbuf_start_index;
 	int last_pkt_sent;
 	int last_pkt_written;
 
-	//TODO what should size of receive buffer be
 	pbuf_t **rcv_buffer;
 	int max_rcv_buffer;
 	int num_dpkts_rcvd;
@@ -134,7 +135,8 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->fin_wait = 0;
 
 	/* initialize send side */
-	r->max_send_buffer = r->window;
+	r->max_send_buffer = r->window; //3B I think this is specified differently in 3B
+	r->advertised_window = r->window; //3B not sure what this should be initialized to
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
 	r->sbuf_start_index = 0;
@@ -142,7 +144,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->last_pkt_written = 0;
 
 	/* initialize receive side */
-	r->max_rcv_buffer = r->window; //TODO what should this be
+	r->max_rcv_buffer = r->window; //3B I think this is specified differently in 3B
 	r->rcv_buffer = create_srbuf(r->rcv_buffer, r->max_rcv_buffer);
 	r->num_dpkts_rcvd = 0;
 	r->last_pkt_read = 0;
@@ -251,7 +253,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 		/* return if there is insufficient space in the buffer */
 		int space_required = (r->last_pkt_received == -1) ? 1 : pkt->seqno - r->last_pkt_received;
-		if(space_required > RCV_BUF_SPACE(r)) {
+		if(space_required > ADVERTISED_WINDOW(r)) {
 			per("Insufficient RCV buffer space.");
 			return;
 		}
@@ -499,7 +501,13 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 
 /* send next packet in queue */
 void send_next_packet(rel_t *s) {
+	/* return if no packets remain to be written */
 	if(s->last_pkt_written == s->last_pkt_sent) {
+		return;
+	}
+
+	/* return if effective window is zero */
+	if(EFFECTIVE_WINDOW(s) == 0) {
 		return;
 	}
 
