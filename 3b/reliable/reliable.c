@@ -34,6 +34,18 @@
 // - have handle_connection_close return an boolean and return from calling function if true
 
 
+
+//TASK
+// 1. Receiver needs to send EOF at the beginning of the connection
+// 2. Advertised Window needs to be included in the ack packet (change the packet header configurations)
+// 3. Sent-packet RTT needs to be calculated constantly to update new timeout
+// 4. Congestion window needs to be updated after each RTT
+// 5. The ack number needs to be recorded to detect fast retransmit
+
+
+
+
+
 typedef struct packet_buf pbuf_t;
 
 pbuf_t **create_srbuf(pbuf_t **srbuf, int len);
@@ -63,7 +75,7 @@ struct reliable_state
 	conn_t *c;          /* This is the connection object */
 
 	int window;
-	int timeout;
+	uint64_t timeout_ns;
 	int remote_eof_seqno;
 	int local_eof_seqno;
 	int fin_wait;
@@ -125,9 +137,14 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 		rel_list->prev = &r->next;
 	rel_list = r;
 
+	//Task1: For receiver, an EOF needs to be sent at the beginning of the session
+
+
+
+
 	/* initialize config params */
 	r->window = cc->window;
-	r->timeout = cc->timeout;
+	r->timeout_ns = 1000000 * cc->timeout;
 
 	/* initialize booleans */
 	r->remote_eof_seqno = 0;
@@ -219,8 +236,8 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 	/* update last byte acked regardless of packet type */
 	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) {
+		r->sbuf_start_index = get_sbuf_index(pkt->ackno, r);
 		r->last_pkt_acked = pkt->ackno - 1;
-		r->sbuf_start_index = get_sbuf_index(r->last_pkt_acked + 1, r);
 		handle_connection_close(r, NO_WAIT);
 		rel_read(r);
 	}
@@ -360,8 +377,8 @@ void rel_output(rel_t *r)
 		}
 
 		/* update last packet read seqno and buffer index */
+		r->rbuf_start_index = get_rbuf_index(r->last_pkt_read + 2, r);
 		r->last_pkt_read++;
-		r->rbuf_start_index = get_rbuf_index(r->last_pkt_read + 1, r);
 
 		/* check connection closed */
 		handle_connection_close(r, NO_WAIT);
@@ -372,20 +389,21 @@ void rel_timer ()
 {
 	// TODO loop through all connections
 	rel_t *r = rel_list;
-	struct timespec *tbuf = xmalloc(sizeof(struct timespec));
+	struct timespec cur_time;
 	int sn;
 	for(sn = r->last_pkt_acked + 1; sn <= r->last_pkt_sent; sn++) {
 		pbuf_t *sbuf = sbuf_from_seqno(sn, r);
-		clock_gettime(CLOCK_MONOTONIC, tbuf);
-		double t_elapsed_ms = 1000 * difftime(tbuf->tv_sec, sbuf->send_time.tv_sec);
+		struct timespec send_time = sbuf->send_time;
+		clock_gettime(CLOCK_MONOTONIC, &cur_time);
 
-		if(t_elapsed_ms >= r->timeout) {
+		uint64_t t_elapsed_ns = 1000000000 * (cur_time.tv_sec - send_time.tv_sec) + (cur_time.tv_nsec - send_time.tv_nsec);
+
+		if(t_elapsed_ns >= r->timeout_ns) {
 			per2("retransmitting", sbuf->seqno);
 			send_packet(sbuf, r);
 		}
 
 	}
-	free(tbuf);
 }
 
 
@@ -413,13 +431,15 @@ void destroy_srbuf(pbuf_t **srbuf, int len) {
 		free(srbuf[i]->data);
 		free(srbuf[i]);
 	}
-//Is it necessary to free srbuf?
 }
 
 
 /* get send or receive buffer index from sequence number target and start index */
 int get_buf_index(int sq_start, int sq_target, int buf_start, int buf_length) {
 	int offset = sq_target - sq_start;
+
+	/*test*/
+	fprintf(stderr, "The start and target are %d, %d.\n", sq_start, sq_target);
 
 	/* validate offset */
 	if(offset < 0 || offset > buf_length) {
