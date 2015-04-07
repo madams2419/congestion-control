@@ -63,7 +63,7 @@ struct reliable_state
 	conn_t *c;          /* This is the connection object */
 
 	int window;
-	int timeout;
+	uint64_t timeout_ns;
 	int remote_eof_seqno;
 	int local_eof_seqno;
 	int fin_wait;
@@ -127,7 +127,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* initialize config params */
 	r->window = cc->window;
-	r->timeout = cc->timeout;
+	r->timeout_ns = 1000000 * cc->timeout;
 
 	/* initialize booleans */
 	r->remote_eof_seqno = 0;
@@ -219,8 +219,8 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 	/* update last byte acked regardless of packet type */
 	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) {
+		r->sbuf_start_index = get_sbuf_index(pkt->ackno, r);
 		r->last_pkt_acked = pkt->ackno - 1;
-		r->sbuf_start_index = get_sbuf_index(r->last_pkt_acked + 1, r);
 		handle_connection_close(r, NO_WAIT);
 		rel_read(r);
 	}
@@ -360,8 +360,8 @@ void rel_output(rel_t *r)
 		}
 
 		/* update last packet read seqno and buffer index */
+		r->rbuf_start_index = get_rbuf_index(r->last_pkt_read + 2, r);
 		r->last_pkt_read++;
-		r->rbuf_start_index = get_rbuf_index(r->last_pkt_read + 1, r);
 
 		/* check connection closed */
 		handle_connection_close(r, NO_WAIT);
@@ -372,20 +372,21 @@ void rel_timer ()
 {
 	// TODO loop through all connections
 	rel_t *r = rel_list;
-	struct timespec *tbuf = xmalloc(sizeof(struct timespec));
+	struct timespec cur_time;
 	int sn;
 	for(sn = r->last_pkt_acked + 1; sn <= r->last_pkt_sent; sn++) {
 		pbuf_t *sbuf = sbuf_from_seqno(sn, r);
-		clock_gettime(CLOCK_MONOTONIC, tbuf);
-		double t_elapsed_ms = 1000 * difftime(tbuf->tv_sec, sbuf->send_time.tv_sec);
+		struct timespec send_time = sbuf->send_time;
+		clock_gettime(CLOCK_MONOTONIC, &cur_time);
 
-		if(t_elapsed_ms >= r->timeout) {
+		uint64_t t_elapsed_ns = 1000000000 * (cur_time.tv_sec - send_time.tv_sec) + (cur_time.tv_nsec - send_time.tv_nsec);
+
+		if(t_elapsed_ns >= r->timeout_ns) {
 			per2("retransmitting", sbuf->seqno);
 			send_packet(sbuf, r);
 		}
 
 	}
-	free(tbuf);
 }
 
 
