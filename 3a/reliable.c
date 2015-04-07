@@ -219,8 +219,8 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 	/* update last byte acked regardless of packet type */
 	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) {
+		r->sbuf_start_index = get_sbuf_index(pkt->ackno, r);
 		r->last_pkt_acked = pkt->ackno - 1;
-		r->sbuf_start_index = get_sbuf_index(r->last_pkt_acked + 1, r);
 		handle_connection_close(r, NO_WAIT);
 		rel_read(r);
 	}
@@ -360,8 +360,8 @@ void rel_output(rel_t *r)
 		}
 
 		/* update last packet read seqno and buffer index */
+		r->rbuf_start_index = get_rbuf_index(r->last_pkt_read + 2, r);
 		r->last_pkt_read++;
-		r->rbuf_start_index = get_rbuf_index(r->last_pkt_read + 1, r);
 
 		/* check connection closed */
 		handle_connection_close(r, NO_WAIT);
