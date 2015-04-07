@@ -420,6 +420,9 @@ void destroy_srbuf(pbuf_t **srbuf, int len) {
 int get_buf_index(int sq_start, int sq_target, int buf_start, int buf_length) {
 	int offset = sq_target - sq_start;
 
+	/*test*/
+	fprintf(stderr, "The start and target are %d, %d.\n", sq_start, sq_target);
+
 	/* validate offset */
 	if(offset < 0 || offset > buf_length) {
 		per("Invalid offset.");
