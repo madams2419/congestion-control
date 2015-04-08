@@ -33,7 +33,6 @@
 // - debug EOF retransmission
 // - debug print last rcvd data when receive ACK
 // - check all requirements in 356 handout and Stanford handout
-// - have handle_connection_close return an boolean and return from calling function if true
 
 
 typedef struct packet_buf pbuf_t;
@@ -45,7 +44,7 @@ int get_rbuf_index(int seqno, rel_t *r);
 int get_sbuf_index(int seqno, rel_t *r);
 pbuf_t *rbuf_from_seqno(int seqno, rel_t *r);
 pbuf_t *sbuf_from_seqno(int seqno, rel_t *r);
-void handle_connection_close(rel_t *r, int wait);
+int handle_connection_close(rel_t *r, int wait);
 void send_packet(pbuf_t *pbuf, rel_t *s);
 void send_next_packet(rel_t *s);
 void send_ack(rel_t *s);
@@ -230,12 +229,20 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	/* convert packet to host byte order */
 	ntoh_pconvert(pkt);
 
-	/* update last byte acked regardless of packet type */
-	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) {
+	/* check ackno regardless of packet type */
+	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) { // packet acks new data
+		/* update last packet acked */
 		r->sbuf_start_index = get_sbuf_index(pkt->ackno, r);
 		r->last_pkt_acked = pkt->ackno - 1;
-		handle_connection_close(r, NO_WAIT);
-		rel_read(r); // cal rel_read because new slot avaialbel in send window
+
+		/* increment congestion window if in slow start */
+		if(IN_SLOW_START(r)) r->congestion_window++;
+
+		/* check if connection has closed */
+		if(handle_connection_close(r, NO_WAIT)) return;
+
+		/* call rel_read because new sending slot available */
+		rel_read(r);
 	}
 
 	/* update remote advertised window regardless of packet type */
@@ -307,7 +314,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		/* additional eof handling */
 		if(isEOF) {
 			r->remote_eof_seqno = pkt->seqno;
-			handle_connection_close(r, WAIT);
+			if(handle_connection_close(r, WAIT)) return;
 		}
 	}
 }
@@ -356,7 +363,7 @@ void rel_read(rel_t *s)
 			/* handle EOF */
 			if(isEOF) {
 				s->local_eof_seqno = sbuf->seqno;
-				handle_connection_close(s, NO_WAIT);
+				if(handle_connection_close(s, NO_WAIT)) return;
 			}
 		}
 	}
@@ -389,7 +396,7 @@ void rel_output(rel_t *r)
 		r->last_pkt_read++;
 
 		/* check connection closed */
-		handle_connection_close(r, NO_WAIT);
+		if(handle_connection_close(r, NO_WAIT)) return;
 	}
 }
 
@@ -480,8 +487,9 @@ pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
 }
 
 
-/* checks if connection is closed and calls rel_destroy if so */
-void handle_connection_close(rel_t *r, int wait) {
+/* checks if connection is closed and calls rel_destroy if so
+   returns 1 if connection is closed, 0 if not */
+int handle_connection_close(rel_t *r, int wait) {
 	if(r->local_eof_seqno > 0 &&							// local eof received
 		r->remote_eof_seqno > 0 &&							// remote eof received
 		r->last_pkt_acked == r->last_pkt_sent &&		// all packets sent have been acked
@@ -493,7 +501,9 @@ void handle_connection_close(rel_t *r, int wait) {
 		}
 
 		rel_destroy(r);
+		return 1;
 	}
+	return 0;
 }
 
 
