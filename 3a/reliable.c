@@ -24,16 +24,6 @@
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
 #define EFFECTIVE_WINDOW(r) r->remote_window - (r->last_pkt_sent - r->last_pkt_acked)
 
-// Questions:
-
-// TODO
-// - debug first packet is EOF
-// - debug EOF retransmission
-// - debug print last rcvd data when receive ACK
-// - check all requirements in 356 handout and Stanford handout
-// - have handle_connection_close return an boolean and return from calling function if true
-
-
 typedef struct packet_buf pbuf_t;
 
 pbuf_t **create_srbuf(pbuf_t **srbuf, int len);
@@ -300,9 +290,6 @@ void rel_read(rel_t *s)
 {
 	per("rel_read");
 
-	//TODO protocol for determining how to structure packets
-	//TODO convert send buffer from packet to byte granularity
-
 	while (SEND_BUF_SPACE(s) > 0) {
 
 		/* get send buffer */
@@ -370,7 +357,6 @@ void rel_output(rel_t *r)
 
 void rel_timer ()
 {
-	// TODO loop through all connections
 	rel_t *r = rel_list;
 	struct timespec cur_time;
 	int sn;

@@ -16,7 +16,7 @@
 
 #define ACK_LEN 8
 #define PKT_HDR_LEN 12 //3B this might be different
-#define PKT_DATA_LEN 1000
+#define PKT_DATA_LEN 500 //3B this should be 1000 for 3B I think
 #define WAIT 1
 #define NO_WAIT 0
 
@@ -299,6 +299,9 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 void rel_read(rel_t *s)
 {
 	per("rel_read");
+
+	//TODO protocol for determining how to structure packets
+	//TODO convert send buffer from packet to byte granularity
 
 	while (SEND_BUF_SPACE(s) > 0) {
 
