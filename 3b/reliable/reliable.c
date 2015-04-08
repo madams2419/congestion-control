@@ -588,6 +588,7 @@ void send_ack(rel_t *s) {
 void ntoh_pconvert(packet_t *pkt) {
 	pkt->len = ntohs(pkt->len);
 	pkt->ackno = ntohl(pkt->ackno);
+	pkt->rwnd = ntohl(pkt->rwnd);
 	if(pkt->len > ACK_LEN) {
 		pkt->seqno = ntohl(pkt->seqno);
 	}
@@ -600,6 +601,7 @@ void hton_pconvert(packet_t *pkt) {
 	}
 	pkt->len = htons(pkt->len);
 	pkt->ackno = htonl(pkt->ackno);
+	pkt->rwnd = htonl(pkt->rwnd);
 }
 
 
