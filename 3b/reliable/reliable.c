@@ -230,24 +230,23 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	/* convert packet to host byte order */
 	ntoh_pconvert(pkt);
 
-	/* debug */
-	if(pkt->len == ACK_LEN) {
-		fprintf(stderr, "%d : recv AckP {ackNo = %d}\n", getpid(), pkt->ackno); //DEBUG
-	}
-
 	/* update last byte acked regardless of packet type */
 	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) {
 		r->sbuf_start_index = get_sbuf_index(pkt->ackno, r);
 		r->last_pkt_acked = pkt->ackno - 1;
 		handle_connection_close(r, NO_WAIT);
-		rel_read(r);
+		rel_read(r); // cal rel_read because new slot avaialbel in send window
 	}
 
 	/* update remote advertised window regardless of packet type */
 	//r->congestion_window = pkt->rwnd; //3B this is essentially what we want to set the remote window. might want to only do it under certain conditions though...
 
+	/* handle ack packet */
+	if(pkt->len == ACK_LEN) {
+		fprintf(stderr, "%d : recv AckP {ackNo = %d}\n", getpid(), pkt->ackno); //DEBUG
+	}
 	/* handle eof or data packet */
-	if(pkt->len >= PKT_HDR_LEN) {
+	else if(pkt->len >= PKT_HDR_LEN) {
 		/* eof boolean */
 		int isEOF = (pkt->len == PKT_HDR_LEN);
 
