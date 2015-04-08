@@ -245,7 +245,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	}
 
 	/* update remote advertised window regardless of packet type */
-	//r->remote_window = pkt->rwnd; //3B this is essentially what we want to set the remote window. might want to only do it under certain conditions though...
+	//r->congestion_window = pkt->rwnd; //3B this is essentially what we want to set the remote window. might want to only do it under certain conditions though...
 
 	/* handle eof or data packet */
 	else if(pkt->len >= PKT_HDR_LEN) {
