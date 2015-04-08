@@ -21,20 +21,22 @@
 #define NO_WAIT 0
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
+#define BILLION 1000000000
+#define BANDWIDTH_KBPS 7975.46
+#define PKTS_SENT 10
+#define BYTES_SENT PKTS_SENT * (PKT_DATA_LEN + PKT_HDR_LEN)
+#define KB_SENT BYTES_SENT / 1000
+
 #define RCV_BUF_SPACE(r) r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
 #define MAX_WINDOW(r) MIN(r->congestion_window, r->advertised_window)
 #define EFFECTIVE_WINDOW(r) MAX_WINDOW(r) - (r->last_pkt_sent - r->last_pkt_acked)
 #define IN_SLOW_START(r) ((r->congestion_window) > (r->ssthresh)) ? 0 : 1
 
-// Questions:
+// Questions
 
 // TODO
-// - debug first packet is EOF
-// - debug EOF retransmission
-// - debug print last rcvd data when receive ACK
-// - check all requirements in 356 handout and Stanford handout
-
+// - implement adaptive timeout
 
 typedef struct packet_buf pbuf_t;
 
@@ -62,12 +64,15 @@ struct reliable_state
 {
 	conn_t *c;          /* This is the connection object */
 
-	uint64_t timeout_ns;
 	struct timespec start_time;
 	struct timespec end_time;
 	int remote_eof_seqno;
 	int local_eof_seqno;
 	int fin_wait;
+
+	uint64_t timeout_ns;
+	uint64_t srtt;
+	uint64_t rttvar;
 
 	pbuf_t **send_buffer;
 	int max_send_buffer;
@@ -127,7 +132,9 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	rel_list = r;
 
 	/* initialize config params */
-	r->timeout_ns = 1000000 * cc->timeout;
+	r->timeout_ns = 100 * 1000000; // 100ns
+	r->srtt = 0;
+	r->rttvar = 0;
 
 	/* initialize booleans */
 	r->remote_eof_seqno = 0;
@@ -136,7 +143,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* initialize send side */
 	r->max_send_buffer = cc->window;
-	r->congestion_window = cc->window; //DEBUG // max allowable starting congestion window (2*SMSS)
+	r->congestion_window = 2; //DEBUG // max allowable starting congestion window (2*SMSS)
 	r->advertised_window = cc->window; // assume remote window starts at max value
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
@@ -177,6 +184,10 @@ void rel_destroy(rel_t *r)
 		clock_gettime(CLOCK_MONOTONIC, &end_time);
 		double time_elapsed_ms = 1000 * (end_time.tv_sec - r->start_time.tv_sec) + (end_time.tv_nsec - r->start_time.tv_nsec) / 1000000;
 		fprintf(stderr, "File send time: %fms\n", time_elapsed_ms);
+
+		double throughput = KB_SENT / time_elapsed_ms;
+		double utilization = throughput / BANDWIDTH_KBPS;
+		fprintf(stderr, "Utilization: %f\n", utilization);
 	}
 
 	/* free connection struct */
