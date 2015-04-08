@@ -23,7 +23,7 @@
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 
 #define BILLION 1000000000
-#define BANDWIDTH_KBPS 7975.46
+#define BANDWIDTH_KBPS 7975.46 / 8
 #define PKTS_SENT 10
 #define BYTES_SENT PKTS_SENT * (PKT_DATA_LEN + PKT_HDR_LEN)
 
@@ -57,6 +57,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s);
 void send_next_packet(rel_t *s);
 void send_ack(rel_t *s);
 void send_init_eof(rel_t *s);
+void handle_duplicate_acks(rel_t *r);
 void hton_pconvert(packet_t *pkt);
 void ntoh_pconvert(packet_t *pkt);
 void per(char *st);
@@ -87,9 +88,8 @@ struct reliable_state
 	int sbuf_start_index;
 	int last_pkt_sent;
 	int last_pkt_written;
-
-	int rwnd;
 	int ssthresh;
+	int duplicate_acks;
 
 	pbuf_t **rcv_buffer;
 	int max_rcv_buffer;
@@ -157,8 +157,8 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->last_pkt_written = 0;
 
 	/* initialize congestion control state */
-	r->rwnd = 0; //TODO
 	r->ssthresh = cc->window; // initial value of ssthresh my be arbitrarily high
+	r->duplicate_acks = 0;
 
 	/* initialize receive side */
 	r->max_rcv_buffer = cc->window;
@@ -191,6 +191,9 @@ void rel_destroy(rel_t *r)
 		fprintf(stderr, "File send time: %fms\n", time_elapsed_ms);
 
 		double throughput = BYTES_SENT / time_elapsed_ms;
+		fprintf(stderr, "Throughput: %fKBps\n", throughput);
+		fprintf(stderr, "Bandwidth: %fKBps\n", BANDWIDTH_KBPS);
+
 		double utilization = throughput / BANDWIDTH_KBPS;
 		fprintf(stderr, "Utilization: %f\n", utilization);
 	}
@@ -244,9 +247,15 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	/* convert packet to host byte order */
 	ntoh_pconvert(pkt);
 
-	/* check ackno regardless of packet type */
+	/* update connection state if packet acks new data */
 	int new_pkts_acked = pkt->ackno - 1 - r->last_pkt_acked;
 	if(pkt->ackno > 0 && new_pkts_acked > 0) { // packet acks new data
+
+		/* handle duplicate ack streak end */
+		if(r->duplicate_acks >= 3) {
+			r->congestion_window = r->ssthresh;
+		}
+
 		/* modify congestion window */
 		if(IN_SLOW_START(r)) { // in slow start
 			r->congestion_window += new_pkts_acked;
@@ -273,9 +282,23 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	/* handle ack packet */
 	if(pkt->len == ACK_LEN) {
 		fprintf(stderr, "%d : recv AckP {ackNo = %d}\n", getpid(), pkt->ackno); //DEBUG
+
+		/* handle duplicate acks */
+		if(pkt->ackno > 0 && new_pkts_acked == 0) {
+			r->duplicate_acks++;
+			if(r->duplicate_acks >= 3) {
+				handle_duplicate_acks(r);
+			}
+		}
+		else {
+			r->duplicate_acks = 0;
+		}
 	}
 	/* handle eof or data packet */
 	else if(pkt->len >= PKT_HDR_LEN) {
+		/* reset duplicate ack count */
+		r->duplicate_acks = 0;
+
 		/* eof boolean */
 		int isEOF = (pkt->len == PKT_HDR_LEN);
 
@@ -338,6 +361,24 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 			r->remote_eof_seqno = pkt->seqno;
 			handle_connection_close(r, WAIT);
 		}
+	}
+}
+
+
+void handle_duplicate_acks(rel_t *r) {
+	if(r->duplicate_acks == 3) {
+		/* retransmit lost segment */
+		pbuf_t *sbuf = sbuf_from_seqno(r->last_pkt_acked + 1, r);
+		send_packet(sbuf, r);
+
+		/* set congestion window */
+		r->congestion_window = r->ssthresh + 3;
+	} else if(r->duplicate_acks > 3) {
+		/* increment congestion window */
+		r->congestion_window++;
+
+		/* send packets */
+		send_next_packet(r);
 	}
 }
 
@@ -447,6 +488,8 @@ void rel_timer ()
 			if(IN_SLOW_START(r)) {
 				r->ssthresh = MAX(FLIGHT_SIZE(r), 2);
 				r->congestion_window = LOSS_WINDOW;
+			} else {
+				r->congestion_window /= 2;
 			}
 
 			send_packet(sbuf, r);
