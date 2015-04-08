@@ -155,7 +155,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->ssthresh = cc->window; // initial value of ssthresh my be arbitrarily high
 
 	/* initialize receive side */
-	r->max_rcv_buffer = cc->window; //3B I think this is specified differently in 3B
+	r->max_rcv_buffer = cc->window;
 	r->rcv_buffer = create_srbuf(r->rcv_buffer, r->max_rcv_buffer);
 	r->num_dpkts_rcvd = 0;
 	r->last_pkt_read = 0;
@@ -516,7 +516,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	pkt->cksum = 0;
 	pkt->len = pkt_len;
 	pkt->ackno = s->next_pkt_expected;
-	//pkt->rwnd = RCV_BUF_SPACE(s); //3B this populates packet with advertised window
+	pkt->rwnd = RCV_BUF_SPACE(s);
 	pkt->seqno = pbuf->seqno;
 	memcpy(pkt->data, pbuf->data, pbuf->data_len);
 
@@ -566,7 +566,7 @@ void send_ack(rel_t *s) {
 	ack->cksum = 0;
 	ack->len = ACK_LEN;
 	ack->ackno = s->next_pkt_expected;
-	//ack->rwnd = RCV_BUF_SPACE(s); //3B this populates ack with advertised window
+	ack->rwnd = RCV_BUF_SPACE(s);
 
 	/* convert to network byte order */
 	hton_pconvert(ack);
