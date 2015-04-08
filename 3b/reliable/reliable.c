@@ -23,7 +23,7 @@
 
 #define ADVERTISED_WINDOW(r) r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
-#define EFFECTIVE_WINDOW(r) r->remote_window - (r->last_pkt_sent - r->last_pkt_acked)
+#define EFFECTIVE_WINDOW(r) r->congestion_window - (r->last_pkt_sent - r->last_pkt_acked)
 
 // Questions:
 
@@ -63,7 +63,6 @@ struct reliable_state
 
 	conn_t *c;          /* This is the connection object */
 
-	int window;
 	uint64_t timeout_ns;
 	struct timespec start_time;
 	struct timespec end_time;
@@ -73,7 +72,7 @@ struct reliable_state
 
 	pbuf_t **send_buffer;
 	int max_send_buffer;
-	int remote_window; //3B this must be updated on every valid packet received in rel_recvpkt
+	int congestion_window; //3B this must be updated on every valid packet received in rel_recvpkt
 	int last_pkt_acked;
 	int sbuf_start_index;
 	int last_pkt_sent;
@@ -133,7 +132,6 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	rel_list = r;
 
 	/* initialize config params */
-	r->window = cc->window;
 	r->timeout_ns = 1000000 * cc->timeout;
 
 	/* initialize booleans */
@@ -142,8 +140,8 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->fin_wait = 0;
 
 	/* initialize send side */
-	r->max_send_buffer = r->window; //3B I think this is specified differently in 3B
-	r->remote_window = r->window; //3B not sure what this should be initialized to
+	r->max_send_buffer = cc->window; //3B I think this is specified differently in 3B
+	r->congestion_window = 2; // max allowable starting congestion window (2*SMSS)
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
 	r->sbuf_start_index = 0;
@@ -153,10 +151,10 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	/* initialize congestion control state */
 	r->cwnd = 2; // max possible starting congestion window (2*SMSS)
 	r->rwnd = 0; //TODO
-	r->ssthresh = r->window; // initial value of ssthresh my be arbitrarily high
+	r->ssthresh = cc->window; // initial value of ssthresh my be arbitrarily high
 
 	/* initialize receive side */
-	r->max_rcv_buffer = r->window; //3B I think this is specified differently in 3B
+	r->max_rcv_buffer = cc->window; //3B I think this is specified differently in 3B
 	r->rcv_buffer = create_srbuf(r->rcv_buffer, r->max_rcv_buffer);
 	r->num_dpkts_rcvd = 0;
 	r->last_pkt_read = 0;
