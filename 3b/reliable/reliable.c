@@ -59,9 +59,6 @@ void print_buf_ptrs(rel_t *r);
 
 struct reliable_state
 {
-	rel_t *next;            /* Linked list for traversing all connections */
-	rel_t **prev;
-
 	conn_t *c;          /* This is the connection object */
 
 	uint64_t timeout_ns;
@@ -126,10 +123,6 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* add reliable struct to linked list */
 	r->c = c;
-	r->next = rel_list;
-	r->prev = &rel_list;
-	if (rel_list)
-		rel_list->prev = &r->next;
 	rel_list = r;
 
 	/* initialize config params */
@@ -142,7 +135,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* initialize send side */
 	r->max_send_buffer = cc->window;
-	r->congestion_window = 2; // max allowable starting congestion window (2*SMSS)
+	r->congestion_window = cc->window; //DEBUG // max allowable starting congestion window (2*SMSS)
 	r->advertised_window = cc->window; // assume remote window starts at max value
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
@@ -177,11 +170,6 @@ void rel_destroy(rel_t *r)
 	clock_gettime(CLOCK_MONOTONIC, &end_time);
 	double time_elapsed_s = (end_time.tv_sec - r->start_time.tv_sec) + (end_time.tv_nsec - r->start_time.tv_nsec) / 1000000000;
 	printf("File send time: %f\n", time_elapsed_s);
-
-	/* reassigned linked list pointers */
-	if (r->next)
-		r->next->prev = r->prev;
-	*r->prev = r->next;
 
 	/* free connection struct */
 	conn_destroy(r->c);
@@ -239,7 +227,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		r->last_pkt_acked = pkt->ackno - 1;
 
 		/* increment congestion window if in slow start */
-		if(IN_SLOW_START(r)) r->congestion_window++;
+		/*if(IN_SLOW_START(r)) r->congestion_window++;*/
 
 		/* check if connection has closed */
 		handle_connection_close(r, NO_WAIT);
