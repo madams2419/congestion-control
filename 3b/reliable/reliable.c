@@ -21,7 +21,7 @@
 #define NO_WAIT 0
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
-#define ADVERTISED_WINDOW(r) r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read)
+#define RCV_BUF_SPACE(r) r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
 #define MAX_WINDOW(r) MIN(r->congestion_window, r->remote_window)
 #define EFFECTIVE_WINDOW(r) MAX_WINDOW(r) - (r->last_pkt_sent - r->last_pkt_acked)
@@ -249,7 +249,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	}
 
 	/* update remote advertised window regardless of packet type */
-	//r->congestion_window = pkt->rwnd; //3B this is essentially what we want to set the remote window. might want to only do it under certain conditions though...
+	//r->remote_window = pkt->rwnd; //3B this is essentially what we want to set the remote window. might want to only do it under certain conditions though...
 
 	/* handle ack packet */
 	if(pkt->len == ACK_LEN) {
@@ -283,7 +283,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 		/* return if there is insufficient space in the buffer */
 		int space_required = (r->last_pkt_received == -1) ? 1 : pkt->seqno - r->last_pkt_received;
-		if(space_required > ADVERTISED_WINDOW(r)) {
+		if(space_required > RCV_BUF_SPACE(r)) {
 			per("Insufficient RCV buffer space.");
 			return;
 		}
@@ -516,7 +516,7 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	pkt->cksum = 0;
 	pkt->len = pkt_len;
 	pkt->ackno = s->next_pkt_expected;
-	//pkt->rwnd = ADVERTISED_WINDOW(s); //3B this populates packet with advertised window
+	//pkt->rwnd = RCV_BUF_SPACE(s); //3B this populates packet with advertised window
 	pkt->seqno = pbuf->seqno;
 	memcpy(pkt->data, pbuf->data, pbuf->data_len);
 
@@ -566,7 +566,7 @@ void send_ack(rel_t *s) {
 	ack->cksum = 0;
 	ack->len = ACK_LEN;
 	ack->ackno = s->next_pkt_expected;
-	//ack->rwnd = ADVERTISED_WINDOW(s); //3B this populates ack with advertised window
+	//ack->rwnd = RCV_BUF_SPACE(s); //3B this populates ack with advertised window
 
 	/* convert to network byte order */
 	hton_pconvert(ack);
