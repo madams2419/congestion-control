@@ -23,7 +23,8 @@
 
 #define ADVERTISED_WINDOW(r) r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
-#define EFFECTIVE_WINDOW(r) r->congestion_window - (r->last_pkt_sent - r->last_pkt_acked)
+#define MAX_WINDOW(r) MIN(r->congestion_window, r->remote_window)
+#define EFFECTIVE_WINDOW(r) MAX_WINDOW(r) - (r->last_pkt_sent - r->last_pkt_acked)
 #define IN_SLOW_START(r) ((r->congestion_window) > (r->ssthresh)) ? 0 : 1
 
 // Questions:
@@ -72,7 +73,8 @@ struct reliable_state
 
 	pbuf_t **send_buffer;
 	int max_send_buffer;
-	int congestion_window; //3B this must be updated on every valid packet received in rel_recvpkt
+	int congestion_window;
+	int remote_window;
 	int last_pkt_acked;
 	int sbuf_start_index;
 	int last_pkt_sent;
@@ -139,8 +141,9 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->fin_wait = 0;
 
 	/* initialize send side */
-	r->max_send_buffer = cc->window; //3B I think this is specified differently in 3B
+	r->max_send_buffer = cc->window;
 	r->congestion_window = 2; // max allowable starting congestion window (2*SMSS)
+	r->remote_window = cc->window; // assume remote window starts at max value
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
 	r->sbuf_start_index = 0;
