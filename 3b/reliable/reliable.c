@@ -49,6 +49,7 @@ void handle_connection_close(rel_t *r, int wait);
 void send_packet(pbuf_t *pbuf, rel_t *s);
 void send_next_packet(rel_t *s);
 void send_ack(rel_t *s);
+void send_init_eof(rel_t *s);
 void hton_pconvert(packet_t *pkt);
 void ntoh_pconvert(packet_t *pkt);
 void per(char *st);
@@ -159,6 +160,11 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	/* initialize send start time */
 	clock_gettime(CLOCK_MONOTONIC, &r->start_time);
 
+	/* send eof if receiver mode */
+	if(r->c->sender_receiver == RECEIVER) {
+		send_init_eof(r);
+	}
+
 	return r;
 }
 
@@ -166,10 +172,12 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 void rel_destroy(rel_t *r)
 {
 	/* print send time */
-	struct timespec end_time;
-	clock_gettime(CLOCK_MONOTONIC, &end_time);
-	double time_elapsed_s = (end_time.tv_sec - r->start_time.tv_sec) + (end_time.tv_nsec - r->start_time.tv_nsec) / 1000000000;
-	fprintf(stderr, "File send time: %f\n", time_elapsed_s);
+	if(r->c->sender_receiver == SENDER) {
+		struct timespec end_time;
+		clock_gettime(CLOCK_MONOTONIC, &end_time);
+		double time_elapsed_ms = 1000 * (end_time.tv_sec - r->start_time.tv_sec) + (end_time.tv_nsec - r->start_time.tv_nsec) / 1000000;
+		fprintf(stderr, "File send time: %fms\n", time_elapsed_ms);
+	}
 
 	/* free connection struct */
 	conn_destroy(r->c);
@@ -314,18 +322,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 void rel_read(rel_t *s)
 {
 	if(s->c->sender_receiver == RECEIVER) {
-		/* sent eof or return if eof already sent */
-		if(s->local_eof_seqno > 0) {
-			return;
-		} else {
-			pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
-			sbuf->seqno = s->last_pkt_written + 1;
-			sbuf->data_len = 0;
-			s->last_pkt_written++;
-			send_next_packet(s);
-			s->local_eof_seqno = sbuf->seqno;
-		}
-
+		send_init_eof(s);
 	} else {
 
 		while (SEND_BUF_SPACE(s) > 0) {
@@ -363,6 +360,20 @@ void rel_read(rel_t *s)
 	}
 }
 
+void send_init_eof(rel_t *s) {
+	if(s->local_eof_seqno > 0 && s->last_pkt_acked >= s->local_eof_seqno) {
+		return;
+	} else {
+		pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
+		sbuf->seqno = s->last_pkt_written + 1;
+		sbuf->data_len = 0;
+		s->last_pkt_written++;
+		send_next_packet(s);
+		s->local_eof_seqno = sbuf->seqno;
+	}
+}
+
+
 
 void rel_output(rel_t *r)
 {
@@ -396,7 +407,6 @@ void rel_output(rel_t *r)
 
 void rel_timer ()
 {
-	// TODO loop through all connections
 	rel_t *r = rel_list;
 	struct timespec cur_time;
 	int sn;
@@ -602,10 +612,10 @@ void hton_pconvert(packet_t *pkt) {
 
 /* print message with PID to standard error */
 void per(char *st) {
-	fprintf(stderr, "%d: %s\n", getpid(), st);
+	//fprintf(stderr, "%d: %s\n", getpid(), st);
 }
 void per2(char *st, int i) {
-	fprintf(stderr, "%d: %s %d\n", getpid(), st, i);
+	//fprintf(stderr, "%d: %s %d\n", getpid(), st, i);
 }
 
 
