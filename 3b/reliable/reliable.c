@@ -172,9 +172,11 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	/* initialize send start time */
 	clock_gettime(CLOCK_MONOTONIC, &r->start_time);
 
-	/* send eof if receiver mode */
+	/* set eof seqno for sender/receiver modes */
 	if(r->c->sender_receiver == RECEIVER) {
-		send_init_eof(r);
+		r->local_eof_seqno = 1;
+	} else if(r->c->sender_receiver == SENDER) {
+		r->remote_eof_seqno = 1;
 	}
 
 	return r;
