@@ -33,7 +33,7 @@ int get_rbuf_index(int seqno, rel_t *r);
 int get_sbuf_index(int seqno, rel_t *r);
 pbuf_t *rbuf_from_seqno(int seqno, rel_t *r);
 pbuf_t *sbuf_from_seqno(int seqno, rel_t *r);
-int handle_connection_close(rel_t *r, int wait);
+void handle_connection_close(rel_t *r, int wait);
 void send_packet(pbuf_t *pbuf, rel_t *s);
 void send_next_packet(rel_t *s);
 void send_ack(rel_t *s);
@@ -206,7 +206,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	if(pkt->ackno > 0 && pkt->ackno - 1 > r->last_pkt_acked) {
 		r->sbuf_start_index = get_sbuf_index(pkt->ackno, r);
 		r->last_pkt_acked = pkt->ackno - 1;
-		if(handle_connection_close(r, NO_WAIT)) return;
+		handle_connection_close(r, NO_WAIT);
 		rel_read(r);
 	}
 
@@ -279,7 +279,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		/* additional eof handling */
 		if(isEOF) {
 			r->remote_eof_seqno = pkt->seqno;
-			if(handle_connection_close(r, WAIT)) return;
+			handle_connection_close(r, WAIT);
 		}
 	}
 }
@@ -315,7 +315,7 @@ void rel_read(rel_t *s)
 		/* handle EOF */
 		if(isEOF) {
 			s->local_eof_seqno = sbuf->seqno;
-			if(handle_connection_close(s, NO_WAIT)) return;
+			handle_connection_close(s, NO_WAIT);
 		}
 
 	}
@@ -350,7 +350,7 @@ void rel_output(rel_t *r)
 		r->last_pkt_read++;
 
 		/* check connection closed */
-		if(handle_connection_close(r, NO_WAIT)) return;
+		handle_connection_close(r, NO_WAIT);
 	}
 }
 
@@ -441,7 +441,7 @@ pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
 
 
 /* checks if connection is closed and calls rel_destroy if so */
-int handle_connection_close(rel_t *r, int wait) {
+void handle_connection_close(rel_t *r, int wait) {
 	if(r->local_eof_seqno > 0 &&							// local eof received
 		r->remote_eof_seqno > 0 &&							// remote eof received
 		r->last_pkt_acked == r->last_pkt_sent &&		// all packets sent have been acked
@@ -453,9 +453,7 @@ int handle_connection_close(rel_t *r, int wait) {
 		}
 
 		rel_destroy(r);
-		return 1;
 	}
-	return 0;
 }
 
 
