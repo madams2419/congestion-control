@@ -143,7 +143,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	/* initialize send side */
 	r->max_send_buffer = cc->window;
 	r->congestion_window = 2; // max allowable starting congestion window (2*SMSS)
-	r->advertised_window= cc->window; // assume remote window starts at max value
+	r->advertised_window = cc->window; // assume remote window starts at max value
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
 	r->sbuf_start_index = 0;
@@ -249,7 +249,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	}
 
 	/* update remote advertised window regardless of packet type */
-	//r->advertised_windo= pkt->rwnd; //3B this is essentially what we want to set the remote window. might want to only do it under certain conditions though...
+	r->advertised_window = pkt->rwnd;
 
 	/* handle ack packet */
 	if(pkt->len == ACK_LEN) {
