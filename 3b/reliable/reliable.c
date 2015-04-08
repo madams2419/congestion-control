@@ -169,7 +169,7 @@ void rel_destroy(rel_t *r)
 	struct timespec end_time;
 	clock_gettime(CLOCK_MONOTONIC, &end_time);
 	double time_elapsed_s = (end_time.tv_sec - r->start_time.tv_sec) + (end_time.tv_nsec - r->start_time.tv_nsec) / 1000000000;
-	printf("File send time: %f\n", time_elapsed_s);
+	fprintf(stderr, "File send time: %f\n", time_elapsed_s);
 
 	/* free connection struct */
 	conn_destroy(r->c);
@@ -334,6 +334,9 @@ void rel_read(rel_t *s)
 			pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
 			int rd_len = conn_input(s->c, sbuf->data, PKT_DATA_LEN);
 			int isEOF = (rd_len == -1);
+
+			/* debug */
+			if(isEOF) per("read EOF");
 
 			/* handle no data */
 			if(rd_len == 0) {
@@ -518,7 +521,11 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 	if(conn_sendpkt(s->c, pkt, pkt_len) > 0) {
 		s->last_pkt_sent = (pbuf->seqno > s->last_pkt_sent) ? pbuf->seqno : s->last_pkt_sent;
 		clock_gettime(CLOCK_MONOTONIC, &pbuf->send_time);
-		fprintf(stderr, "%d : send DataP {acknoP = %d, seqnoP = %d, payloadP = \"%.*s\\n\"}\n", getpid(), s->next_pkt_expected, pbuf->seqno, pbuf->data_len-1, pkt->data); //DEBUG
+		if(pbuf->data_len == 0) {
+			fprintf(stderr, "%d : send eofP {acknoP = %d, seqnoP = %d, payloadP = Empty}\n", getpid(), s->next_pkt_expected, pbuf->seqno); //DEBUG
+		} else {
+			fprintf(stderr, "%d : send DataP {acknoP = %d, seqnoP = %d, payloadP = \"%.*s\\n\"}\n", getpid(), s->next_pkt_expected, pbuf->seqno, pbuf->data_len-1, pkt->data); //DEBUG
+		}
 	} else {
 		per("Packet sending failed!");
 	}
@@ -595,10 +602,10 @@ void hton_pconvert(packet_t *pkt) {
 
 /* print message with PID to standard error */
 void per(char *st) {
-	//fprintf(stderr, "%d: %s\n", getpid(), st);
+	fprintf(stderr, "%d: %s\n", getpid(), st);
 }
 void per2(char *st, int i) {
-	//fprintf(stderr, "%d: %s %d\n", getpid(), st, i);
+	fprintf(stderr, "%d: %s %d\n", getpid(), st, i);
 }
 
 
