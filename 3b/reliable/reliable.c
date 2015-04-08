@@ -64,6 +64,8 @@ struct reliable_state
 
 	int window;
 	uint64_t timeout_ns;
+	struct timespec start_time;
+	struct timespec end_time;
 	int remote_eof_seqno;
 	int local_eof_seqno;
 	int fin_wait;
@@ -152,12 +154,21 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->next_pkt_expected = 1;
 	r->last_pkt_received = 0;
 
+	/* initialize send start time */
+	clock_gettime(CLOCK_MONOTONIC, &r->start_time);
+
 	return r;
 }
 
 
 void rel_destroy(rel_t *r)
 {
+	/* print send time */
+	struct timespec end_time;
+	clock_gettime(CLOCK_MONOTONIC, &end_time);
+	double time_elapsed_s = (end_time.tv_sec - r->start_time.tv_sec) + (end_time.tv_nsec - r->start_time.tv_nsec) / 1000000000;
+	printf("File send time: %f\n", time_elapsed_s);
+
 	/* reassigned linked list pointers */
 	if (r->next)
 		r->next->prev = r->prev;
