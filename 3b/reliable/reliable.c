@@ -393,8 +393,6 @@ void rel_read(rel_t *s)
 		send_init_eof(s);
 	} else {
 
-		print_buf_ptrs(s);
-
 		while (SEND_BUF_SPACE(s) > 0) {
 
 			/* get send buffer */
@@ -427,8 +425,6 @@ void rel_read(rel_t *s)
 				handle_connection_close(s, NO_WAIT);
 			}
 		}
-
-		fprintf(stderr, "SEND_BUF_SPACE == %d\n", SEND_BUF_SPACE(s));
 	}
 }
 
