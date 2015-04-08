@@ -14,11 +14,12 @@
 
 #include "rlib.h"
 
-#define ACK_LEN 8
-#define PKT_HDR_LEN 12 //3B this might be different
+#define ACK_LEN 12
+#define PKT_HDR_LEN 16
 #define PKT_DATA_LEN 1000
 #define WAIT 1
 #define NO_WAIT 0
+#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
 #define ADVERTISED_WINDOW(r) r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
@@ -77,6 +78,10 @@ struct reliable_state
 	int sbuf_start_index;
 	int last_pkt_sent;
 	int last_pkt_written;
+
+	int cwnd;
+	int rwnd;
+	int ssthresh;
 
 	pbuf_t **rcv_buffer;
 	int max_rcv_buffer;
@@ -144,6 +149,11 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->sbuf_start_index = 0;
 	r->last_pkt_sent = 0;
 	r->last_pkt_written = 0;
+
+	/* initialize congestion control state */
+	r->cwnd = 2; // max possible starting congestion window (2*SMSS)
+	r->rwnd = 0; //TODO
+	r->ssthresh = r->window; // initial value of ssthresh my be arbitrarily high
 
 	/* initialize receive side */
 	r->max_rcv_buffer = r->window; //3B I think this is specified differently in 3B
