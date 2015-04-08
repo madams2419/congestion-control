@@ -14,17 +14,28 @@
 
 #include "rlib.h"
 
-#define ACK_LEN 8
-#define PKT_HDR_LEN 12 //3B this might be different
-#define PKT_DATA_LEN 500 //3B this should be 1000 for 3B I think
+#define ACK_LEN 12
+#define PKT_HDR_LEN 16 //3B this might be different
+#define PKT_DATA_LEN 1000 //3B this should be 1000 for 3B I think
 #define WAIT 1
 #define NO_WAIT 0
+#define TCP_MAXWIN 25
 
 #define ADVERTISED_WINDOW(r) r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
-#define EFFECTIVE_WINDOW(r) r->remote_window - (r->last_pkt_sent - r->last_pkt_acked)
+#define EFFECTIVE_WINDOW(r) r->remote_window - (r->last_pkt_sent - r->last_pkt_acked) 
+#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
+
+
+int last_acked_num = 0;
+int ack_count = 0;
+int slow_start=1;
+int congestion_threshold = TCP_MAXWIN; 
+
 
 // Questions:
+//Shall we set the receive of an ack as an RTT and once we receive an RTT we update congestion window using slow start/AIMD?
+//Is it necessary to implement fast retransmit? how to implement here by using the ACKS in the pipe to clock the sending of packet?
 
 // TODO
 // - debug first packet is EOF
@@ -41,12 +52,13 @@
 // 3. Sent-packet RTT needs to be calculated constantly to update new timeout
 // 4. Congestion window needs to be updated after each RTT
 // 5. The ack number needs to be recorded to detect fast retransmit
-
+// 6. Deal with dead connection condition. 1 ack && 0 expected window size and recovery
 
 
 
 
 typedef struct packet_buf pbuf_t;
+typedef struct ack_packet ack_t;
 
 pbuf_t **create_srbuf(pbuf_t **srbuf, int len);
 void destroy_srbuf(pbuf_t **srbuf, int len);
@@ -95,6 +107,7 @@ struct reliable_state
 	int rbuf_start_index;
 	int next_pkt_expected;
 	int last_pkt_received;
+
 };
 
 struct packet_buf
@@ -143,7 +156,8 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 
 	/* initialize config params */
-	r->window = cc->window;
+	r->window = 1; //slow start initial congestion window value
+	// r->window = cc->window;
 	r->timeout_ns = 1000000 * cc->timeout;
 
 	/* initialize booleans */
@@ -152,8 +166,10 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->fin_wait = 0;
 
 	/* initialize send side */
-	r->max_send_buffer = r->window; //3B I think this is specified differently in 3B
-	r->remote_window = r->window; //3B not sure what this should be initialized to
+	// r->max_send_buffer = r->window; //3B I think this is specified differently in 3B
+	r->max_send_buffer = cc->window;// which should be 25
+	// r->remote_window = r->window; //3B not sure what this should be initialized to
+	r->remote_window = MIN(r->rwnd,r->window); // min of advised window and congestion window
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
 	r->sbuf_start_index = 0;
@@ -161,7 +177,8 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->last_pkt_written = 0;
 
 	/* initialize receive side */
-	r->max_rcv_buffer = r->window; //3B I think this is specified differently in 3B
+	// r->max_rcv_buffer = r->window; //3B I think this is specified differently in 3B
+	r->max_rcv_buffer = cc->window;//which should be 25
 	r->rcv_buffer = create_srbuf(r->rcv_buffer, r->max_rcv_buffer);
 	r->num_dpkts_rcvd = 0;
 	r->last_pkt_read = 0;
@@ -242,8 +259,34 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		rel_read(r);
 	}
 
+
+
 	/* update remote advertised window regardless of packet type */
 	//r->remote_window = pkt->rwnd; //3B this is essentially what we want to set the remote window. might want to only do it under certain conditions though...
+
+
+	/* Handle when the packet is an ACK */
+	if (pkt->len == ACK_LEN) {
+		/* fast recovery*/
+		if (pkt->ackno == last_acked_num) {
+			ack_count++;
+			if (ack_count >= 3){
+				// slow_start = 1;// Shouldn't be this way if implementing fast recovery
+				per2("retransmitting", sbuf->seqno);
+				send_packet(sbuf, r);
+				r->window = r->window / 2; // Fast recovery
+			}
+		}else{
+			if (slow_start == 1){ // If in slow start phase
+				r->window = r->window * 2;
+				if (r->window >= congestion_threshold) // Turn to AIMD after reaching congestion threshold
+					slow_start = 0;
+			}else{
+				r->window ++; //AIMD when not in slow start phase
+			}
+		}
+
+	}
 
 	/* handle eof or data packet */
 	else if(pkt->len >= PKT_HDR_LEN) {
@@ -315,6 +358,19 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 void rel_read(rel_t *s)
 {
+
+// 	if(s->c->sender_receiver == RECEIVER)
+//   {
+//     //if already sent EOF to the sender
+//     //  return;
+//     //else
+//     //  send EOF to the sender
+//   }
+//   else //run in the sender mode
+//   {
+//     //same logic as lab 1
+//   }
+// }
 	per("rel_read");
 
 	//TODO protocol for determining how to structure packets
@@ -399,8 +455,14 @@ void rel_timer ()
 		uint64_t t_elapsed_ns = 1000000000 * (cur_time.tv_sec - send_time.tv_sec) + (cur_time.tv_nsec - send_time.tv_nsec);
 
 		if(t_elapsed_ns >= r->timeout_ns) {
-			per2("retransmitting", sbuf->seqno);
-			send_packet(sbuf, r);
+			if (EFFECTIVE_WINDOW > 0){
+				r->window = r->window / 2;
+				per2("retransmitting", sbuf->seqno);
+				send_packet(sbuf, r);
+			}else{
+				send_ack(r);
+			}
+			
 		}
 
 	}
@@ -547,7 +609,7 @@ void send_next_packet(rel_t *s) {
 /* send ack packet */
 void send_ack(rel_t *s) {
 	/* construct packet */
-	packet_t *ack = xmalloc(ACK_LEN);
+	ack_t *ack = xmalloc(ACK_LEN);
 	ack->cksum = 0;
 	ack->len = ACK_LEN;
 	ack->ackno = s->next_pkt_expected;
