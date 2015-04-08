@@ -24,6 +24,7 @@
 #define ADVERTISED_WINDOW(r) r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
 #define EFFECTIVE_WINDOW(r) r->congestion_window - (r->last_pkt_sent - r->last_pkt_acked)
+#define IN_SLOW_START(r) ((r->congestion_window) > (r->ssthresh)) ? 0 : 1
 
 // Questions:
 
@@ -78,7 +79,6 @@ struct reliable_state
 	int last_pkt_sent;
 	int last_pkt_written;
 
-	int cwnd;
 	int rwnd;
 	int ssthresh;
 
@@ -149,7 +149,6 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->last_pkt_written = 0;
 
 	/* initialize congestion control state */
-	r->cwnd = 2; // max possible starting congestion window (2*SMSS)
 	r->rwnd = 0; //TODO
 	r->ssthresh = cc->window; // initial value of ssthresh my be arbitrarily high
 
@@ -248,7 +247,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	//r->congestion_window = pkt->rwnd; //3B this is essentially what we want to set the remote window. might want to only do it under certain conditions though...
 
 	/* handle eof or data packet */
-	else if(pkt->len >= PKT_HDR_LEN) {
+	if(pkt->len >= PKT_HDR_LEN) {
 		/* eof boolean */
 		int isEOF = (pkt->len == PKT_HDR_LEN);
 
