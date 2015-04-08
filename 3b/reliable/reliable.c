@@ -136,7 +136,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* initialize send side */
 	r->max_send_buffer = cc->window;
-	r->congestion_window = cc->window; //DEBUG // max allowable starting congestion window (2*SMSS)
+	r->congestion_window = 2; //DEBUG // max allowable starting congestion window (2*SMSS)??
 	r->advertised_window = cc->window; // assume remote window starts at max value
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
@@ -235,6 +235,11 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		r->last_pkt_acked = pkt->ackno - 1;
 
 		/* increment congestion window if in slow start */
+		if (IN_SLOW_START(r))
+			r->congestion_window = r->congestion_window * 2;
+		else
+			r->congestion_window++;
+		
 		/*if(IN_SLOW_START(r)) r->congestion_window++;*/
 
 		/* check if connection has closed */
@@ -348,8 +353,8 @@ void rel_read(rel_t *s)
 			/* update last packet written */
 			s->last_pkt_written++;
 
-			/* send next packet */
-			send_next_packet(s);
+			/*send packets as much as effective_window allows */
+				send_next_packet(s);
 
 			/* handle EOF */
 			if(isEOF) {
@@ -357,6 +362,13 @@ void rel_read(rel_t *s)
 				handle_connection_close(s, NO_WAIT);
 			}
 		}
+		/* If the sender buffer is full but effective window>0 */
+		int i;
+		for (i=0;i<EFFECTIVE_WINDOW(s);i++){
+			send_next_packet(s);
+		}
+
+
 	}
 }
 
@@ -407,7 +419,9 @@ void rel_output(rel_t *r)
 
 void rel_timer ()
 {
+
 	rel_t *r = rel_list;
+
 	struct timespec cur_time;
 	int sn;
 	for(sn = r->last_pkt_acked + 1; sn <= r->last_pkt_sent; sn++) {
@@ -418,8 +432,19 @@ void rel_timer ()
 		uint64_t t_elapsed_ns = 1000000000 * (cur_time.tv_sec - send_time.tv_sec) + (cur_time.tv_nsec - send_time.tv_nsec);
 
 		if(t_elapsed_ns >= r->timeout_ns) {
-			per2("retransmitting", sbuf->seqno);
-			send_packet(sbuf, r);
+			/* slow start timeout */
+			if (r->last_pkt_sent == r->last_pkt_received)
+				r->congestion_window = 2;
+			else{
+				r->ssthresh = r->congestion_window/2;
+				r->congestion_window = r->ssthresh;
+			}
+			
+			r->last_pkt_sent = sn-1;
+			rel_read(r);//Start retransmiting
+			break;
+			// per2("retransmitting", sbuf->seqno);
+			// send_packet(sbuf, r);
 		}
 
 	}
@@ -570,7 +595,7 @@ void send_ack(rel_t *s) {
 	packet_t *ack = xmalloc(ACK_LEN);
 	ack->cksum = 0;
 	ack->len = ACK_LEN;
-	ack->ackno = s->next_pkt_expected;
+	ack->ackno = s->next_pkt_expected;// Because pkt before ackno are all acked?
 	ack->rwnd = RCV_BUF_SPACE(s);
 
 	/* convert to network byte order */
