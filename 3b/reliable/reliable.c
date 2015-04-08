@@ -20,6 +20,7 @@
 #define WAIT 1
 #define NO_WAIT 0
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
+#define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 
 #define BILLION 1000000000
 #define BANDWIDTH_KBPS 7975.46
@@ -30,6 +31,11 @@
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
 #define MAX_WINDOW(r) MIN(r->congestion_window, r->advertised_window)
 #define EFFECTIVE_WINDOW(r) MAX_WINDOW(r) - (r->last_pkt_sent - r->last_pkt_acked)
+#define FLIGHT_SIZE(r) r->last_pkt_sent - r->last_pkt_acked
+
+#define INIT_WINDOW 2
+#define LOSS_WINDOW 2
+
 #define IN_SLOW_START(r) ((r->congestion_window) > (r->ssthresh)) ? 0 : 1
 
 // Questions
@@ -142,7 +148,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 
 	/* initialize send side */
 	r->max_send_buffer = cc->window;
-	r->congestion_window = 2; // max allowable starting congestion window (2*SMSS)
+	r->congestion_window = INIT_WINDOW; // max allowable starting congestion window (2*SMSS)
 	r->advertised_window = cc->window; // assume remote window starts at max value
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
@@ -436,6 +442,13 @@ void rel_timer ()
 
 		if(t_elapsed_ns >= r->timeout_ns) {
 			per2("retransmitting", sbuf->seqno);
+
+			/* adjust ssthresh  and congestion window */
+			if(IN_SLOW_START(r)) {
+				r->ssthresh = MAX(FLIGHT_SIZE(r), 2);
+				r->congestion_window = LOSS_WINDOW;
+			}
+
 			send_packet(sbuf, r);
 		}
 
