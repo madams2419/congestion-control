@@ -298,40 +298,51 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 
 void rel_read(rel_t *s)
 {
-	per("rel_read");
-
-	while (SEND_BUF_SPACE(s) > 0) {
-
-		/* get send buffer */
-		pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
-		int rd_len = conn_input(s->c, sbuf->data, PKT_DATA_LEN);
-		int isEOF = (rd_len == -1);
-
-		/* handle no data */
-		if(rd_len == 0) {
-			per("rel_read : no data");
+	if(s->c->sender_receiver == RECEIVER) {
+		/* sent eof or return if eof already sent */
+		if(s->local_eof_seqno > 0) {
 			return;
-		}
-
-		/* set sent buffer seqno and length */
-		sbuf->seqno = s->last_pkt_written + 1;
-		sbuf->data_len = (isEOF) ? 0 : rd_len;
-
-		/* update last packet written */
-		s->last_pkt_written++;
-
-		/* send next packet */
-		send_next_packet(s);
-
-		/* handle EOF */
-		if(isEOF) {
+		} else {
+			pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
+			sbuf->seqno = s->last_pkt_written + 1;
+			sbuf->data_len = 0;
+			s->last_pkt_written++;
+			send_next_packet(s);
 			s->local_eof_seqno = sbuf->seqno;
-			handle_connection_close(s, NO_WAIT);
 		}
 
-	}
+	} else {
 
-	per("rel_read : end of while");
+		while (SEND_BUF_SPACE(s) > 0) {
+
+			/* get send buffer */
+			pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
+			int rd_len = conn_input(s->c, sbuf->data, PKT_DATA_LEN);
+			int isEOF = (rd_len == -1);
+
+			/* handle no data */
+			if(rd_len == 0) {
+				per("rel_read : no data");
+				return;
+			}
+
+			/* set sent buffer seqno and length */
+			sbuf->seqno = s->last_pkt_written + 1;
+			sbuf->data_len = (isEOF) ? 0 : rd_len;
+
+			/* update last packet written */
+			s->last_pkt_written++;
+
+			/* send next packet */
+			send_next_packet(s);
+
+			/* handle EOF */
+			if(isEOF) {
+				s->local_eof_seqno = sbuf->seqno;
+				handle_connection_close(s, NO_WAIT);
+			}
+		}
+	}
 }
 
 
