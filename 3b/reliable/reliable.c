@@ -389,6 +389,7 @@ void handle_duplicate_acks(rel_t *r) {
 
 void rel_read(rel_t *s)
 {
+	per("rel_read");
 	if(s->c->sender_receiver == RECEIVER) {
 		send_init_eof(s);
 	} else {
@@ -459,7 +460,7 @@ void rel_output(rel_t *r)
 
 		/* output packet */
 		int out_len = conn_output(r->c, rbuf->data, rbuf->data_len);
-		if(out_len <= 0) {
+		if(out_len < 0) {
 			per("Data output error.");
 			return;
 		}
@@ -691,7 +692,7 @@ void hton_pconvert(packet_t *pkt) {
 
 /* print message with PID to standard error */
 void per(char *st) {
-	//fprintf(stderr, "%d: %s\n", getpid(), st);
+	fprintf(stderr, "%d: %s\n", getpid(), st);
 }
 void per2(char *st, int i) {
 	//fprintf(stderr, "%d: %s %d\n", getpid(), st, i);
