@@ -17,6 +17,8 @@
 #define ACK_LEN 12
 #define PKT_HDR_LEN 16
 #define PKT_DATA_LEN 1000
+#define MAX_RCV_BUFFER 25
+
 #define WAIT 1
 #define NO_WAIT 0
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
@@ -147,9 +149,9 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->fin_wait = 0;
 
 	/* initialize send side */
-	r->max_send_buffer = cc->window;
+	r->max_send_buffer = MAX_RCV_BUFFER;
 	r->congestion_window = INIT_WINDOW; // max allowable starting congestion window (2*SMSS)
-	r->advertised_window = cc->window; // assume remote window starts at max value
+	r->advertised_window = MAX_RCV_BUFFER; // assume remote window starts at max value
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
 	r->sbuf_start_index = 0;
@@ -157,11 +159,11 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	r->last_pkt_written = 0;
 
 	/* initialize congestion control state */
-	r->ssthresh = cc->window; // initial value of ssthresh my be arbitrarily high
+	r->ssthresh = MAX_RCV_BUFFER; // initial value of ssthresh my be arbitrarily high
 	r->duplicate_acks = 0;
 
 	/* initialize receive side */
-	r->max_rcv_buffer = cc->window;
+	r->max_rcv_buffer = MAX_RCV_BUFFER;
 	r->rcv_buffer = create_srbuf(r->rcv_buffer, r->max_rcv_buffer);
 	r->num_dpkts_rcvd = 0;
 	r->last_pkt_read = 0;
@@ -391,6 +393,8 @@ void rel_read(rel_t *s)
 		send_init_eof(s);
 	} else {
 
+		print_buf_ptrs(s);
+
 		while (SEND_BUF_SPACE(s) > 0) {
 
 			/* get send buffer */
@@ -403,7 +407,7 @@ void rel_read(rel_t *s)
 
 			/* handle no data */
 			if(rd_len == 0) {
-				per("rel_read : no data");
+				fprintf(stderr, "rel_read : no data\n");
 				return;
 			}
 
@@ -423,6 +427,8 @@ void rel_read(rel_t *s)
 				handle_connection_close(s, NO_WAIT);
 			}
 		}
+
+		fprintf(stderr, "SEND_BUF_SPACE == %d\n", SEND_BUF_SPACE(s));
 	}
 }
 
@@ -636,6 +642,8 @@ void send_next_packet(rel_t *s) {
 
 	/* send packet */
 	send_packet(sbuf, s);
+
+	send_next_packet(s);
 }
 
 
