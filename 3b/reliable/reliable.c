@@ -23,7 +23,7 @@
 
 #define RCV_BUF_SPACE(r) r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read)
 #define SEND_BUF_SPACE(r) r->max_send_buffer - (r->last_pkt_written - r->last_pkt_acked)
-#define MAX_WINDOW(r) MIN(r->congestion_window, r->remote_window)
+#define MAX_WINDOW(r) MIN(r->congestion_window, r->advertised_window)
 #define EFFECTIVE_WINDOW(r) MAX_WINDOW(r) - (r->last_pkt_sent - r->last_pkt_acked)
 #define IN_SLOW_START(r) ((r->congestion_window) > (r->ssthresh)) ? 0 : 1
 
@@ -74,7 +74,7 @@ struct reliable_state
 	pbuf_t **send_buffer;
 	int max_send_buffer;
 	int congestion_window;
-	int remote_window;
+	int advertised_window;
 	int last_pkt_acked;
 	int sbuf_start_index;
 	int last_pkt_sent;
@@ -143,7 +143,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	/* initialize send side */
 	r->max_send_buffer = cc->window;
 	r->congestion_window = 2; // max allowable starting congestion window (2*SMSS)
-	r->remote_window = cc->window; // assume remote window starts at max value
+	r->advertised_window= cc->window; // assume remote window starts at max value
 	r->send_buffer = create_srbuf(r->send_buffer, r->max_send_buffer);
 	r->last_pkt_acked = 0;
 	r->sbuf_start_index = 0;
@@ -249,7 +249,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 	}
 
 	/* update remote advertised window regardless of packet type */
-	//r->remote_window = pkt->rwnd; //3B this is essentially what we want to set the remote window. might want to only do it under certain conditions though...
+	//r->advertised_windo= pkt->rwnd; //3B this is essentially what we want to set the remote window. might want to only do it under certain conditions though...
 
 	/* handle ack packet */
 	if(pkt->len == ACK_LEN) {
