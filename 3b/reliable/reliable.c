@@ -25,8 +25,8 @@
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 
 #define BILLION 1000000000
-#define BANDWIDTH_KBPS 7975.46 / 8
-#define PKTS_SENT 10
+#define BANDWIDTH_KBPS (7975.46 / 8)
+#define PKTS_SENT 1000
 #define BYTES_SENT PKTS_SENT * (PKT_DATA_LEN + PKT_HDR_LEN)
 
 #define RCV_BUF_SPACE(r) r->max_rcv_buffer - ((r->next_pkt_expected - 1) - r->last_pkt_read)
@@ -36,7 +36,7 @@
 #define FLIGHT_SIZE(r) r->last_pkt_sent - r->last_pkt_acked
 
 #define INIT_WINDOW 2
-#define LOSS_WINDOW 2
+#define LOSS_WINDOW INIT_WINDOW
 
 #define IN_SLOW_START(r) ((r->congestion_window) > (r->ssthresh)) ? 0 : 1
 
@@ -141,7 +141,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	rel_list = r;
 
 	/* initialize config params */
-	r->timeout_ns = 100 * 1000000; // 100ms
+	r->timeout_ns = 1000 * 1000000; // 100ms
 	r->srtt = 0;
 	r->rttvar = 0;
 
@@ -425,16 +425,12 @@ void rel_read(rel_t *s)
 			/* update last packet written */
 			s->last_pkt_written++;
 
-			/* send next packet */
-			send_next_packet(s);
-
 			/* handle EOF */
 			if(isEOF) {
 				s->local_eof_seqno = sbuf->seqno;
 				handle_connection_close(s, NO_WAIT);
 			}
 		}
-		send_next_packet(s);
 	}
 }
 
@@ -489,6 +485,11 @@ void rel_output(rel_t *r)
 void rel_timer ()
 {
 	rel_t *r = rel_list;
+
+	/* try to send packets */
+	send_next_packet(r);
+
+	/* retransmit any packets that have timed out */
 	struct timespec cur_time;
 	int sn;
 	for(sn = r->last_pkt_acked + 1; sn <= r->last_pkt_sent; sn++) {
