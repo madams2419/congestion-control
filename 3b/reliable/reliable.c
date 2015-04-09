@@ -65,7 +65,9 @@ void ntoh_pconvert(packet_t *pkt);
 void per(char *st);
 void per2(char *st, int i);
 void ppkt(packet_t *pkt);
-void print_buf_ptrs(rel_t *r);
+void print_sbuf_ptrs(rel_t *r);
+void print_rbuf_ptrs(rel_t *r);
+void print_close_state(rel_t *r);
 
 
 struct reliable_state
@@ -177,8 +179,14 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	/* set eof seqno for sender/receiver modes */
 	if(r->c->sender_receiver == RECEIVER) {
 		r->local_eof_seqno = 1;
+		r->last_pkt_acked = 1;
+		r->last_pkt_sent = 1;
+		r->last_pkt_written = 1;
 	} else if(r->c->sender_receiver == SENDER) {
 		r->remote_eof_seqno = 1;
+		r->last_pkt_read = 1;
+		r->last_pkt_received = 1;
+		r->next_pkt_expected = 2;
 	}
 
 	return r;
@@ -276,7 +284,7 @@ void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 		/* check if connection has closed */
 		handle_connection_close(r, NO_WAIT);
 
-		/* call rel_read because new sending slot available */
+		/* call send_next_packet because new sending slot available */
 		rel_read(r);
 	}
 
@@ -394,14 +402,14 @@ void rel_read(rel_t *s)
 		send_init_eof(s);
 	} else {
 
-		while (SEND_BUF_SPACE(s) > 0) {
-
+		while (SEND_BUF_SPACE(s) > 0 && s->local_eof_seqno == 0) {
 			/* get send buffer */
 			pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
 			int rd_len = conn_input(s->c, sbuf->data, PKT_DATA_LEN);
 			int isEOF = (rd_len == -1);
 
 			/* debug */
+			fprintf(stderr, "rd_len: %d\n", rd_len);
 			if(isEOF) per("read EOF");
 
 			/* handle no data */
@@ -426,6 +434,7 @@ void rel_read(rel_t *s)
 				handle_connection_close(s, NO_WAIT);
 			}
 		}
+		send_next_packet(s);
 	}
 }
 
@@ -573,9 +582,10 @@ pbuf_t *rbuf_from_seqno(int seqno, rel_t *r) {
 void handle_connection_close(rel_t *r, int wait) {
 	if(r->local_eof_seqno > 0 &&							// local eof received
 		r->remote_eof_seqno > 0 &&							// remote eof received
-		r->last_pkt_acked == r->last_pkt_sent &&		// all packets sent have been acked
-		r->last_pkt_read == r->remote_eof_seqno - 1)	// all packets up to eof have been outputted
+		r->last_pkt_acked == r->last_pkt_written &&	// all packets sent have been acked
+		r->last_pkt_read == r->remote_eof_seqno)		// all packets up to and including eof have been outputted
 	{
+
 		/* wait two segment lifetimes if wait flag set */
 		if(wait == WAIT) {
 			r->fin_wait = 1;
@@ -624,6 +634,8 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 
 /* send next packet in queue */
 void send_next_packet(rel_t *s) {
+	per("send_next_packet");
+
 	/* return if no packets remain to be written */
 	if(s->last_pkt_written == s->last_pkt_sent) {
 		return;
@@ -711,8 +723,8 @@ void ppkt(packet_t *pkt) {
 }
 
 
-/* print send and receive buffer pointers */
-void print_buf_ptrs(rel_t *r) {
+/* print send buffer pointers */
+void print_sbuf_ptrs(rel_t *r) {
 	fprintf(stderr, "==========================\n");
 	fprintf(stderr, "SEND BUFFER\n");
 	fprintf(stderr, "==========================\n");
@@ -722,7 +734,11 @@ void print_buf_ptrs(rel_t *r) {
 	fprintf(stderr, "last_pkt_written  : %d\n", r->last_pkt_written);
 	fprintf(stderr, "max_send_buffer   : %d\n", r->max_send_buffer);
 	fprintf(stderr, "==========================\n");
+}
 
+
+/* print receive buffer pointers */
+void print_rbuf_ptrs(rel_t *r) {
 	fprintf(stderr, "==========================\n");
 	fprintf(stderr, "RECEIVE BUFFER\n");
 	fprintf(stderr, "==========================\n");
@@ -731,7 +747,11 @@ void print_buf_ptrs(rel_t *r) {
 	fprintf(stderr, "next_pkt_expected : %d\n", r->next_pkt_expected);
 	fprintf(stderr, "last_pkt_received : %d\n", r->last_pkt_received);
 	fprintf(stderr, "==========================\n");
+}
 
+
+/* print close state */
+void print_close_state(rel_t *r) {
 	fprintf(stderr, "==========================\n");
 	fprintf(stderr, "CLOSE STATE\n");
 	fprintf(stderr, "==========================\n");
