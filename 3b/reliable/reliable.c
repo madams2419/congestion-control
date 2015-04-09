@@ -467,6 +467,9 @@ void rel_output(rel_t *r)
 			return;
 		}
 
+		fprintf(stderr, "rel_output: %.*s\n", rbuf->data_len, rbuf->data);
+		fprintf(stderr, "data_len: %d\n", rbuf->data_len);
+
 		/* output packet */
 		int out_len = conn_output(r->c, rbuf->data, rbuf->data_len);
 		if(out_len < 0) {
