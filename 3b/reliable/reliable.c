@@ -80,9 +80,7 @@ struct reliable_state
 	int local_eof_seqno;
 	int fin_wait;
 
-	uint64_t timeout_ns;
-	uint64_t srtt;
-	uint64_t rttvar;
+	int timeout_s;
 
 	pbuf_t **send_buffer;
 	int max_send_buffer;
@@ -141,9 +139,7 @@ rel_t* rel_create (conn_t *c, const struct sockaddr_storage *ss, const struct co
 	rel_list = r;
 
 	/* initialize config params */
-	r->timeout_ns = 1000 * 1000000; // 100ms
-	r->srtt = 0;
-	r->rttvar = 0;
+	r->timeout_s = 3;
 
 	/* initialize booleans */
 	r->remote_eof_seqno = 0;
@@ -239,7 +235,6 @@ void rel_demux (const struct config_common *cc, const struct sockaddr_storage *s
 
 void rel_recvpkt(rel_t *r, packet_t *pkt, size_t n)
 {
-	per("rel_recvpkt");
 	uint16_t pkt_len = ntohs(pkt->len);
 
 	/* verify packet length */
@@ -397,7 +392,6 @@ void handle_duplicate_acks(rel_t *r) {
 
 void rel_read(rel_t *s)
 {
-	per("rel_read");
 	if(s->c->sender_receiver == RECEIVER) {
 		send_init_eof(s);
 	} else {
@@ -407,10 +401,6 @@ void rel_read(rel_t *s)
 			pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_written + 1, s);
 			int rd_len = conn_input(s->c, sbuf->data, PKT_DATA_LEN);
 			int isEOF = (rd_len == -1);
-
-			/* debug */
-			fprintf(stderr, "rd_len: %d\n", rd_len);
-			if(isEOF) per("read EOF");
 
 			/* handle no data */
 			if(rd_len == 0) {
@@ -451,7 +441,6 @@ void send_init_eof(rel_t *s) {
 
 void rel_output(rel_t *r)
 {
-	per("rel_output");
 	while (r->last_pkt_read + 1 < r->next_pkt_expected) {
 
 		size_t buf_space = conn_bufspace(r->c);
@@ -497,9 +486,9 @@ void rel_timer ()
 		struct timespec send_time = sbuf->send_time;
 		clock_gettime(CLOCK_MONOTONIC, &cur_time);
 
-		uint64_t t_elapsed_ns = 1000000000 * (cur_time.tv_sec - send_time.tv_sec) + (cur_time.tv_nsec - send_time.tv_nsec);
+		int t_elapsed_s = (cur_time.tv_sec - send_time.tv_sec);
 
-		if(t_elapsed_ns >= r->timeout_ns) {
+		if(t_elapsed_s >= r->timeout_s) {
 			per2("retransmitting", sbuf->seqno);
 
 			/* adjust ssthresh  and congestion window */
@@ -638,8 +627,6 @@ void send_packet(pbuf_t *pbuf, rel_t *s) {
 
 /* send next packet in queue */
 void send_next_packet(rel_t *s) {
-	per("send_next_packet");
-
 	/* return if no packets remain to be written */
 	if(s->last_pkt_written == s->last_pkt_sent) {
 		return;
@@ -649,6 +636,9 @@ void send_next_packet(rel_t *s) {
 	if(EFFECTIVE_WINDOW(s) <= 0) {
 		return;
 	}
+
+	fprintf(stderr, "MAX WINDOW: %d\n", MAX_WINDOW(s));
+	fprintf(stderr, "EFFECTIVE WINDOW: %d\n", EFFECTIVE_WINDOW(s));
 
 	/* retrieve buffer to send */
 	pbuf_t *sbuf = sbuf_from_seqno(s->last_pkt_sent + 1, s);
